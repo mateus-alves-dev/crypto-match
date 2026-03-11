@@ -24,7 +24,7 @@ dependencies:
 
   # Immutable models & serialization
   freezed_annotation: ^3.1.0
-  json_annotation: ^4.9.0
+  json_annotation: ^4.11.0
 
   # Navigation
   go_router: ^17.1.0
@@ -43,7 +43,7 @@ dev_dependencies:
   build_runner: ^2.4.13
   freezed: ^3.2.5
   injectable_generator: ^2.6.2
-  json_serializable: ^6.8.0
+  json_serializable: ^6.13.0
 
   # Testing
   bloc_test: ^10.0.0
