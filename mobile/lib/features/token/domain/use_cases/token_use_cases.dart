@@ -1,4 +1,5 @@
 import 'package:crypto_match/core/error/failure.dart';
+import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
 import 'package:crypto_match/features/token/domain/repositories/token_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -30,4 +31,33 @@ class DailyCheckinUseCase {
   final TokenRepository _repository;
 
   Future<Either<Failure, void>> call() => _repository.dailyCheckin();
+}
+
+@injectable
+class GetRewardActionsUseCase {
+  const GetRewardActionsUseCase(this._repository);
+
+  final TokenRepository _repository;
+
+  Future<Either<Failure, List<TokenAction>>> call() =>
+      _repository.getRewardActions();
+}
+
+@injectable
+class CompleteProfileActionUseCase {
+  const CompleteProfileActionUseCase(this._repository);
+
+  final TokenRepository _repository;
+
+  Future<Either<Failure, void>> call() => _repository.completeProfileAction();
+}
+
+@injectable
+class InviteFriendUseCase {
+  const InviteFriendUseCase(this._repository);
+
+  final TokenRepository _repository;
+
+  Future<Either<Failure, void>> call({required String referralCode}) =>
+      _repository.inviteFriend(referralCode: referralCode);
 }

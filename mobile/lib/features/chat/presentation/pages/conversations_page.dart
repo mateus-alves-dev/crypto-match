@@ -29,7 +29,6 @@ class _ConversationsPageState extends State<ConversationsPage> {
           'Mensagens',
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
-        leading: const BackButton(),
       ),
       body: BlocBuilder<ConversationsCubit, ConversationsState>(
         builder: (context, state) => state.when(
@@ -110,7 +109,9 @@ class _ErrorView extends StatelessWidget {
           Text(message),
           const SizedBox(height: 16),
           ElevatedButton(
-              onPressed: onRetry, child: const Text('Tentar novamente'),),
+            onPressed: onRetry,
+            child: const Text('Tentar novamente'),
+          ),
         ],
       ),
     );

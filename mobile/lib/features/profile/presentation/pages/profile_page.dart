@@ -29,7 +29,13 @@ class _ProfilePageState extends State<ProfilePage> {
           'Meu Perfil',
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
-        leading: const BackButton(),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings_rounded),
+            tooltip: 'Configurações',
+            onPressed: () => context.push(AppRoutes.settings),
+          ),
+        ],
       ),
       body: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {

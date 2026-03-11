@@ -72,4 +72,6 @@ class AuthCubit extends Cubit<AuthState> {
       (user) => emit(AuthState.authenticated(user: user)),
     );
   }
+
+  void logout() => emit(const AuthState.unauthenticated());
 }

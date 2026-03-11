@@ -6,6 +6,8 @@ import 'package:crypto_match/features/chat/presentation/cubit/conversations_cubi
 import 'package:crypto_match/features/match/presentation/cubit/match_cubit.dart';
 import 'package:crypto_match/features/match/presentation/cubit/matches_list_cubit.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:crypto_match/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:crypto_match/features/token/presentation/cubit/reward_actions_cubit.dart';
 import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +31,10 @@ class App extends StatelessWidget {
         ),
         BlocProvider<ProfileCubit>(create: (_) => getIt<ProfileCubit>()),
         BlocProvider<TokenCubit>(create: (_) => getIt<TokenCubit>()),
+        BlocProvider<RewardActionsCubit>(
+          create: (_) => getIt<RewardActionsCubit>(),
+        ),
+        BlocProvider<SettingsCubit>(create: (_) => getIt<SettingsCubit>()),
       ],
       child: MaterialApp.router(
         title: 'CryptoMatch',

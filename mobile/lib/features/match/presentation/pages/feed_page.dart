@@ -35,18 +35,6 @@ class _FeedPageState extends State<FeedPage> {
             onPressed: () {},
             tooltip: 'Filtros',
           ),
-          IconButton(
-            icon: const Icon(Icons.chat_bubble_rounded),
-            color: Colors.white70,
-            onPressed: () => context.push(AppRoutes.conversations),
-            tooltip: 'Mensagens',
-          ),
-          IconButton(
-            icon: const Icon(Icons.favorite_rounded),
-            color: const Color(0xFF6C63FF),
-            onPressed: () => context.push(AppRoutes.matches),
-            tooltip: 'Seus matches',
-          ),
           const SizedBox(width: 4),
         ],
       ),

@@ -56,14 +56,26 @@ import 'package:crypto_match/features/profile/domain/use_cases/profile_use_cases
     as _i722;
 import 'package:crypto_match/features/profile/presentation/cubit/profile_cubit.dart'
     as _i41;
+import 'package:crypto_match/features/settings/data/datasources/settings_remote_data_source.dart'
+    as _i98;
+import 'package:crypto_match/features/settings/data/repositories/settings_repository_mock.dart'
+    as _i954;
+import 'package:crypto_match/features/settings/domain/repositories/settings_repository.dart'
+    as _i864;
+import 'package:crypto_match/features/settings/domain/use_cases/settings_use_cases.dart'
+    as _i795;
+import 'package:crypto_match/features/settings/presentation/cubit/settings_cubit.dart'
+    as _i296;
 import 'package:crypto_match/features/token/data/datasources/token_remote_data_source.dart'
     as _i4;
-import 'package:crypto_match/features/token/data/repositories/token_repository_impl.dart'
-    as _i366;
+import 'package:crypto_match/features/token/data/repositories/token_repository_mock.dart'
+    as _i920;
 import 'package:crypto_match/features/token/domain/repositories/token_repository.dart'
     as _i593;
 import 'package:crypto_match/features/token/domain/use_cases/token_use_cases.dart'
     as _i833;
+import 'package:crypto_match/features/token/presentation/cubit/reward_actions_cubit.dart'
+    as _i312;
 import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart'
     as _i947;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -90,6 +102,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i269.ChatRepository>(() => _i74.MockChatRepositoryImpl());
     gh.lazySingleton<_i1050.MatchRepository>(
         () => _i1067.MockMatchRepositoryImpl());
+    gh.lazySingleton<_i864.SettingsRepository>(
+        () => _i954.MockSettingsRepositoryImpl());
+    gh.lazySingleton<_i593.TokenRepository>(
+        () => _i920.MockTokenRepositoryImpl());
     gh.lazySingleton<_i360.ProfileRepository>(
         () => _i841.MockProfileRepositoryImpl());
     gh.factory<_i676.GetConversationsUseCase>(
@@ -112,6 +128,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i722.UpdateMyProfileUseCase(gh<_i360.ProfileRepository>()));
     gh.singleton<_i53.ApiClient>(
         () => _i53.ApiClient(gh<_i558.FlutterSecureStorage>()));
+    gh.factory<_i795.GetUserSettingsUseCase>(
+        () => _i795.GetUserSettingsUseCase(gh<_i864.SettingsRepository>()));
+    gh.factory<_i795.UpdateMatchPreferencesUseCase>(() =>
+        _i795.UpdateMatchPreferencesUseCase(gh<_i864.SettingsRepository>()));
+    gh.factory<_i795.UpdateNotificationSettingsUseCase>(() =>
+        _i795.UpdateNotificationSettingsUseCase(
+            gh<_i864.SettingsRepository>()));
+    gh.factory<_i795.UpdatePrivacySettingsUseCase>(() =>
+        _i795.UpdatePrivacySettingsUseCase(gh<_i864.SettingsRepository>()));
+    gh.factory<_i795.DeleteAccountUseCase>(
+        () => _i795.DeleteAccountUseCase(gh<_i864.SettingsRepository>()));
     gh.factory<_i41.ProfileCubit>(() => _i41.ProfileCubit(
           gh<_i722.GetMyProfileUseCase>(),
           gh<_i722.UpdateMyProfileUseCase>(),
@@ -126,6 +153,25 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1051.SwipeUseCase(gh<_i1050.MatchRepository>()));
     gh.factory<_i1051.GetMatchesUseCase>(
         () => _i1051.GetMatchesUseCase(gh<_i1050.MatchRepository>()));
+    gh.factory<_i833.GetTokenBalanceUseCase>(
+        () => _i833.GetTokenBalanceUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.GetTokenHistoryUseCase>(
+        () => _i833.GetTokenHistoryUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.DailyCheckinUseCase>(
+        () => _i833.DailyCheckinUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.GetRewardActionsUseCase>(
+        () => _i833.GetRewardActionsUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.CompleteProfileActionUseCase>(
+        () => _i833.CompleteProfileActionUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.InviteFriendUseCase>(
+        () => _i833.InviteFriendUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i296.SettingsCubit>(() => _i296.SettingsCubit(
+          gh<_i795.GetUserSettingsUseCase>(),
+          gh<_i795.UpdateMatchPreferencesUseCase>(),
+          gh<_i795.UpdateNotificationSettingsUseCase>(),
+          gh<_i795.UpdatePrivacySettingsUseCase>(),
+          gh<_i795.DeleteAccountUseCase>(),
+        ));
     gh.factory<_i212.AuthCubit>(() => _i212.AuthCubit(
           gh<_i825.LoginUseCase>(),
           gh<_i825.RegisterUseCase>(),
@@ -143,22 +189,22 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i706.ProfileRemoteDataSource(gh<_i53.ApiClient>()));
     gh.factory<_i173.ChatRemoteDataSource>(
         () => _i173.ChatRemoteDataSource(gh<_i53.ApiClient>()));
+    gh.factory<_i98.SettingsRemoteDataSource>(
+        () => _i98.SettingsRemoteDataSource(gh<_i53.ApiClient>()));
     gh.factory<_i498.MatchCubit>(() => _i498.MatchCubit(
           gh<_i1051.GetMatchFeedUseCase>(),
           gh<_i1051.SwipeUseCase>(),
         ));
-    gh.lazySingleton<_i593.TokenRepository>(
-        () => _i366.TokenRepositoryImpl(gh<_i4.TokenRemoteDataSource>()));
-    gh.factory<_i833.GetTokenBalanceUseCase>(
-        () => _i833.GetTokenBalanceUseCase(gh<_i593.TokenRepository>()));
-    gh.factory<_i833.GetTokenHistoryUseCase>(
-        () => _i833.GetTokenHistoryUseCase(gh<_i593.TokenRepository>()));
-    gh.factory<_i833.DailyCheckinUseCase>(
-        () => _i833.DailyCheckinUseCase(gh<_i593.TokenRepository>()));
     gh.factory<_i947.TokenCubit>(() => _i947.TokenCubit(
           gh<_i833.GetTokenBalanceUseCase>(),
           gh<_i833.GetTokenHistoryUseCase>(),
           gh<_i833.DailyCheckinUseCase>(),
+        ));
+    gh.factory<_i312.RewardActionsCubit>(() => _i312.RewardActionsCubit(
+          gh<_i833.GetRewardActionsUseCase>(),
+          gh<_i833.DailyCheckinUseCase>(),
+          gh<_i833.CompleteProfileActionUseCase>(),
+          gh<_i833.InviteFriendUseCase>(),
         ));
     return this;
   }

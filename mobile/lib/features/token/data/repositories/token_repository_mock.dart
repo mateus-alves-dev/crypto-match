@@ -1,0 +1,227 @@
+import 'dart:math';
+
+import 'package:crypto_match/core/error/failure.dart';
+import 'package:crypto_match/features/token/domain/entities/token_action.dart';
+import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
+import 'package:crypto_match/features/token/domain/repositories/token_repository.dart';
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+
+@LazySingleton(as: TokenRepository)
+class MockTokenRepositoryImpl implements TokenRepository {
+  MockTokenRepositoryImpl() {
+    _initHistory();
+  }
+
+  static const _userId = 'mock-user-1';
+
+  double _balance = 135;
+
+  late final List<TokenTransaction> _history;
+
+  // Track which actions have been performed
+  bool _dailyCheckinDone = false;
+  bool _completeProfileDone = true; // already done in initial history
+  bool _inviteFriendDone = true; // already done in initial history
+
+  void _initHistory() {
+    final now = DateTime.now();
+
+    _history = [
+      TokenTransaction(
+        id: 'tx-001',
+        userId: _userId,
+        type: TokenTransactionType.credit,
+        amount: 100,
+        reason: 'Convite aceito',
+        createdAt: now.subtract(const Duration(days: 12)),
+        metadata: {'referralCode': 'CRYPTO123'},
+      ),
+      TokenTransaction(
+        id: 'tx-002',
+        userId: _userId,
+        type: TokenTransactionType.credit,
+        amount: 50,
+        reason: 'Perfil completo',
+        createdAt: now.subtract(const Duration(days: 10)),
+      ),
+      TokenTransaction(
+        id: 'tx-003',
+        userId: _userId,
+        type: TokenTransactionType.credit,
+        amount: 10,
+        reason: 'Check-in diário',
+        createdAt: now.subtract(const Duration(days: 7)),
+      ),
+      TokenTransaction(
+        id: 'tx-004',
+        userId: _userId,
+        type: TokenTransactionType.debit,
+        amount: 25,
+        reason: 'Presente enviado para Camila',
+        createdAt: now.subtract(const Duration(days: 6)),
+        metadata: {'targetUserId': 'mock-1', 'giftType': 'rose'},
+      ),
+      TokenTransaction(
+        id: 'tx-005',
+        userId: _userId,
+        type: TokenTransactionType.credit,
+        amount: 10,
+        reason: 'Check-in diário',
+        createdAt: now.subtract(const Duration(days: 5)),
+      ),
+      TokenTransaction(
+        id: 'tx-006',
+        userId: _userId,
+        type: TokenTransactionType.debit,
+        amount: 15,
+        reason: 'Presente enviado para Rafael',
+        createdAt: now.subtract(const Duration(days: 4)),
+        metadata: {'targetUserId': 'mock-2', 'giftType': 'bitcoin'},
+      ),
+      TokenTransaction(
+        id: 'tx-007',
+        userId: _userId,
+        type: TokenTransactionType.credit,
+        amount: 10,
+        reason: 'Check-in diário',
+        createdAt: now.subtract(const Duration(days: 2)),
+      ),
+      TokenTransaction(
+        id: 'tx-008',
+        userId: _userId,
+        type: TokenTransactionType.debit,
+        amount: 5,
+        reason: 'Super like enviado',
+        createdAt: now.subtract(const Duration(days: 1)),
+        metadata: {'targetUserId': 'mock-3'},
+      ),
+    ];
+  }
+
+  @override
+  Future<Either<Failure, TokenBalance>> getBalance() async {
+    await Future<void>.delayed(const Duration(milliseconds: 400));
+    return Right(
+      TokenBalance(
+        userId: _userId,
+        balance: _balance,
+        updatedAt: DateTime.now(),
+      ),
+    );
+  }
+
+  @override
+  Future<Either<Failure, List<TokenTransaction>>> getHistory() async {
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    // Return newest first
+    final sorted = List<TokenTransaction>.from(_history)
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return Right(sorted);
+  }
+
+  @override
+  Future<Either<Failure, List<TokenAction>>> getRewardActions() async {
+    await Future<void>.delayed(const Duration(milliseconds: 400));
+    return Right(_buildActions());
+  }
+
+  @override
+  Future<Either<Failure, void>> dailyCheckin() async {
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+    const amount = 10.0;
+    _balance += amount;
+    _dailyCheckinDone = true;
+    _history.add(
+      TokenTransaction(
+        id: 'tx-${Random().nextInt(99999)}',
+        userId: _userId,
+        type: TokenTransactionType.credit,
+        amount: amount,
+        reason: 'Check-in diário',
+        createdAt: DateTime.now(),
+      ),
+    );
+    return const Right(null);
+  }
+
+  @override
+  Future<Either<Failure, void>> completeProfileAction() async {
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+    const amount = 50.0;
+    _balance += amount;
+    _completeProfileDone = true;
+    _history.add(
+      TokenTransaction(
+        id: 'tx-${Random().nextInt(99999)}',
+        userId: _userId,
+        type: TokenTransactionType.credit,
+        amount: amount,
+        reason: 'Perfil completo',
+        createdAt: DateTime.now(),
+      ),
+    );
+    return const Right(null);
+  }
+
+  @override
+  Future<Either<Failure, void>> inviteFriend({
+    required String referralCode,
+  }) async {
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+    const amount = 100.0;
+    _balance += amount;
+    _inviteFriendDone = true;
+    _history.add(
+      TokenTransaction(
+        id: 'tx-${Random().nextInt(99999)}',
+        userId: _userId,
+        type: TokenTransactionType.credit,
+        amount: amount,
+        reason: 'Convite aceito',
+        createdAt: DateTime.now(),
+        metadata: {'referralCode': referralCode},
+      ),
+    );
+    return const Right(null);
+  }
+
+  List<TokenAction> _buildActions() {
+    final now = DateTime.now();
+    final tomorrowMidnight = DateTime(now.year, now.month, now.day + 1);
+
+    return [
+      TokenAction(
+        id: 'daily-checkin',
+        type: TokenActionType.dailyCheckin,
+        title: 'Check-in Diário',
+        description: 'Faça login todo dia para ganhar tokens',
+        reward: 10,
+        isAvailable: !_dailyCheckinDone,
+        nextAvailableAt: _dailyCheckinDone ? tomorrowMidnight : null,
+      ),
+      TokenAction(
+        id: 'complete-profile',
+        type: TokenActionType.completeProfile,
+        title: 'Complete seu Perfil',
+        description: 'Adicione foto, bio e interesses para ganhar tokens',
+        reward: 50,
+        isAvailable: !_completeProfileDone,
+        completedAt: _completeProfileDone
+            ? now.subtract(const Duration(days: 10))
+            : null,
+      ),
+      TokenAction(
+        id: 'invite-friend',
+        type: TokenActionType.inviteFriend,
+        title: 'Convide um Amigo',
+        description:
+            'Ganhe tokens quando seu amigo se cadastrar com seu código',
+        reward: 100,
+        isAvailable: !_inviteFriendDone,
+        completedAt:
+            _inviteFriendDone ? now.subtract(const Duration(days: 12)) : null,
+      ),
+    ];
+  }
+}

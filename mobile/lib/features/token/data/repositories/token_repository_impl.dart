@@ -1,12 +1,11 @@
 import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/core/network/api_error.dart';
 import 'package:crypto_match/features/token/data/datasources/token_remote_data_source.dart';
+import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
 import 'package:crypto_match/features/token/domain/repositories/token_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: TokenRepository)
 class TokenRepositoryImpl implements TokenRepository {
   const TokenRepositoryImpl(this._dataSource);
 
@@ -19,6 +18,10 @@ class TokenRepositoryImpl implements TokenRepository {
   @override
   Future<Either<Failure, List<TokenTransaction>>> getHistory() =>
       safeApiCall(_dataSource.getHistory);
+
+  @override
+  Future<Either<Failure, List<TokenAction>>> getRewardActions() =>
+      safeApiCall(_dataSource.getRewardActions);
 
   @override
   Future<Either<Failure, void>> completeProfileAction() =>

@@ -1,4 +1,5 @@
 import 'package:crypto_match/core/network/api_client.dart';
+import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
 import 'package:injectable/injectable.dart';
 
@@ -12,6 +13,13 @@ class TokenRemoteDataSource {
     final response =
         await _apiClient.dio.get<Map<String, dynamic>>('/token/balance');
     return TokenBalance.fromJson(response.data!);
+  }
+
+  Future<List<TokenAction>> getRewardActions() async {
+    final response = await _apiClient.dio.get<List<dynamic>>('/token/actions');
+    return response.data!
+        .map((e) => TokenAction.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   Future<List<TokenTransaction>> getHistory() async {

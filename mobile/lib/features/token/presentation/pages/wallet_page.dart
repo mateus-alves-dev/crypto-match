@@ -1,7 +1,9 @@
+import 'package:crypto_match/core/router/app_router.dart';
 import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart';
 import 'package:crypto_match/features/token/presentation/cubit/token_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
@@ -48,9 +50,10 @@ class _WalletPageState extends State<WalletPage> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () => context.read<TokenCubit>().dailyCheckin(),
-                child: const Text('Daily Check-in'),
+              ElevatedButton.icon(
+                onPressed: () => context.push(AppRoutes.rewards),
+                icon: const Icon(Icons.bolt_rounded),
+                label: const Text('Ganhar Tokens'),
               ),
               const SizedBox(height: 16),
               Expanded(
