@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UserRankCard extends StatelessWidget {
-  const UserRankCard({super.key, required this.rank});
+  const UserRankCard({required this.rank, super.key});
 
   final int rank;
 

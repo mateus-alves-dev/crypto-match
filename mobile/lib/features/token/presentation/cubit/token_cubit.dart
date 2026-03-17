@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/features/token/domain/use_cases/token_use_cases.dart';
 import 'package:crypto_match/features/token/presentation/cubit/token_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,24 +26,24 @@ class TokenCubit extends Cubit<TokenState> {
     balanceResult.fold(
       (failure) => emit(
         TokenState.failure(
-          message: failure.when(
-            server: (_, message) => message,
-            network: (message) => message,
-            unauthorized: () => 'Unauthorized',
-            notFound: () => 'Not found',
-            unknown: (message) => message,
+          message: failure.map(
+            server: (f) => f.message,
+            network: (f) => f.message,
+            unauthorized: (_) => 'Unauthorized',
+            notFound: (_) => 'Not found',
+            unknown: (f) => f.message,
           ),
         ),
       ),
       (balance) => historyResult.fold(
         (failure) => emit(
           TokenState.failure(
-            message: failure.when(
-              server: (_, message) => message,
-              network: (message) => message,
-              unauthorized: () => 'Unauthorized',
-              notFound: () => 'Not found',
-              unknown: (message) => message,
+            message: failure.map(
+              server: (f) => f.message,
+              network: (f) => f.message,
+              unauthorized: (_) => 'Unauthorized',
+              notFound: (_) => 'Not found',
+              unknown: (f) => f.message,
             ),
           ),
         ),

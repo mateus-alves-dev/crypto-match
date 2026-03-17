@@ -1,4 +1,5 @@
 import 'package:crypto_match/core/router/app_router.dart';
+import 'package:crypto_match/core/utils/app_links.dart';
 import 'package:crypto_match/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:crypto_match/features/settings/domain/entities/user_settings.dart';
 import 'package:crypto_match/features/settings/presentation/cubit/settings_cubit.dart';
@@ -6,6 +7,7 @@ import 'package:crypto_match/features/settings/presentation/cubit/settings_state
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -183,6 +185,8 @@ class _SettingsContent extends StatelessWidget {
               _buildPrivacy(context),
               const SizedBox(height: 32),
               _buildAccount(context),
+              const SizedBox(height: 32),
+              _buildLegal(context),
             ],
           ),
         ),
@@ -370,10 +374,7 @@ class _SettingsContent extends StatelessWidget {
             _ActionTile(
               icon: Icons.logout_rounded,
               title: 'Sair',
-              onTap: () {
-                context.read<AuthCubit>().logout();
-                context.go(AppRoutes.login);
-              },
+              onTap: () => context.read<AuthCubit>().logout(),
             ),
             const Divider(height: 1, color: Color(0xFF1A1A2E)),
             _ActionTile(
@@ -382,6 +383,31 @@ class _SettingsContent extends StatelessWidget {
               title: 'Excluir conta',
               titleColor: Colors.redAccent,
               onTap: () => _showDeleteDialog(context),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLegal(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _SectionLabel('Legal'),
+        const SizedBox(height: 16),
+        _buildCard(
+          children: [
+            _ActionTile(
+              icon: Icons.description_outlined,
+              title: 'Termos de Uso',
+              onTap: () => launchUrl(Uri.parse(AppLinks.termsOfService)),
+            ),
+            const Divider(height: 1, color: Color(0xFF1A1A2E)),
+            _ActionTile(
+              icon: Icons.privacy_tip_outlined,
+              title: 'Política de Privacidade',
+              onTap: () => launchUrl(Uri.parse(AppLinks.privacyPolicy)),
             ),
           ],
         ),

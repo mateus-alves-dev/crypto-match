@@ -28,7 +28,7 @@ class MockTokenRepositoryImpl implements TokenRepository {
   bool _inviteFriendDone = true; // already done in initial history
 
   // Streak state
-  int _currentStreak = 7;
+  final int _currentStreak = 7;
   bool _streakAtRisk = true; // true so the shield dialog is shown on first load
   bool _shieldUsed = false;
 
@@ -329,8 +329,8 @@ class MockTokenRepositoryImpl implements TokenRepository {
   }
 
   // Daily missions mock state
-  int _likeProgress = 0;
-  int _chatProgress = 0;
+  final int _likeProgress = 0;
+  final int _chatProgress = 0;
   bool _likeRewarded = false;
   bool _chatRewarded = false;
   bool _streak7dRewarded = false;

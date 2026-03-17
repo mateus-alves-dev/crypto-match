@@ -1,3 +1,4 @@
+import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/features/chat/domain/entities/message.dart';
 import 'package:crypto_match/features/chat/domain/use_cases/chat_use_cases.dart';
 import 'package:crypto_match/features/chat/presentation/cubit/messages_state.dart';
@@ -18,12 +19,12 @@ class MessagesCubit extends Cubit<MessagesState> {
     result.fold(
       (failure) => emit(
         MessagesState.failure(
-          message: failure.when(
-            server: (_, message) => message,
-            network: (message) => message,
-            unauthorized: () => 'Não autorizado',
-            notFound: () => 'Não encontrado',
-            unknown: (message) => message,
+          message: failure.map(
+            server: (f) => f.message,
+            network: (f) => f.message,
+            unauthorized: (_) => 'Não autorizado',
+            notFound: (_) => 'Não encontrado',
+            unknown: (f) => f.message,
           ),
         ),
       ),

@@ -78,10 +78,10 @@ class StreakShieldDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 'Você não fez check-in hoje. Use um Streak Shield para '
                 'proteger seu progresso.',
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white60,
                   fontSize: 14,
                   height: 1.5,

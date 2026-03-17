@@ -1,4 +1,5 @@
 import 'package:crypto_match/core/network/api_client.dart';
+import 'package:crypto_match/features/auth/domain/entities/auth_response.dart';
 import 'package:crypto_match/features/auth/domain/entities/user.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,7 +9,7 @@ class AuthRemoteDataSource {
 
   final ApiClient _apiClient;
 
-  Future<User> register({
+  Future<AuthResponse> register({
     required String name,
     required String email,
     required String password,
@@ -17,10 +18,10 @@ class AuthRemoteDataSource {
       '/auth/register',
       data: {'name': name, 'email': email, 'password': password},
     );
-    return User.fromJson(response.data!);
+    return AuthResponse.fromJson(response.data!);
   }
 
-  Future<User> login({
+  Future<AuthResponse> login({
     required String email,
     required String password,
   }) async {
@@ -28,7 +29,7 @@ class AuthRemoteDataSource {
       '/auth/login',
       data: {'email': email, 'password': password},
     );
-    return User.fromJson(response.data!);
+    return AuthResponse.fromJson(response.data!);
   }
 
   Future<User> getMe() async {

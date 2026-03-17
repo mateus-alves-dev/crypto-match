@@ -2,7 +2,7 @@ import 'package:crypto_match/features/token/domain/entities/leaderboard_entry.da
 import 'package:flutter/material.dart';
 
 class LeaderboardPodiumWidget extends StatelessWidget {
-  const LeaderboardPodiumWidget({super.key, required this.top3});
+  const LeaderboardPodiumWidget({required this.top3, super.key});
 
   final List<LeaderboardEntry> top3;
 

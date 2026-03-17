@@ -24,7 +24,9 @@ class App extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthCubit>(create: (_) => getIt<AuthCubit>()),
+        BlocProvider<AuthCubit>(
+          create: (_) => getIt<AuthCubit>()..checkAuth(),
+        ),
         BlocProvider<MatchCubit>(create: (_) => getIt<MatchCubit>()),
         BlocProvider<MatchesListCubit>(
           create: (_) => getIt<MatchesListCubit>(),

@@ -20,10 +20,15 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) =>
-      safeApiCall(
-        () =>
-            _dataSource.register(name: name, email: email, password: password),
-      );
+      safeApiCall(() async {
+        final authResponse = await _dataSource.register(
+          name: name,
+          email: email,
+          password: password,
+        );
+        await _storage.write(key: _tokenKey, value: authResponse.accessToken);
+        return authResponse.user;
+      });
 
   @override
   Future<Either<Failure, User>> login({
@@ -31,9 +36,12 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) =>
       safeApiCall(() async {
-        final user = await _dataSource.login(email: email, password: password);
-        // TODO(mateus): extract token from response headers/body and persist
-        return user;
+        final authResponse = await _dataSource.login(
+          email: email,
+          password: password,
+        );
+        await _storage.write(key: _tokenKey, value: authResponse.accessToken);
+        return authResponse.user;
       });
 
   @override

@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (BuildContext context, AuthState state) {
         state.whenOrNull(
-          authenticated: (_) => context.go(AppRoutes.feed),
           failure: (message) => ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(message)),
           ),
@@ -82,6 +81,11 @@ class _LoginPageState extends State<LoginPage> {
                           : const Text('Login'),
                     );
                   },
+                ),
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: () => context.push(AppRoutes.register),
+                  child: const Text('Criar conta'),
                 ),
               ],
             ),

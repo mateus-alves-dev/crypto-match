@@ -63,8 +63,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         TextEditingController(text: p.age != null ? '${p.age}' : '');
     _selectedInterests = List<String>.from(p.cryptoInterests ?? []);
     _selectedPersonaTags = List<String>.from(p.personaTags ?? []);
-    _hadPersonaTagsOnLoad =
-        p.personaTags != null && p.personaTags!.isNotEmpty;
+    _hadPersonaTagsOnLoad = p.personaTags != null && p.personaTags!.isNotEmpty;
   }
 
   @override
@@ -276,9 +275,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               const SizedBox(height: 28),
               const _SectionLabel('Identidade Cripto'),
               const SizedBox(height: 4),
-              Text(
+              const Text(
                 'Escolha até 3 personas que combinam com você',
-                style: const TextStyle(color: Colors.white38, fontSize: 13),
+                style: TextStyle(color: Colors.white38, fontSize: 13),
               ),
               const SizedBox(height: 12),
               PersonaTagPicker(

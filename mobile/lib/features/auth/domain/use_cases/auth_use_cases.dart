@@ -39,3 +39,12 @@ class GetMeUseCase {
 
   Future<Either<Failure, User>> call() => _repository.getMe();
 }
+
+@injectable
+class LogoutUseCase {
+  const LogoutUseCase(this._repository);
+
+  final AuthRepository _repository;
+
+  Future<Either<Failure, void>> call() => _repository.logout();
+}

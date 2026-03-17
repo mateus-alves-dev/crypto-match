@@ -102,7 +102,6 @@ extension GetItInjectableX on _i174.GetIt {
     final registerModule = _$RegisterModule();
     gh.singleton<_i558.FlutterSecureStorage>(
         () => registerModule.secureStorage);
-    gh.singleton<_i446.AppRouter>(() => _i446.AppRouter());
     gh.lazySingleton<_i197.AuthRepository>(
         () => _i698.MockAuthRepositoryImpl());
     gh.lazySingleton<_i269.ChatRepository>(() => _i74.MockChatRepositoryImpl());
@@ -134,6 +133,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i825.RegisterUseCase(gh<_i197.AuthRepository>()));
     gh.factory<_i825.GetMeUseCase>(
         () => _i825.GetMeUseCase(gh<_i197.AuthRepository>()));
+    gh.factory<_i825.LogoutUseCase>(
+        () => _i825.LogoutUseCase(gh<_i197.AuthRepository>()));
+    gh.lazySingleton<_i212.AuthCubit>(() => _i212.AuthCubit(
+          gh<_i825.LoginUseCase>(),
+          gh<_i825.RegisterUseCase>(),
+          gh<_i825.GetMeUseCase>(),
+          gh<_i825.LogoutUseCase>(),
+        ));
     gh.factory<_i833.GetTokenBalanceUseCase>(
         () => _i833.GetTokenBalanceUseCase(gh<_i593.TokenRepository>()));
     gh.factory<_i833.GetTokenHistoryUseCase>(
@@ -206,15 +213,11 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i676.GetMessagesUseCase>(),
           gh<_i676.SendMessageUseCase>(),
         ));
-    gh.factory<_i212.AuthCubit>(() => _i212.AuthCubit(
-          gh<_i825.LoginUseCase>(),
-          gh<_i825.RegisterUseCase>(),
-          gh<_i825.GetMeUseCase>(),
-        ));
     gh.factory<_i722.GetMyProfileUseCase>(
         () => _i722.GetMyProfileUseCase(gh<_i360.ProfileRepository>()));
     gh.factory<_i722.UpdateMyProfileUseCase>(
         () => _i722.UpdateMyProfileUseCase(gh<_i360.ProfileRepository>()));
+    gh.singleton<_i446.AppRouter>(() => _i446.AppRouter(gh<_i212.AuthCubit>()));
     gh.factory<_i498.MatchCubit>(() => _i498.MatchCubit(
           gh<_i1051.GetMatchFeedUseCase>(),
           gh<_i1051.SwipeUseCase>(),

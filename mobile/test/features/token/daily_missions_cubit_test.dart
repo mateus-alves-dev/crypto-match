@@ -114,19 +114,13 @@ void main() {
     // -----------------------------------------------------------------------
     group('auto-claim', () {
       final completedMission = _mission(
-        id: 'mission-like',
         isCompleted: true,
-        isRewarded: false,
-        reward: 5,
       );
       final reloadedMissions = [
         _mission(
-          id: 'mission-like',
           isCompleted: true,
           isRewarded: true,
           progress: 3,
-          target: 3,
-          reward: 5,
         ),
       ];
 

@@ -56,20 +56,18 @@ void main() {
     // -----------------------------------------------------------------------
     group('loadLeaderboard', () {
       final entries = [
-        _entry(rank: 1, userId: 'user-1', displayName: 'Alice'),
+        _entry(userId: 'user-1'),
         _entry(
           rank: 2,
           userId: 'user-2',
           displayName: 'Bob',
           weeklyTokens: 200,
-          hasWeeklyBadge: true,
         ),
         _entry(
           rank: 3,
           userId: 'user-3',
           displayName: 'Carol',
           weeklyTokens: 150,
-          hasWeeklyBadge: true,
         ),
         _entry(
           rank: 4,
@@ -97,7 +95,7 @@ void main() {
         'emits [loading, loaded] with null userRank when no current user entry',
         setUp: () => when(getLeaderboard.call).thenAnswer(
           (_) async => Right([
-            _entry(rank: 1),
+            _entry(),
             _entry(rank: 2, userId: 'user-2', weeklyTokens: 200),
           ]),
         ),
@@ -107,10 +105,9 @@ void main() {
           const LeaderboardState.loading(),
           LeaderboardState.loaded(
             entries: [
-              _entry(rank: 1),
+              _entry(),
               _entry(rank: 2, userId: 'user-2', weeklyTokens: 200),
             ],
-            userRank: null,
           ),
         ],
       );

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class MissionCard extends StatelessWidget {
   const MissionCard({
-    super.key,
     required this.mission,
+    super.key,
     this.isClaiming = false,
   });
 

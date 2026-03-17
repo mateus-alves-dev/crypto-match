@@ -26,7 +26,9 @@ class StreakCounterWidget extends StatelessWidget {
           ),
           failure: (_, info) => info != null
               ? _StreakBanner(
-                  days: info.currentStreak, atRisk: info.streakAtRisk)
+                  days: info.currentStreak,
+                  atRisk: info.streakAtRisk,
+                )
               : const SizedBox.shrink(),
           orElse: () => const SizedBox.shrink(),
         );

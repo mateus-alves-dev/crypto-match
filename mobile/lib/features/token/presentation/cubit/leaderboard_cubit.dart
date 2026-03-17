@@ -1,3 +1,4 @@
+import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/features/token/domain/use_cases/token_use_cases.dart';
 import 'package:crypto_match/features/token/presentation/cubit/leaderboard_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,12 +17,12 @@ class LeaderboardCubit extends Cubit<LeaderboardState> {
     result.fold(
       (failure) => emit(
         LeaderboardState.failure(
-          message: failure.when(
-            server: (_, message) => message,
-            network: (message) => message,
-            unauthorized: () => 'Não autorizado',
-            notFound: () => 'Não encontrado',
-            unknown: (message) => message,
+          message: failure.map(
+            server: (f) => f.message,
+            network: (f) => f.message,
+            unauthorized: (_) => 'Não autorizado',
+            notFound: (_) => 'Não encontrado',
+            unknown: (f) => f.message,
           ),
         ),
       ),

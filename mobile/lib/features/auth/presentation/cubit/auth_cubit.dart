@@ -1,19 +1,22 @@
+import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/features/auth/domain/use_cases/auth_use_cases.dart';
 import 'package:crypto_match/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@lazySingleton
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(
     this._loginUseCase,
     this._registerUseCase,
     this._getMeUseCase,
+    this._logoutUseCase,
   ) : super(const AuthState.initial());
 
   final LoginUseCase _loginUseCase;
   final RegisterUseCase _registerUseCase;
   final GetMeUseCase _getMeUseCase;
+  final LogoutUseCase _logoutUseCase;
 
   Future<void> login({
     required String email,
@@ -24,12 +27,12 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) => emit(
         AuthState.failure(
-          message: failure.when(
-            server: (_, message) => message,
-            network: (message) => message,
-            unauthorized: () => 'Invalid credentials',
-            notFound: () => 'User not found',
-            unknown: (message) => message,
+          message: failure.map(
+            server: (f) => f.message,
+            network: (f) => f.message,
+            unauthorized: (_) => 'Invalid credentials',
+            notFound: (_) => 'User not found',
+            unknown: (f) => f.message,
           ),
         ),
       ),
@@ -51,12 +54,12 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold(
       (failure) => emit(
         AuthState.failure(
-          message: failure.when(
-            server: (_, message) => message,
-            network: (message) => message,
-            unauthorized: () => 'Unauthorized',
-            notFound: () => 'Not found',
-            unknown: (message) => message,
+          message: failure.map(
+            server: (f) => f.message,
+            network: (f) => f.message,
+            unauthorized: (_) => 'Unauthorized',
+            notFound: (_) => 'Not found',
+            unknown: (f) => f.message,
           ),
         ),
       ),
@@ -73,5 +76,8 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  void logout() => emit(const AuthState.unauthenticated());
+  void logout() {
+    _logoutUseCase();
+    emit(const AuthState.unauthenticated());
+  }
 }

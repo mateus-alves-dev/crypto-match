@@ -2,7 +2,7 @@ import 'package:crypto_match/features/token/domain/entities/leaderboard_entry.da
 import 'package:flutter/material.dart';
 
 class LeaderboardRankTile extends StatelessWidget {
-  const LeaderboardRankTile({super.key, required this.entry});
+  const LeaderboardRankTile({required this.entry, super.key});
 
   final LeaderboardEntry entry;
 

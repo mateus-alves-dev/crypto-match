@@ -1,3 +1,4 @@
+import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/features/match/domain/entities/match.dart';
 import 'package:crypto_match/features/match/domain/use_cases/match_use_cases.dart';
 import 'package:crypto_match/features/match/presentation/cubit/match_state.dart';
@@ -17,12 +18,12 @@ class MatchCubit extends Cubit<MatchState> {
     result.fold(
       (failure) => emit(
         MatchState.failure(
-          message: failure.when(
-            server: (_, message) => message,
-            network: (message) => message,
-            unauthorized: () => 'Nao autorizado',
-            notFound: () => 'Nao encontrado',
-            unknown: (message) => message,
+          message: failure.map(
+            server: (f) => f.message,
+            network: (f) => f.message,
+            unauthorized: (_) => 'Nao autorizado',
+            notFound: (_) => 'Nao encontrado',
+            unknown: (f) => f.message,
           ),
         ),
       ),

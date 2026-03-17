@@ -116,7 +116,7 @@ void main() {
     // claimDailyCheckin
     // -----------------------------------------------------------------------
     group('claimDailyCheckin', () {
-      final actions = [_action(reward: 10)];
+      final actions = [_action()];
 
       blocTest<RewardActionsCubit, RewardActionsState>(
         'emits [claiming, claimSuccess, loading, loaded] when checkin succeeds',

@@ -1,6 +1,10 @@
 import 'package:crypto_match/core/di/injection.dart';
+import 'package:crypto_match/core/router/go_router_refresh_stream.dart';
 import 'package:crypto_match/core/router/main_shell.dart';
+import 'package:crypto_match/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:crypto_match/features/auth/presentation/cubit/auth_state.dart';
 import 'package:crypto_match/features/auth/presentation/pages/login_page.dart';
+import 'package:crypto_match/features/auth/presentation/pages/register_page.dart';
 import 'package:crypto_match/features/chat/domain/entities/message.dart';
 import 'package:crypto_match/features/chat/presentation/cubit/messages_cubit.dart';
 import 'package:crypto_match/features/chat/presentation/pages/chat_page.dart';
@@ -22,6 +26,7 @@ import 'package:injectable/injectable.dart';
 
 abstract final class AppRoutes {
   static const login = '/login';
+  static const register = '/register';
   static const feed = '/feed';
   static const matches = '/matches';
   static const conversations = '/conversations';
@@ -39,17 +44,41 @@ abstract final class AppRoutes {
 
 @singleton
 class AppRouter {
+  AppRouter(this._authCubit);
+
+  final AuthCubit _authCubit;
+
   GoRouter get router => _router;
 
-  final GoRouter _router = GoRouter(
+  late final GoRouter _router = GoRouter(
     initialLocation: AppRoutes.login,
     debugLogDiagnostics: true,
+    refreshListenable: GoRouterRefreshStream(_authCubit.stream),
+    redirect: (context, state) {
+      final location = state.matchedLocation;
+      final isOnAuthRoute =
+          location == AppRoutes.login || location == AppRoutes.register;
+
+      return _authCubit.state.when(
+        initial: () => null,
+        loading: () => null,
+        authenticated: (_) => isOnAuthRoute ? AppRoutes.feed : null,
+        unauthenticated: () => isOnAuthRoute ? null : AppRoutes.login,
+        failure: (_) => isOnAuthRoute ? null : AppRoutes.login,
+      );
+    },
     routes: [
       GoRoute(
         path: AppRoutes.login,
         name: 'login',
         builder: (BuildContext context, GoRouterState state) =>
             const LoginPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.register,
+        name: 'register',
+        builder: (BuildContext context, GoRouterState state) =>
+            const RegisterPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (
