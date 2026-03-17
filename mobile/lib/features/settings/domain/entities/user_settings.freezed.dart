@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,175 +9,32 @@ part of 'user_settings.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-MatchPreferences _$MatchPreferencesFromJson(Map<String, dynamic> json) {
-  return _MatchPreferences.fromJson(json);
-}
 
 /// @nodoc
 mixin _$MatchPreferences {
-  int get maxDistanceKm => throw _privateConstructorUsedError;
-  int get minAge => throw _privateConstructorUsedError;
-  int get maxAge => throw _privateConstructorUsedError;
-  bool get filterByCryptoInterests => throw _privateConstructorUsedError;
-
-  /// Serializes this MatchPreferences to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  int get maxDistanceKm;
+  int get minAge;
+  int get maxAge;
+  bool get filterByCryptoInterests;
 
   /// Create a copy of MatchPreferences
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $MatchPreferencesCopyWith<MatchPreferences> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$MatchPreferencesCopyWithImpl<MatchPreferences>(
+          this as MatchPreferences, _$identity);
 
-/// @nodoc
-abstract class $MatchPreferencesCopyWith<$Res> {
-  factory $MatchPreferencesCopyWith(
-          MatchPreferences value, $Res Function(MatchPreferences) then) =
-      _$MatchPreferencesCopyWithImpl<$Res, MatchPreferences>;
-  @useResult
-  $Res call(
-      {int maxDistanceKm,
-      int minAge,
-      int maxAge,
-      bool filterByCryptoInterests});
-}
-
-/// @nodoc
-class _$MatchPreferencesCopyWithImpl<$Res, $Val extends MatchPreferences>
-    implements $MatchPreferencesCopyWith<$Res> {
-  _$MatchPreferencesCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of MatchPreferences
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? maxDistanceKm = null,
-    Object? minAge = null,
-    Object? maxAge = null,
-    Object? filterByCryptoInterests = null,
-  }) {
-    return _then(_value.copyWith(
-      maxDistanceKm: null == maxDistanceKm
-          ? _value.maxDistanceKm
-          : maxDistanceKm // ignore: cast_nullable_to_non_nullable
-              as int,
-      minAge: null == minAge
-          ? _value.minAge
-          : minAge // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxAge: null == maxAge
-          ? _value.maxAge
-          : maxAge // ignore: cast_nullable_to_non_nullable
-              as int,
-      filterByCryptoInterests: null == filterByCryptoInterests
-          ? _value.filterByCryptoInterests
-          : filterByCryptoInterests // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$MatchPreferencesImplCopyWith<$Res>
-    implements $MatchPreferencesCopyWith<$Res> {
-  factory _$$MatchPreferencesImplCopyWith(_$MatchPreferencesImpl value,
-          $Res Function(_$MatchPreferencesImpl) then) =
-      __$$MatchPreferencesImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int maxDistanceKm,
-      int minAge,
-      int maxAge,
-      bool filterByCryptoInterests});
-}
-
-/// @nodoc
-class __$$MatchPreferencesImplCopyWithImpl<$Res>
-    extends _$MatchPreferencesCopyWithImpl<$Res, _$MatchPreferencesImpl>
-    implements _$$MatchPreferencesImplCopyWith<$Res> {
-  __$$MatchPreferencesImplCopyWithImpl(_$MatchPreferencesImpl _value,
-      $Res Function(_$MatchPreferencesImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of MatchPreferences
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? maxDistanceKm = null,
-    Object? minAge = null,
-    Object? maxAge = null,
-    Object? filterByCryptoInterests = null,
-  }) {
-    return _then(_$MatchPreferencesImpl(
-      maxDistanceKm: null == maxDistanceKm
-          ? _value.maxDistanceKm
-          : maxDistanceKm // ignore: cast_nullable_to_non_nullable
-              as int,
-      minAge: null == minAge
-          ? _value.minAge
-          : minAge // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxAge: null == maxAge
-          ? _value.maxAge
-          : maxAge // ignore: cast_nullable_to_non_nullable
-              as int,
-      filterByCryptoInterests: null == filterByCryptoInterests
-          ? _value.filterByCryptoInterests
-          : filterByCryptoInterests // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$MatchPreferencesImpl implements _MatchPreferences {
-  const _$MatchPreferencesImpl(
-      {this.maxDistanceKm = 50,
-      this.minAge = 18,
-      this.maxAge = 50,
-      this.filterByCryptoInterests = false});
-
-  factory _$MatchPreferencesImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MatchPreferencesImplFromJson(json);
-
-  @override
-  @JsonKey()
-  final int maxDistanceKm;
-  @override
-  @JsonKey()
-  final int minAge;
-  @override
-  @JsonKey()
-  final int maxAge;
-  @override
-  @JsonKey()
-  final bool filterByCryptoInterests;
-
-  @override
-  String toString() {
-    return 'MatchPreferences(maxDistanceKm: $maxDistanceKm, minAge: $minAge, maxAge: $maxAge, filterByCryptoInterests: $filterByCryptoInterests)';
-  }
+  /// Serializes this MatchPreferences to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MatchPreferencesImpl &&
+            other is MatchPreferences &&
             (identical(other.maxDistanceKm, maxDistanceKm) ||
                 other.maxDistanceKm == maxDistanceKm) &&
             (identical(other.minAge, minAge) || other.minAge == minAge) &&
@@ -192,209 +49,371 @@ class _$MatchPreferencesImpl implements _MatchPreferences {
   int get hashCode => Object.hash(
       runtimeType, maxDistanceKm, minAge, maxAge, filterByCryptoInterests);
 
-  /// Create a copy of MatchPreferences
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$MatchPreferencesImplCopyWith<_$MatchPreferencesImpl> get copyWith =>
-      __$$MatchPreferencesImplCopyWithImpl<_$MatchPreferencesImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MatchPreferencesImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _MatchPreferences implements MatchPreferences {
-  const factory _MatchPreferences(
-      {final int maxDistanceKm,
-      final int minAge,
-      final int maxAge,
-      final bool filterByCryptoInterests}) = _$MatchPreferencesImpl;
-
-  factory _MatchPreferences.fromJson(Map<String, dynamic> json) =
-      _$MatchPreferencesImpl.fromJson;
-
-  @override
-  int get maxDistanceKm;
-  @override
-  int get minAge;
-  @override
-  int get maxAge;
-  @override
-  bool get filterByCryptoInterests;
-
-  /// Create a copy of MatchPreferences
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MatchPreferencesImplCopyWith<_$MatchPreferencesImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-NotificationSettings _$NotificationSettingsFromJson(Map<String, dynamic> json) {
-  return _NotificationSettings.fromJson(json);
-}
-
-/// @nodoc
-mixin _$NotificationSettings {
-  bool get newMatches => throw _privateConstructorUsedError;
-  bool get newMessages => throw _privateConstructorUsedError;
-  bool get tokenRewards => throw _privateConstructorUsedError;
-  bool get appUpdates => throw _privateConstructorUsedError;
-
-  /// Serializes this NotificationSettings to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of NotificationSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $NotificationSettingsCopyWith<NotificationSettings> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $NotificationSettingsCopyWith<$Res> {
-  factory $NotificationSettingsCopyWith(NotificationSettings value,
-          $Res Function(NotificationSettings) then) =
-      _$NotificationSettingsCopyWithImpl<$Res, NotificationSettings>;
-  @useResult
-  $Res call(
-      {bool newMatches, bool newMessages, bool tokenRewards, bool appUpdates});
-}
-
-/// @nodoc
-class _$NotificationSettingsCopyWithImpl<$Res,
-        $Val extends NotificationSettings>
-    implements $NotificationSettingsCopyWith<$Res> {
-  _$NotificationSettingsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of NotificationSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? newMatches = null,
-    Object? newMessages = null,
-    Object? tokenRewards = null,
-    Object? appUpdates = null,
-  }) {
-    return _then(_value.copyWith(
-      newMatches: null == newMatches
-          ? _value.newMatches
-          : newMatches // ignore: cast_nullable_to_non_nullable
-              as bool,
-      newMessages: null == newMessages
-          ? _value.newMessages
-          : newMessages // ignore: cast_nullable_to_non_nullable
-              as bool,
-      tokenRewards: null == tokenRewards
-          ? _value.tokenRewards
-          : tokenRewards // ignore: cast_nullable_to_non_nullable
-              as bool,
-      appUpdates: null == appUpdates
-          ? _value.appUpdates
-          : appUpdates // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+  String toString() {
+    return 'MatchPreferences(maxDistanceKm: $maxDistanceKm, minAge: $minAge, maxAge: $maxAge, filterByCryptoInterests: $filterByCryptoInterests)';
   }
 }
 
 /// @nodoc
-abstract class _$$NotificationSettingsImplCopyWith<$Res>
-    implements $NotificationSettingsCopyWith<$Res> {
-  factory _$$NotificationSettingsImplCopyWith(_$NotificationSettingsImpl value,
-          $Res Function(_$NotificationSettingsImpl) then) =
-      __$$NotificationSettingsImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $MatchPreferencesCopyWith<$Res> {
+  factory $MatchPreferencesCopyWith(
+          MatchPreferences value, $Res Function(MatchPreferences) _then) =
+      _$MatchPreferencesCopyWithImpl;
   @useResult
   $Res call(
-      {bool newMatches, bool newMessages, bool tokenRewards, bool appUpdates});
+      {int maxDistanceKm,
+      int minAge,
+      int maxAge,
+      bool filterByCryptoInterests});
 }
 
 /// @nodoc
-class __$$NotificationSettingsImplCopyWithImpl<$Res>
-    extends _$NotificationSettingsCopyWithImpl<$Res, _$NotificationSettingsImpl>
-    implements _$$NotificationSettingsImplCopyWith<$Res> {
-  __$$NotificationSettingsImplCopyWithImpl(_$NotificationSettingsImpl _value,
-      $Res Function(_$NotificationSettingsImpl) _then)
-      : super(_value, _then);
+class _$MatchPreferencesCopyWithImpl<$Res>
+    implements $MatchPreferencesCopyWith<$Res> {
+  _$MatchPreferencesCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of NotificationSettings
+  final MatchPreferences _self;
+  final $Res Function(MatchPreferences) _then;
+
+  /// Create a copy of MatchPreferences
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? newMatches = null,
-    Object? newMessages = null,
-    Object? tokenRewards = null,
-    Object? appUpdates = null,
+    Object? maxDistanceKm = null,
+    Object? minAge = null,
+    Object? maxAge = null,
+    Object? filterByCryptoInterests = null,
   }) {
-    return _then(_$NotificationSettingsImpl(
-      newMatches: null == newMatches
-          ? _value.newMatches
-          : newMatches // ignore: cast_nullable_to_non_nullable
-              as bool,
-      newMessages: null == newMessages
-          ? _value.newMessages
-          : newMessages // ignore: cast_nullable_to_non_nullable
-              as bool,
-      tokenRewards: null == tokenRewards
-          ? _value.tokenRewards
-          : tokenRewards // ignore: cast_nullable_to_non_nullable
-              as bool,
-      appUpdates: null == appUpdates
-          ? _value.appUpdates
-          : appUpdates // ignore: cast_nullable_to_non_nullable
+    return _then(_self.copyWith(
+      maxDistanceKm: null == maxDistanceKm
+          ? _self.maxDistanceKm
+          : maxDistanceKm // ignore: cast_nullable_to_non_nullable
+              as int,
+      minAge: null == minAge
+          ? _self.minAge
+          : minAge // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxAge: null == maxAge
+          ? _self.maxAge
+          : maxAge // ignore: cast_nullable_to_non_nullable
+              as int,
+      filterByCryptoInterests: null == filterByCryptoInterests
+          ? _self.filterByCryptoInterests
+          : filterByCryptoInterests // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [MatchPreferences].
+extension MatchPreferencesPatterns on MatchPreferences {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_MatchPreferences value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MatchPreferences() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_MatchPreferences value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MatchPreferences():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_MatchPreferences value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MatchPreferences() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(int maxDistanceKm, int minAge, int maxAge,
+            bool filterByCryptoInterests)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MatchPreferences() when $default != null:
+        return $default(_that.maxDistanceKm, _that.minAge, _that.maxAge,
+            _that.filterByCryptoInterests);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(int maxDistanceKm, int minAge, int maxAge,
+            bool filterByCryptoInterests)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MatchPreferences():
+        return $default(_that.maxDistanceKm, _that.minAge, _that.maxAge,
+            _that.filterByCryptoInterests);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(int maxDistanceKm, int minAge, int maxAge,
+            bool filterByCryptoInterests)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MatchPreferences() when $default != null:
+        return $default(_that.maxDistanceKm, _that.minAge, _that.maxAge,
+            _that.filterByCryptoInterests);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$NotificationSettingsImpl implements _NotificationSettings {
-  const _$NotificationSettingsImpl(
-      {this.newMatches = true,
-      this.newMessages = true,
-      this.tokenRewards = true,
-      this.appUpdates = false});
-
-  factory _$NotificationSettingsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NotificationSettingsImplFromJson(json);
-
-  @override
-  @JsonKey()
-  final bool newMatches;
-  @override
-  @JsonKey()
-  final bool newMessages;
-  @override
-  @JsonKey()
-  final bool tokenRewards;
-  @override
-  @JsonKey()
-  final bool appUpdates;
+class _MatchPreferences implements MatchPreferences {
+  const _MatchPreferences(
+      {this.maxDistanceKm = 50,
+      this.minAge = 18,
+      this.maxAge = 50,
+      this.filterByCryptoInterests = false});
+  factory _MatchPreferences.fromJson(Map<String, dynamic> json) =>
+      _$MatchPreferencesFromJson(json);
 
   @override
-  String toString() {
-    return 'NotificationSettings(newMatches: $newMatches, newMessages: $newMessages, tokenRewards: $tokenRewards, appUpdates: $appUpdates)';
+  @JsonKey()
+  final int maxDistanceKm;
+  @override
+  @JsonKey()
+  final int minAge;
+  @override
+  @JsonKey()
+  final int maxAge;
+  @override
+  @JsonKey()
+  final bool filterByCryptoInterests;
+
+  /// Create a copy of MatchPreferences
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$MatchPreferencesCopyWith<_MatchPreferences> get copyWith =>
+      __$MatchPreferencesCopyWithImpl<_MatchPreferences>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$MatchPreferencesToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NotificationSettingsImpl &&
+            other is _MatchPreferences &&
+            (identical(other.maxDistanceKm, maxDistanceKm) ||
+                other.maxDistanceKm == maxDistanceKm) &&
+            (identical(other.minAge, minAge) || other.minAge == minAge) &&
+            (identical(other.maxAge, maxAge) || other.maxAge == maxAge) &&
+            (identical(
+                    other.filterByCryptoInterests, filterByCryptoInterests) ||
+                other.filterByCryptoInterests == filterByCryptoInterests));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, maxDistanceKm, minAge, maxAge, filterByCryptoInterests);
+
+  @override
+  String toString() {
+    return 'MatchPreferences(maxDistanceKm: $maxDistanceKm, minAge: $minAge, maxAge: $maxAge, filterByCryptoInterests: $filterByCryptoInterests)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$MatchPreferencesCopyWith<$Res>
+    implements $MatchPreferencesCopyWith<$Res> {
+  factory _$MatchPreferencesCopyWith(
+          _MatchPreferences value, $Res Function(_MatchPreferences) _then) =
+      __$MatchPreferencesCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int maxDistanceKm,
+      int minAge,
+      int maxAge,
+      bool filterByCryptoInterests});
+}
+
+/// @nodoc
+class __$MatchPreferencesCopyWithImpl<$Res>
+    implements _$MatchPreferencesCopyWith<$Res> {
+  __$MatchPreferencesCopyWithImpl(this._self, this._then);
+
+  final _MatchPreferences _self;
+  final $Res Function(_MatchPreferences) _then;
+
+  /// Create a copy of MatchPreferences
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? maxDistanceKm = null,
+    Object? minAge = null,
+    Object? maxAge = null,
+    Object? filterByCryptoInterests = null,
+  }) {
+    return _then(_MatchPreferences(
+      maxDistanceKm: null == maxDistanceKm
+          ? _self.maxDistanceKm
+          : maxDistanceKm // ignore: cast_nullable_to_non_nullable
+              as int,
+      minAge: null == minAge
+          ? _self.minAge
+          : minAge // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxAge: null == maxAge
+          ? _self.maxAge
+          : maxAge // ignore: cast_nullable_to_non_nullable
+              as int,
+      filterByCryptoInterests: null == filterByCryptoInterests
+          ? _self.filterByCryptoInterests
+          : filterByCryptoInterests // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+mixin _$NotificationSettings {
+  bool get newMatches;
+  bool get newMessages;
+  bool get tokenRewards;
+  bool get appUpdates;
+
+  /// Create a copy of NotificationSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $NotificationSettingsCopyWith<NotificationSettings> get copyWith =>
+      _$NotificationSettingsCopyWithImpl<NotificationSettings>(
+          this as NotificationSettings, _$identity);
+
+  /// Serializes this NotificationSettings to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is NotificationSettings &&
             (identical(other.newMatches, newMatches) ||
                 other.newMatches == newMatches) &&
             (identical(other.newMessages, newMessages) ||
@@ -410,192 +429,366 @@ class _$NotificationSettingsImpl implements _NotificationSettings {
   int get hashCode => Object.hash(
       runtimeType, newMatches, newMessages, tokenRewards, appUpdates);
 
-  /// Create a copy of NotificationSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$NotificationSettingsImplCopyWith<_$NotificationSettingsImpl>
-      get copyWith =>
-          __$$NotificationSettingsImplCopyWithImpl<_$NotificationSettingsImpl>(
-              this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$NotificationSettingsImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _NotificationSettings implements NotificationSettings {
-  const factory _NotificationSettings(
-      {final bool newMatches,
-      final bool newMessages,
-      final bool tokenRewards,
-      final bool appUpdates}) = _$NotificationSettingsImpl;
-
-  factory _NotificationSettings.fromJson(Map<String, dynamic> json) =
-      _$NotificationSettingsImpl.fromJson;
-
-  @override
-  bool get newMatches;
-  @override
-  bool get newMessages;
-  @override
-  bool get tokenRewards;
-  @override
-  bool get appUpdates;
-
-  /// Create a copy of NotificationSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$NotificationSettingsImplCopyWith<_$NotificationSettingsImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-PrivacySettings _$PrivacySettingsFromJson(Map<String, dynamic> json) {
-  return _PrivacySettings.fromJson(json);
-}
-
-/// @nodoc
-mixin _$PrivacySettings {
-  bool get showOnlineStatus => throw _privateConstructorUsedError;
-  bool get showDistance => throw _privateConstructorUsedError;
-  bool get profileVisible => throw _privateConstructorUsedError;
-
-  /// Serializes this PrivacySettings to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of PrivacySettings
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PrivacySettingsCopyWith<PrivacySettings> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PrivacySettingsCopyWith<$Res> {
-  factory $PrivacySettingsCopyWith(
-          PrivacySettings value, $Res Function(PrivacySettings) then) =
-      _$PrivacySettingsCopyWithImpl<$Res, PrivacySettings>;
-  @useResult
-  $Res call({bool showOnlineStatus, bool showDistance, bool profileVisible});
-}
-
-/// @nodoc
-class _$PrivacySettingsCopyWithImpl<$Res, $Val extends PrivacySettings>
-    implements $PrivacySettingsCopyWith<$Res> {
-  _$PrivacySettingsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PrivacySettings
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? showOnlineStatus = null,
-    Object? showDistance = null,
-    Object? profileVisible = null,
-  }) {
-    return _then(_value.copyWith(
-      showOnlineStatus: null == showOnlineStatus
-          ? _value.showOnlineStatus
-          : showOnlineStatus // ignore: cast_nullable_to_non_nullable
-              as bool,
-      showDistance: null == showDistance
-          ? _value.showDistance
-          : showDistance // ignore: cast_nullable_to_non_nullable
-              as bool,
-      profileVisible: null == profileVisible
-          ? _value.profileVisible
-          : profileVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+  String toString() {
+    return 'NotificationSettings(newMatches: $newMatches, newMessages: $newMessages, tokenRewards: $tokenRewards, appUpdates: $appUpdates)';
   }
 }
 
 /// @nodoc
-abstract class _$$PrivacySettingsImplCopyWith<$Res>
-    implements $PrivacySettingsCopyWith<$Res> {
-  factory _$$PrivacySettingsImplCopyWith(_$PrivacySettingsImpl value,
-          $Res Function(_$PrivacySettingsImpl) then) =
-      __$$PrivacySettingsImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $NotificationSettingsCopyWith<$Res> {
+  factory $NotificationSettingsCopyWith(NotificationSettings value,
+          $Res Function(NotificationSettings) _then) =
+      _$NotificationSettingsCopyWithImpl;
   @useResult
-  $Res call({bool showOnlineStatus, bool showDistance, bool profileVisible});
+  $Res call(
+      {bool newMatches, bool newMessages, bool tokenRewards, bool appUpdates});
 }
 
 /// @nodoc
-class __$$PrivacySettingsImplCopyWithImpl<$Res>
-    extends _$PrivacySettingsCopyWithImpl<$Res, _$PrivacySettingsImpl>
-    implements _$$PrivacySettingsImplCopyWith<$Res> {
-  __$$PrivacySettingsImplCopyWithImpl(
-      _$PrivacySettingsImpl _value, $Res Function(_$PrivacySettingsImpl) _then)
-      : super(_value, _then);
+class _$NotificationSettingsCopyWithImpl<$Res>
+    implements $NotificationSettingsCopyWith<$Res> {
+  _$NotificationSettingsCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of PrivacySettings
+  final NotificationSettings _self;
+  final $Res Function(NotificationSettings) _then;
+
+  /// Create a copy of NotificationSettings
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? showOnlineStatus = null,
-    Object? showDistance = null,
-    Object? profileVisible = null,
+    Object? newMatches = null,
+    Object? newMessages = null,
+    Object? tokenRewards = null,
+    Object? appUpdates = null,
   }) {
-    return _then(_$PrivacySettingsImpl(
-      showOnlineStatus: null == showOnlineStatus
-          ? _value.showOnlineStatus
-          : showOnlineStatus // ignore: cast_nullable_to_non_nullable
+    return _then(_self.copyWith(
+      newMatches: null == newMatches
+          ? _self.newMatches
+          : newMatches // ignore: cast_nullable_to_non_nullable
               as bool,
-      showDistance: null == showDistance
-          ? _value.showDistance
-          : showDistance // ignore: cast_nullable_to_non_nullable
+      newMessages: null == newMessages
+          ? _self.newMessages
+          : newMessages // ignore: cast_nullable_to_non_nullable
               as bool,
-      profileVisible: null == profileVisible
-          ? _value.profileVisible
-          : profileVisible // ignore: cast_nullable_to_non_nullable
+      tokenRewards: null == tokenRewards
+          ? _self.tokenRewards
+          : tokenRewards // ignore: cast_nullable_to_non_nullable
+              as bool,
+      appUpdates: null == appUpdates
+          ? _self.appUpdates
+          : appUpdates // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [NotificationSettings].
+extension NotificationSettingsPatterns on NotificationSettings {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_NotificationSettings value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationSettings() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_NotificationSettings value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationSettings():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_NotificationSettings value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationSettings() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(bool newMatches, bool newMessages, bool tokenRewards,
+            bool appUpdates)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationSettings() when $default != null:
+        return $default(_that.newMatches, _that.newMessages, _that.tokenRewards,
+            _that.appUpdates);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(bool newMatches, bool newMessages, bool tokenRewards,
+            bool appUpdates)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationSettings():
+        return $default(_that.newMatches, _that.newMessages, _that.tokenRewards,
+            _that.appUpdates);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(bool newMatches, bool newMessages, bool tokenRewards,
+            bool appUpdates)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationSettings() when $default != null:
+        return $default(_that.newMatches, _that.newMessages, _that.tokenRewards,
+            _that.appUpdates);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$PrivacySettingsImpl implements _PrivacySettings {
-  const _$PrivacySettingsImpl(
-      {this.showOnlineStatus = true,
-      this.showDistance = true,
-      this.profileVisible = true});
-
-  factory _$PrivacySettingsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PrivacySettingsImplFromJson(json);
+class _NotificationSettings implements NotificationSettings {
+  const _NotificationSettings(
+      {this.newMatches = true,
+      this.newMessages = true,
+      this.tokenRewards = true,
+      this.appUpdates = false});
+  factory _NotificationSettings.fromJson(Map<String, dynamic> json) =>
+      _$NotificationSettingsFromJson(json);
 
   @override
   @JsonKey()
-  final bool showOnlineStatus;
+  final bool newMatches;
   @override
   @JsonKey()
-  final bool showDistance;
+  final bool newMessages;
   @override
   @JsonKey()
-  final bool profileVisible;
+  final bool tokenRewards;
+  @override
+  @JsonKey()
+  final bool appUpdates;
+
+  /// Create a copy of NotificationSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$NotificationSettingsCopyWith<_NotificationSettings> get copyWith =>
+      __$NotificationSettingsCopyWithImpl<_NotificationSettings>(
+          this, _$identity);
 
   @override
-  String toString() {
-    return 'PrivacySettings(showOnlineStatus: $showOnlineStatus, showDistance: $showDistance, profileVisible: $profileVisible)';
+  Map<String, dynamic> toJson() {
+    return _$NotificationSettingsToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PrivacySettingsImpl &&
+            other is _NotificationSettings &&
+            (identical(other.newMatches, newMatches) ||
+                other.newMatches == newMatches) &&
+            (identical(other.newMessages, newMessages) ||
+                other.newMessages == newMessages) &&
+            (identical(other.tokenRewards, tokenRewards) ||
+                other.tokenRewards == tokenRewards) &&
+            (identical(other.appUpdates, appUpdates) ||
+                other.appUpdates == appUpdates));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, newMatches, newMessages, tokenRewards, appUpdates);
+
+  @override
+  String toString() {
+    return 'NotificationSettings(newMatches: $newMatches, newMessages: $newMessages, tokenRewards: $tokenRewards, appUpdates: $appUpdates)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$NotificationSettingsCopyWith<$Res>
+    implements $NotificationSettingsCopyWith<$Res> {
+  factory _$NotificationSettingsCopyWith(_NotificationSettings value,
+          $Res Function(_NotificationSettings) _then) =
+      __$NotificationSettingsCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {bool newMatches, bool newMessages, bool tokenRewards, bool appUpdates});
+}
+
+/// @nodoc
+class __$NotificationSettingsCopyWithImpl<$Res>
+    implements _$NotificationSettingsCopyWith<$Res> {
+  __$NotificationSettingsCopyWithImpl(this._self, this._then);
+
+  final _NotificationSettings _self;
+  final $Res Function(_NotificationSettings) _then;
+
+  /// Create a copy of NotificationSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? newMatches = null,
+    Object? newMessages = null,
+    Object? tokenRewards = null,
+    Object? appUpdates = null,
+  }) {
+    return _then(_NotificationSettings(
+      newMatches: null == newMatches
+          ? _self.newMatches
+          : newMatches // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newMessages: null == newMessages
+          ? _self.newMessages
+          : newMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
+      tokenRewards: null == tokenRewards
+          ? _self.tokenRewards
+          : tokenRewards // ignore: cast_nullable_to_non_nullable
+              as bool,
+      appUpdates: null == appUpdates
+          ? _self.appUpdates
+          : appUpdates // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+mixin _$PrivacySettings {
+  bool get showOnlineStatus;
+  bool get showDistance;
+  bool get profileVisible;
+
+  /// Create a copy of PrivacySettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PrivacySettingsCopyWith<PrivacySettings> get copyWith =>
+      _$PrivacySettingsCopyWithImpl<PrivacySettings>(
+          this as PrivacySettings, _$identity);
+
+  /// Serializes this PrivacySettings to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PrivacySettings &&
             (identical(other.showOnlineStatus, showOnlineStatus) ||
                 other.showOnlineStatus == showOnlineStatus) &&
             (identical(other.showDistance, showDistance) ||
@@ -609,234 +802,347 @@ class _$PrivacySettingsImpl implements _PrivacySettings {
   int get hashCode =>
       Object.hash(runtimeType, showOnlineStatus, showDistance, profileVisible);
 
-  /// Create a copy of PrivacySettings
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PrivacySettingsImplCopyWith<_$PrivacySettingsImpl> get copyWith =>
-      __$$PrivacySettingsImplCopyWithImpl<_$PrivacySettingsImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PrivacySettingsImplToJson(
-      this,
-    );
+  String toString() {
+    return 'PrivacySettings(showOnlineStatus: $showOnlineStatus, showDistance: $showDistance, profileVisible: $profileVisible)';
   }
 }
 
-abstract class _PrivacySettings implements PrivacySettings {
-  const factory _PrivacySettings(
-      {final bool showOnlineStatus,
-      final bool showDistance,
-      final bool profileVisible}) = _$PrivacySettingsImpl;
+/// @nodoc
+abstract mixin class $PrivacySettingsCopyWith<$Res> {
+  factory $PrivacySettingsCopyWith(
+          PrivacySettings value, $Res Function(PrivacySettings) _then) =
+      _$PrivacySettingsCopyWithImpl;
+  @useResult
+  $Res call({bool showOnlineStatus, bool showDistance, bool profileVisible});
+}
 
-  factory _PrivacySettings.fromJson(Map<String, dynamic> json) =
-      _$PrivacySettingsImpl.fromJson;
+/// @nodoc
+class _$PrivacySettingsCopyWithImpl<$Res>
+    implements $PrivacySettingsCopyWith<$Res> {
+  _$PrivacySettingsCopyWithImpl(this._self, this._then);
 
-  @override
-  bool get showOnlineStatus;
-  @override
-  bool get showDistance;
-  @override
-  bool get profileVisible;
+  final PrivacySettings _self;
+  final $Res Function(PrivacySettings) _then;
 
   /// Create a copy of PrivacySettings
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PrivacySettingsImplCopyWith<_$PrivacySettingsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) {
-  return _UserSettings.fromJson(json);
-}
-
-/// @nodoc
-mixin _$UserSettings {
-  MatchPreferences get matchPreferences => throw _privateConstructorUsedError;
-  NotificationSettings get notificationSettings =>
-      throw _privateConstructorUsedError;
-  PrivacySettings get privacySettings => throw _privateConstructorUsedError;
-
-  /// Serializes this UserSettings to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of UserSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $UserSettingsCopyWith<UserSettings> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $UserSettingsCopyWith<$Res> {
-  factory $UserSettingsCopyWith(
-          UserSettings value, $Res Function(UserSettings) then) =
-      _$UserSettingsCopyWithImpl<$Res, UserSettings>;
-  @useResult
-  $Res call(
-      {MatchPreferences matchPreferences,
-      NotificationSettings notificationSettings,
-      PrivacySettings privacySettings});
-
-  $MatchPreferencesCopyWith<$Res> get matchPreferences;
-  $NotificationSettingsCopyWith<$Res> get notificationSettings;
-  $PrivacySettingsCopyWith<$Res> get privacySettings;
-}
-
-/// @nodoc
-class _$UserSettingsCopyWithImpl<$Res, $Val extends UserSettings>
-    implements $UserSettingsCopyWith<$Res> {
-  _$UserSettingsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of UserSettings
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? matchPreferences = null,
-    Object? notificationSettings = null,
-    Object? privacySettings = null,
+    Object? showOnlineStatus = null,
+    Object? showDistance = null,
+    Object? profileVisible = null,
   }) {
-    return _then(_value.copyWith(
-      matchPreferences: null == matchPreferences
-          ? _value.matchPreferences
-          : matchPreferences // ignore: cast_nullable_to_non_nullable
-              as MatchPreferences,
-      notificationSettings: null == notificationSettings
-          ? _value.notificationSettings
-          : notificationSettings // ignore: cast_nullable_to_non_nullable
-              as NotificationSettings,
-      privacySettings: null == privacySettings
-          ? _value.privacySettings
-          : privacySettings // ignore: cast_nullable_to_non_nullable
-              as PrivacySettings,
-    ) as $Val);
-  }
-
-  /// Create a copy of UserSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MatchPreferencesCopyWith<$Res> get matchPreferences {
-    return $MatchPreferencesCopyWith<$Res>(_value.matchPreferences, (value) {
-      return _then(_value.copyWith(matchPreferences: value) as $Val);
-    });
-  }
-
-  /// Create a copy of UserSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $NotificationSettingsCopyWith<$Res> get notificationSettings {
-    return $NotificationSettingsCopyWith<$Res>(_value.notificationSettings,
-        (value) {
-      return _then(_value.copyWith(notificationSettings: value) as $Val);
-    });
-  }
-
-  /// Create a copy of UserSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $PrivacySettingsCopyWith<$Res> get privacySettings {
-    return $PrivacySettingsCopyWith<$Res>(_value.privacySettings, (value) {
-      return _then(_value.copyWith(privacySettings: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$UserSettingsImplCopyWith<$Res>
-    implements $UserSettingsCopyWith<$Res> {
-  factory _$$UserSettingsImplCopyWith(
-          _$UserSettingsImpl value, $Res Function(_$UserSettingsImpl) then) =
-      __$$UserSettingsImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {MatchPreferences matchPreferences,
-      NotificationSettings notificationSettings,
-      PrivacySettings privacySettings});
-
-  @override
-  $MatchPreferencesCopyWith<$Res> get matchPreferences;
-  @override
-  $NotificationSettingsCopyWith<$Res> get notificationSettings;
-  @override
-  $PrivacySettingsCopyWith<$Res> get privacySettings;
-}
-
-/// @nodoc
-class __$$UserSettingsImplCopyWithImpl<$Res>
-    extends _$UserSettingsCopyWithImpl<$Res, _$UserSettingsImpl>
-    implements _$$UserSettingsImplCopyWith<$Res> {
-  __$$UserSettingsImplCopyWithImpl(
-      _$UserSettingsImpl _value, $Res Function(_$UserSettingsImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of UserSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? matchPreferences = null,
-    Object? notificationSettings = null,
-    Object? privacySettings = null,
-  }) {
-    return _then(_$UserSettingsImpl(
-      matchPreferences: null == matchPreferences
-          ? _value.matchPreferences
-          : matchPreferences // ignore: cast_nullable_to_non_nullable
-              as MatchPreferences,
-      notificationSettings: null == notificationSettings
-          ? _value.notificationSettings
-          : notificationSettings // ignore: cast_nullable_to_non_nullable
-              as NotificationSettings,
-      privacySettings: null == privacySettings
-          ? _value.privacySettings
-          : privacySettings // ignore: cast_nullable_to_non_nullable
-              as PrivacySettings,
+    return _then(_self.copyWith(
+      showOnlineStatus: null == showOnlineStatus
+          ? _self.showOnlineStatus
+          : showOnlineStatus // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showDistance: null == showDistance
+          ? _self.showDistance
+          : showDistance // ignore: cast_nullable_to_non_nullable
+              as bool,
+      profileVisible: null == profileVisible
+          ? _self.profileVisible
+          : profileVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [PrivacySettings].
+extension PrivacySettingsPatterns on PrivacySettings {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PrivacySettings value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PrivacySettings() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PrivacySettings value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PrivacySettings():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PrivacySettings value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PrivacySettings() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool showOnlineStatus, bool showDistance, bool profileVisible)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PrivacySettings() when $default != null:
+        return $default(
+            _that.showOnlineStatus, _that.showDistance, _that.profileVisible);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool showOnlineStatus, bool showDistance, bool profileVisible)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PrivacySettings():
+        return $default(
+            _that.showOnlineStatus, _that.showDistance, _that.profileVisible);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool showOnlineStatus, bool showDistance, bool profileVisible)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PrivacySettings() when $default != null:
+        return $default(
+            _that.showOnlineStatus, _that.showDistance, _that.profileVisible);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$UserSettingsImpl implements _UserSettings {
-  const _$UserSettingsImpl(
-      {required this.matchPreferences,
-      required this.notificationSettings,
-      required this.privacySettings});
-
-  factory _$UserSettingsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserSettingsImplFromJson(json);
-
-  @override
-  final MatchPreferences matchPreferences;
-  @override
-  final NotificationSettings notificationSettings;
-  @override
-  final PrivacySettings privacySettings;
+class _PrivacySettings implements PrivacySettings {
+  const _PrivacySettings(
+      {this.showOnlineStatus = true,
+      this.showDistance = true,
+      this.profileVisible = true});
+  factory _PrivacySettings.fromJson(Map<String, dynamic> json) =>
+      _$PrivacySettingsFromJson(json);
 
   @override
-  String toString() {
-    return 'UserSettings(matchPreferences: $matchPreferences, notificationSettings: $notificationSettings, privacySettings: $privacySettings)';
+  @JsonKey()
+  final bool showOnlineStatus;
+  @override
+  @JsonKey()
+  final bool showDistance;
+  @override
+  @JsonKey()
+  final bool profileVisible;
+
+  /// Create a copy of PrivacySettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PrivacySettingsCopyWith<_PrivacySettings> get copyWith =>
+      __$PrivacySettingsCopyWithImpl<_PrivacySettings>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PrivacySettingsToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserSettingsImpl &&
+            other is _PrivacySettings &&
+            (identical(other.showOnlineStatus, showOnlineStatus) ||
+                other.showOnlineStatus == showOnlineStatus) &&
+            (identical(other.showDistance, showDistance) ||
+                other.showDistance == showDistance) &&
+            (identical(other.profileVisible, profileVisible) ||
+                other.profileVisible == profileVisible));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, showOnlineStatus, showDistance, profileVisible);
+
+  @override
+  String toString() {
+    return 'PrivacySettings(showOnlineStatus: $showOnlineStatus, showDistance: $showDistance, profileVisible: $profileVisible)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$PrivacySettingsCopyWith<$Res>
+    implements $PrivacySettingsCopyWith<$Res> {
+  factory _$PrivacySettingsCopyWith(
+          _PrivacySettings value, $Res Function(_PrivacySettings) _then) =
+      __$PrivacySettingsCopyWithImpl;
+  @override
+  @useResult
+  $Res call({bool showOnlineStatus, bool showDistance, bool profileVisible});
+}
+
+/// @nodoc
+class __$PrivacySettingsCopyWithImpl<$Res>
+    implements _$PrivacySettingsCopyWith<$Res> {
+  __$PrivacySettingsCopyWithImpl(this._self, this._then);
+
+  final _PrivacySettings _self;
+  final $Res Function(_PrivacySettings) _then;
+
+  /// Create a copy of PrivacySettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? showOnlineStatus = null,
+    Object? showDistance = null,
+    Object? profileVisible = null,
+  }) {
+    return _then(_PrivacySettings(
+      showOnlineStatus: null == showOnlineStatus
+          ? _self.showOnlineStatus
+          : showOnlineStatus // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showDistance: null == showDistance
+          ? _self.showDistance
+          : showDistance // ignore: cast_nullable_to_non_nullable
+              as bool,
+      profileVisible: null == profileVisible
+          ? _self.profileVisible
+          : profileVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+mixin _$UserSettings {
+  MatchPreferences get matchPreferences;
+  NotificationSettings get notificationSettings;
+  PrivacySettings get privacySettings;
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $UserSettingsCopyWith<UserSettings> get copyWith =>
+      _$UserSettingsCopyWithImpl<UserSettings>(
+          this as UserSettings, _$identity);
+
+  /// Serializes this UserSettings to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UserSettings &&
             (identical(other.matchPreferences, matchPreferences) ||
                 other.matchPreferences == matchPreferences) &&
             (identical(other.notificationSettings, notificationSettings) ||
@@ -850,42 +1156,404 @@ class _$UserSettingsImpl implements _UserSettings {
   int get hashCode => Object.hash(
       runtimeType, matchPreferences, notificationSettings, privacySettings);
 
-  /// Create a copy of UserSettings
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$UserSettingsImplCopyWith<_$UserSettingsImpl> get copyWith =>
-      __$$UserSettingsImplCopyWithImpl<_$UserSettingsImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$UserSettingsImplToJson(
-      this,
-    );
+  String toString() {
+    return 'UserSettings(matchPreferences: $matchPreferences, notificationSettings: $notificationSettings, privacySettings: $privacySettings)';
   }
 }
 
-abstract class _UserSettings implements UserSettings {
-  const factory _UserSettings(
-      {required final MatchPreferences matchPreferences,
-      required final NotificationSettings notificationSettings,
-      required final PrivacySettings privacySettings}) = _$UserSettingsImpl;
+/// @nodoc
+abstract mixin class $UserSettingsCopyWith<$Res> {
+  factory $UserSettingsCopyWith(
+          UserSettings value, $Res Function(UserSettings) _then) =
+      _$UserSettingsCopyWithImpl;
+  @useResult
+  $Res call(
+      {MatchPreferences matchPreferences,
+      NotificationSettings notificationSettings,
+      PrivacySettings privacySettings});
 
-  factory _UserSettings.fromJson(Map<String, dynamic> json) =
-      _$UserSettingsImpl.fromJson;
+  $MatchPreferencesCopyWith<$Res> get matchPreferences;
+  $NotificationSettingsCopyWith<$Res> get notificationSettings;
+  $PrivacySettingsCopyWith<$Res> get privacySettings;
+}
+
+/// @nodoc
+class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
+  _$UserSettingsCopyWithImpl(this._self, this._then);
+
+  final UserSettings _self;
+  final $Res Function(UserSettings) _then;
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? matchPreferences = null,
+    Object? notificationSettings = null,
+    Object? privacySettings = null,
+  }) {
+    return _then(_self.copyWith(
+      matchPreferences: null == matchPreferences
+          ? _self.matchPreferences
+          : matchPreferences // ignore: cast_nullable_to_non_nullable
+              as MatchPreferences,
+      notificationSettings: null == notificationSettings
+          ? _self.notificationSettings
+          : notificationSettings // ignore: cast_nullable_to_non_nullable
+              as NotificationSettings,
+      privacySettings: null == privacySettings
+          ? _self.privacySettings
+          : privacySettings // ignore: cast_nullable_to_non_nullable
+              as PrivacySettings,
+    ));
+  }
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MatchPreferencesCopyWith<$Res> get matchPreferences {
+    return $MatchPreferencesCopyWith<$Res>(_self.matchPreferences, (value) {
+      return _then(_self.copyWith(matchPreferences: value));
+    });
+  }
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $NotificationSettingsCopyWith<$Res> get notificationSettings {
+    return $NotificationSettingsCopyWith<$Res>(_self.notificationSettings,
+        (value) {
+      return _then(_self.copyWith(notificationSettings: value));
+    });
+  }
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PrivacySettingsCopyWith<$Res> get privacySettings {
+    return $PrivacySettingsCopyWith<$Res>(_self.privacySettings, (value) {
+      return _then(_self.copyWith(privacySettings: value));
+    });
+  }
+}
+
+/// Adds pattern-matching-related methods to [UserSettings].
+extension UserSettingsPatterns on UserSettings {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_UserSettings value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _UserSettings() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_UserSettings value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _UserSettings():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_UserSettings value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _UserSettings() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            MatchPreferences matchPreferences,
+            NotificationSettings notificationSettings,
+            PrivacySettings privacySettings)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _UserSettings() when $default != null:
+        return $default(_that.matchPreferences, _that.notificationSettings,
+            _that.privacySettings);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            MatchPreferences matchPreferences,
+            NotificationSettings notificationSettings,
+            PrivacySettings privacySettings)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _UserSettings():
+        return $default(_that.matchPreferences, _that.notificationSettings,
+            _that.privacySettings);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            MatchPreferences matchPreferences,
+            NotificationSettings notificationSettings,
+            PrivacySettings privacySettings)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _UserSettings() when $default != null:
+        return $default(_that.matchPreferences, _that.notificationSettings,
+            _that.privacySettings);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _UserSettings implements UserSettings {
+  const _UserSettings(
+      {required this.matchPreferences,
+      required this.notificationSettings,
+      required this.privacySettings});
+  factory _UserSettings.fromJson(Map<String, dynamic> json) =>
+      _$UserSettingsFromJson(json);
 
   @override
-  MatchPreferences get matchPreferences;
+  final MatchPreferences matchPreferences;
   @override
-  NotificationSettings get notificationSettings;
+  final NotificationSettings notificationSettings;
   @override
-  PrivacySettings get privacySettings;
+  final PrivacySettings privacySettings;
 
   /// Create a copy of UserSettings
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserSettingsImplCopyWith<_$UserSettingsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$UserSettingsCopyWith<_UserSettings> get copyWith =>
+      __$UserSettingsCopyWithImpl<_UserSettings>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$UserSettingsToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _UserSettings &&
+            (identical(other.matchPreferences, matchPreferences) ||
+                other.matchPreferences == matchPreferences) &&
+            (identical(other.notificationSettings, notificationSettings) ||
+                other.notificationSettings == notificationSettings) &&
+            (identical(other.privacySettings, privacySettings) ||
+                other.privacySettings == privacySettings));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, matchPreferences, notificationSettings, privacySettings);
+
+  @override
+  String toString() {
+    return 'UserSettings(matchPreferences: $matchPreferences, notificationSettings: $notificationSettings, privacySettings: $privacySettings)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$UserSettingsCopyWith<$Res>
+    implements $UserSettingsCopyWith<$Res> {
+  factory _$UserSettingsCopyWith(
+          _UserSettings value, $Res Function(_UserSettings) _then) =
+      __$UserSettingsCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {MatchPreferences matchPreferences,
+      NotificationSettings notificationSettings,
+      PrivacySettings privacySettings});
+
+  @override
+  $MatchPreferencesCopyWith<$Res> get matchPreferences;
+  @override
+  $NotificationSettingsCopyWith<$Res> get notificationSettings;
+  @override
+  $PrivacySettingsCopyWith<$Res> get privacySettings;
+}
+
+/// @nodoc
+class __$UserSettingsCopyWithImpl<$Res>
+    implements _$UserSettingsCopyWith<$Res> {
+  __$UserSettingsCopyWithImpl(this._self, this._then);
+
+  final _UserSettings _self;
+  final $Res Function(_UserSettings) _then;
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? matchPreferences = null,
+    Object? notificationSettings = null,
+    Object? privacySettings = null,
+  }) {
+    return _then(_UserSettings(
+      matchPreferences: null == matchPreferences
+          ? _self.matchPreferences
+          : matchPreferences // ignore: cast_nullable_to_non_nullable
+              as MatchPreferences,
+      notificationSettings: null == notificationSettings
+          ? _self.notificationSettings
+          : notificationSettings // ignore: cast_nullable_to_non_nullable
+              as NotificationSettings,
+      privacySettings: null == privacySettings
+          ? _self.privacySettings
+          : privacySettings // ignore: cast_nullable_to_non_nullable
+              as PrivacySettings,
+    ));
+  }
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MatchPreferencesCopyWith<$Res> get matchPreferences {
+    return $MatchPreferencesCopyWith<$Res>(_self.matchPreferences, (value) {
+      return _then(_self.copyWith(matchPreferences: value));
+    });
+  }
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $NotificationSettingsCopyWith<$Res> get notificationSettings {
+    return $NotificationSettingsCopyWith<$Res>(_self.notificationSettings,
+        (value) {
+      return _then(_self.copyWith(notificationSettings: value));
+    });
+  }
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PrivacySettingsCopyWith<$Res> get privacySettings {
+    return $PrivacySettingsCopyWith<$Res>(_self.privacySettings, (value) {
+      return _then(_self.copyWith(privacySettings: value));
+    });
+  }
+}
+
+// dart format on

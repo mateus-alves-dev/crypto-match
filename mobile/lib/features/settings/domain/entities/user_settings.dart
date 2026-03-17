@@ -4,7 +4,7 @@ part 'user_settings.freezed.dart';
 part 'user_settings.g.dart';
 
 @freezed
-class MatchPreferences with _$MatchPreferences {
+abstract class MatchPreferences with _$MatchPreferences {
   const factory MatchPreferences({
     @Default(50) int maxDistanceKm,
     @Default(18) int minAge,
@@ -17,7 +17,7 @@ class MatchPreferences with _$MatchPreferences {
 }
 
 @freezed
-class NotificationSettings with _$NotificationSettings {
+abstract class NotificationSettings with _$NotificationSettings {
   const factory NotificationSettings({
     @Default(true) bool newMatches,
     @Default(true) bool newMessages,
@@ -30,7 +30,7 @@ class NotificationSettings with _$NotificationSettings {
 }
 
 @freezed
-class PrivacySettings with _$PrivacySettings {
+abstract class PrivacySettings with _$PrivacySettings {
   const factory PrivacySettings({
     @Default(true) bool showOnlineStatus,
     @Default(true) bool showDistance,
@@ -42,7 +42,7 @@ class PrivacySettings with _$PrivacySettings {
 }
 
 @freezed
-class UserSettings with _$UserSettings {
+abstract class UserSettings with _$UserSettings {
   const factory UserSettings({
     required MatchPreferences matchPreferences,
     required NotificationSettings notificationSettings,

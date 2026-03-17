@@ -1,6 +1,10 @@
 import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/presentation/cubit/reward_actions_cubit.dart';
 import 'package:crypto_match/features/token/presentation/cubit/reward_actions_state.dart';
+import 'package:crypto_match/features/token/presentation/cubit/streak_cubit.dart';
+import 'package:crypto_match/features/token/presentation/cubit/streak_state.dart';
+import 'package:crypto_match/features/token/presentation/widgets/streak_counter_widget.dart';
+import 'package:crypto_match/features/token/presentation/widgets/streak_shield_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +26,32 @@ class _RewardActionsPageState extends State<RewardActionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Ganhar Tokens')),
-      body: BlocConsumer<RewardActionsCubit, RewardActionsState>(
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<StreakCubit, StreakState>(
+            listener: (context, state) {
+              state.whenOrNull(
+                loaded: (info) {
+                  if (info.streakAtRisk) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (context.mounted) {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (_) => BlocProvider.value(
+                            value: context.read<StreakCubit>(),
+                            child: const StreakShieldDialog(),
+                          ),
+                        );
+                      }
+                    });
+                  }
+                },
+              );
+            },
+          ),
+        ],
+        child: BlocConsumer<RewardActionsCubit, RewardActionsState>(
         listener: (context, state) {
           state.whenOrNull(
             claimSuccess: (_, earnedAmount) {
@@ -48,12 +77,12 @@ class _RewardActionsPageState extends State<RewardActionsPage> {
         builder: (context, state) => state.when(
           initial: () => const SizedBox.shrink(),
           loading: () => const Center(child: CircularProgressIndicator()),
-          loaded: (actions) => _ActionsList(actions: actions),
+          loaded: (actions) => _ActionsBody(actions: actions),
           claiming: (actions, claimingId) =>
-              _ActionsList(actions: actions, claimingActionId: claimingId),
-          claimSuccess: (actions, _) => _ActionsList(actions: actions),
+              _ActionsBody(actions: actions, claimingActionId: claimingId),
+          claimSuccess: (actions, _) => _ActionsBody(actions: actions),
           failure: (message, actions) => actions != null && actions.isNotEmpty
-              ? _ActionsList(actions: actions)
+              ? _ActionsBody(actions: actions)
               : _ErrorView(
                   message: message,
                   onRetry: () =>
@@ -61,6 +90,33 @@ class _RewardActionsPageState extends State<RewardActionsPage> {
                 ),
         ),
       ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Actions body (streak banner + list)
+// ---------------------------------------------------------------------------
+
+class _ActionsBody extends StatelessWidget {
+  const _ActionsBody({required this.actions, this.claimingActionId});
+
+  final List<TokenAction> actions;
+  final String? claimingActionId;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const StreakCounterWidget(),
+        Expanded(
+          child: _ActionsList(
+            actions: actions,
+            claimingActionId: claimingActionId,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -245,6 +301,7 @@ class _ActionCard extends StatelessWidget {
         TokenActionType.dailyCheckin => Icons.calendar_today_rounded,
         TokenActionType.completeProfile => Icons.person_rounded,
         TokenActionType.inviteFriend => Icons.group_add_rounded,
+        TokenActionType.streakShield => Icons.shield_rounded,
       };
 
   void _onClaim(BuildContext context) {
@@ -256,6 +313,8 @@ class _ActionCard extends StatelessWidget {
         cubit.claimCompleteProfile();
       case TokenActionType.inviteFriend:
         _showInviteDialog(context, cubit);
+      case TokenActionType.streakShield:
+        break; // managed by StreakCubit, not RewardActionsCubit
     }
   }
 

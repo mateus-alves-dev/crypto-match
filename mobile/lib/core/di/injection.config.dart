@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -76,6 +76,8 @@ import 'package:crypto_match/features/token/domain/use_cases/token_use_cases.dar
     as _i833;
 import 'package:crypto_match/features/token/presentation/cubit/reward_actions_cubit.dart'
     as _i312;
+import 'package:crypto_match/features/token/presentation/cubit/streak_cubit.dart'
+    as _i823;
 import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart'
     as _i947;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -102,57 +104,32 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i269.ChatRepository>(() => _i74.MockChatRepositoryImpl());
     gh.lazySingleton<_i1050.MatchRepository>(
         () => _i1067.MockMatchRepositoryImpl());
+    gh.singleton<_i53.ApiClient>(
+        () => _i53.ApiClient(gh<_i558.FlutterSecureStorage>()));
     gh.lazySingleton<_i864.SettingsRepository>(
         () => _i954.MockSettingsRepositoryImpl());
     gh.lazySingleton<_i593.TokenRepository>(
         () => _i920.MockTokenRepositoryImpl());
+    gh.factory<_i156.AuthRemoteDataSource>(
+        () => _i156.AuthRemoteDataSource(gh<_i53.ApiClient>()));
+    gh.factory<_i173.ChatRemoteDataSource>(
+        () => _i173.ChatRemoteDataSource(gh<_i53.ApiClient>()));
+    gh.factory<_i627.MatchRemoteDataSource>(
+        () => _i627.MatchRemoteDataSource(gh<_i53.ApiClient>()));
+    gh.factory<_i706.ProfileRemoteDataSource>(
+        () => _i706.ProfileRemoteDataSource(gh<_i53.ApiClient>()));
+    gh.factory<_i98.SettingsRemoteDataSource>(
+        () => _i98.SettingsRemoteDataSource(gh<_i53.ApiClient>()));
+    gh.factory<_i4.TokenRemoteDataSource>(
+        () => _i4.TokenRemoteDataSource(gh<_i53.ApiClient>()));
     gh.lazySingleton<_i360.ProfileRepository>(
         () => _i841.MockProfileRepositoryImpl());
-    gh.factory<_i676.GetConversationsUseCase>(
-        () => _i676.GetConversationsUseCase(gh<_i269.ChatRepository>()));
-    gh.factory<_i676.GetMessagesUseCase>(
-        () => _i676.GetMessagesUseCase(gh<_i269.ChatRepository>()));
-    gh.factory<_i676.SendMessageUseCase>(
-        () => _i676.SendMessageUseCase(gh<_i269.ChatRepository>()));
     gh.factory<_i825.LoginUseCase>(
         () => _i825.LoginUseCase(gh<_i197.AuthRepository>()));
     gh.factory<_i825.RegisterUseCase>(
         () => _i825.RegisterUseCase(gh<_i197.AuthRepository>()));
     gh.factory<_i825.GetMeUseCase>(
         () => _i825.GetMeUseCase(gh<_i197.AuthRepository>()));
-    gh.factory<_i698.ConversationsCubit>(
-        () => _i698.ConversationsCubit(gh<_i676.GetConversationsUseCase>()));
-    gh.factory<_i722.GetMyProfileUseCase>(
-        () => _i722.GetMyProfileUseCase(gh<_i360.ProfileRepository>()));
-    gh.factory<_i722.UpdateMyProfileUseCase>(
-        () => _i722.UpdateMyProfileUseCase(gh<_i360.ProfileRepository>()));
-    gh.singleton<_i53.ApiClient>(
-        () => _i53.ApiClient(gh<_i558.FlutterSecureStorage>()));
-    gh.factory<_i795.GetUserSettingsUseCase>(
-        () => _i795.GetUserSettingsUseCase(gh<_i864.SettingsRepository>()));
-    gh.factory<_i795.UpdateMatchPreferencesUseCase>(() =>
-        _i795.UpdateMatchPreferencesUseCase(gh<_i864.SettingsRepository>()));
-    gh.factory<_i795.UpdateNotificationSettingsUseCase>(() =>
-        _i795.UpdateNotificationSettingsUseCase(
-            gh<_i864.SettingsRepository>()));
-    gh.factory<_i795.UpdatePrivacySettingsUseCase>(() =>
-        _i795.UpdatePrivacySettingsUseCase(gh<_i864.SettingsRepository>()));
-    gh.factory<_i795.DeleteAccountUseCase>(
-        () => _i795.DeleteAccountUseCase(gh<_i864.SettingsRepository>()));
-    gh.factory<_i41.ProfileCubit>(() => _i41.ProfileCubit(
-          gh<_i722.GetMyProfileUseCase>(),
-          gh<_i722.UpdateMyProfileUseCase>(),
-        ));
-    gh.factory<_i293.MessagesCubit>(() => _i293.MessagesCubit(
-          gh<_i676.GetMessagesUseCase>(),
-          gh<_i676.SendMessageUseCase>(),
-        ));
-    gh.factory<_i1051.GetMatchFeedUseCase>(
-        () => _i1051.GetMatchFeedUseCase(gh<_i1050.MatchRepository>()));
-    gh.factory<_i1051.SwipeUseCase>(
-        () => _i1051.SwipeUseCase(gh<_i1050.MatchRepository>()));
-    gh.factory<_i1051.GetMatchesUseCase>(
-        () => _i1051.GetMatchesUseCase(gh<_i1050.MatchRepository>()));
     gh.factory<_i833.GetTokenBalanceUseCase>(
         () => _i833.GetTokenBalanceUseCase(gh<_i593.TokenRepository>()));
     gh.factory<_i833.GetTokenHistoryUseCase>(
@@ -165,6 +142,69 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i833.CompleteProfileActionUseCase(gh<_i593.TokenRepository>()));
     gh.factory<_i833.InviteFriendUseCase>(
         () => _i833.InviteFriendUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.GetStreakInfoUseCase>(
+        () => _i833.GetStreakInfoUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.UseStreakShieldUseCase>(
+        () => _i833.UseStreakShieldUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i823.StreakCubit>(() => _i823.StreakCubit(
+          gh<_i833.GetStreakInfoUseCase>(),
+          gh<_i833.UseStreakShieldUseCase>(),
+        ));
+    gh.factory<_i1051.GetMatchFeedUseCase>(
+        () => _i1051.GetMatchFeedUseCase(gh<_i1050.MatchRepository>()));
+    gh.factory<_i1051.SwipeUseCase>(
+        () => _i1051.SwipeUseCase(gh<_i1050.MatchRepository>()));
+    gh.factory<_i1051.GetMatchesUseCase>(
+        () => _i1051.GetMatchesUseCase(gh<_i1050.MatchRepository>()));
+    gh.factory<_i12.MatchesListCubit>(
+        () => _i12.MatchesListCubit(gh<_i1051.GetMatchesUseCase>()));
+    gh.factory<_i676.GetConversationsUseCase>(
+        () => _i676.GetConversationsUseCase(gh<_i269.ChatRepository>()));
+    gh.factory<_i676.GetMessagesUseCase>(
+        () => _i676.GetMessagesUseCase(gh<_i269.ChatRepository>()));
+    gh.factory<_i676.SendMessageUseCase>(
+        () => _i676.SendMessageUseCase(gh<_i269.ChatRepository>()));
+    gh.factory<_i795.GetUserSettingsUseCase>(
+        () => _i795.GetUserSettingsUseCase(gh<_i864.SettingsRepository>()));
+    gh.factory<_i795.UpdateMatchPreferencesUseCase>(() =>
+        _i795.UpdateMatchPreferencesUseCase(gh<_i864.SettingsRepository>()));
+    gh.factory<_i795.UpdateNotificationSettingsUseCase>(() =>
+        _i795.UpdateNotificationSettingsUseCase(
+            gh<_i864.SettingsRepository>()));
+    gh.factory<_i795.UpdatePrivacySettingsUseCase>(() =>
+        _i795.UpdatePrivacySettingsUseCase(gh<_i864.SettingsRepository>()));
+    gh.factory<_i795.DeleteAccountUseCase>(
+        () => _i795.DeleteAccountUseCase(gh<_i864.SettingsRepository>()));
+    gh.factory<_i312.RewardActionsCubit>(() => _i312.RewardActionsCubit(
+          gh<_i833.GetRewardActionsUseCase>(),
+          gh<_i833.DailyCheckinUseCase>(),
+          gh<_i833.CompleteProfileActionUseCase>(),
+          gh<_i833.InviteFriendUseCase>(),
+        ));
+    gh.factory<_i947.TokenCubit>(() => _i947.TokenCubit(
+          gh<_i833.GetTokenBalanceUseCase>(),
+          gh<_i833.GetTokenHistoryUseCase>(),
+          gh<_i833.DailyCheckinUseCase>(),
+        ));
+    gh.factory<_i293.MessagesCubit>(() => _i293.MessagesCubit(
+          gh<_i676.GetMessagesUseCase>(),
+          gh<_i676.SendMessageUseCase>(),
+        ));
+    gh.factory<_i212.AuthCubit>(() => _i212.AuthCubit(
+          gh<_i825.LoginUseCase>(),
+          gh<_i825.RegisterUseCase>(),
+          gh<_i825.GetMeUseCase>(),
+        ));
+    gh.factory<_i722.GetMyProfileUseCase>(
+        () => _i722.GetMyProfileUseCase(gh<_i360.ProfileRepository>()));
+    gh.factory<_i722.UpdateMyProfileUseCase>(
+        () => _i722.UpdateMyProfileUseCase(gh<_i360.ProfileRepository>()));
+    gh.factory<_i498.MatchCubit>(() => _i498.MatchCubit(
+          gh<_i1051.GetMatchFeedUseCase>(),
+          gh<_i1051.SwipeUseCase>(),
+        ));
+    gh.factory<_i698.ConversationsCubit>(
+        () => _i698.ConversationsCubit(gh<_i676.GetConversationsUseCase>()));
     gh.factory<_i296.SettingsCubit>(() => _i296.SettingsCubit(
           gh<_i795.GetUserSettingsUseCase>(),
           gh<_i795.UpdateMatchPreferencesUseCase>(),
@@ -172,39 +212,9 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i795.UpdatePrivacySettingsUseCase>(),
           gh<_i795.DeleteAccountUseCase>(),
         ));
-    gh.factory<_i212.AuthCubit>(() => _i212.AuthCubit(
-          gh<_i825.LoginUseCase>(),
-          gh<_i825.RegisterUseCase>(),
-          gh<_i825.GetMeUseCase>(),
-        ));
-    gh.factory<_i12.MatchesListCubit>(
-        () => _i12.MatchesListCubit(gh<_i1051.GetMatchesUseCase>()));
-    gh.factory<_i4.TokenRemoteDataSource>(
-        () => _i4.TokenRemoteDataSource(gh<_i53.ApiClient>()));
-    gh.factory<_i156.AuthRemoteDataSource>(
-        () => _i156.AuthRemoteDataSource(gh<_i53.ApiClient>()));
-    gh.factory<_i627.MatchRemoteDataSource>(
-        () => _i627.MatchRemoteDataSource(gh<_i53.ApiClient>()));
-    gh.factory<_i706.ProfileRemoteDataSource>(
-        () => _i706.ProfileRemoteDataSource(gh<_i53.ApiClient>()));
-    gh.factory<_i173.ChatRemoteDataSource>(
-        () => _i173.ChatRemoteDataSource(gh<_i53.ApiClient>()));
-    gh.factory<_i98.SettingsRemoteDataSource>(
-        () => _i98.SettingsRemoteDataSource(gh<_i53.ApiClient>()));
-    gh.factory<_i498.MatchCubit>(() => _i498.MatchCubit(
-          gh<_i1051.GetMatchFeedUseCase>(),
-          gh<_i1051.SwipeUseCase>(),
-        ));
-    gh.factory<_i947.TokenCubit>(() => _i947.TokenCubit(
-          gh<_i833.GetTokenBalanceUseCase>(),
-          gh<_i833.GetTokenHistoryUseCase>(),
-          gh<_i833.DailyCheckinUseCase>(),
-        ));
-    gh.factory<_i312.RewardActionsCubit>(() => _i312.RewardActionsCubit(
-          gh<_i833.GetRewardActionsUseCase>(),
-          gh<_i833.DailyCheckinUseCase>(),
-          gh<_i833.CompleteProfileActionUseCase>(),
-          gh<_i833.InviteFriendUseCase>(),
+    gh.factory<_i41.ProfileCubit>(() => _i41.ProfileCubit(
+          gh<_i722.GetMyProfileUseCase>(),
+          gh<_i722.UpdateMyProfileUseCase>(),
         ));
     return this;
   }

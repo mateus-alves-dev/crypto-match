@@ -1,4 +1,5 @@
 import 'package:crypto_match/core/error/failure.dart';
+import 'package:crypto_match/features/token/domain/entities/streak_info.dart';
 import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
 import 'package:crypto_match/features/token/domain/repositories/token_repository.dart';
@@ -60,4 +61,22 @@ class InviteFriendUseCase {
 
   Future<Either<Failure, void>> call({required String referralCode}) =>
       _repository.inviteFriend(referralCode: referralCode);
+}
+
+@injectable
+class GetStreakInfoUseCase {
+  const GetStreakInfoUseCase(this._repository);
+
+  final TokenRepository _repository;
+
+  Future<Either<Failure, StreakInfo>> call() => _repository.getStreakInfo();
+}
+
+@injectable
+class UseStreakShieldUseCase {
+  const UseStreakShieldUseCase(this._repository);
+
+  final TokenRepository _repository;
+
+  Future<Either<Failure, void>> call() => _repository.useStreakShield();
 }

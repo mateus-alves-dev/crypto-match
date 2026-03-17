@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,147 +9,31 @@ part of 'token_balance.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-TokenBalance _$TokenBalanceFromJson(Map<String, dynamic> json) {
-  return _TokenBalance.fromJson(json);
-}
 
 /// @nodoc
 mixin _$TokenBalance {
-  String get userId => throw _privateConstructorUsedError;
-  double get balance => throw _privateConstructorUsedError;
-  DateTime get updatedAt => throw _privateConstructorUsedError;
-
-  /// Serializes this TokenBalance to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get userId;
+  double get balance;
+  DateTime get updatedAt;
 
   /// Create a copy of TokenBalance
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $TokenBalanceCopyWith<TokenBalance> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$TokenBalanceCopyWithImpl<TokenBalance>(
+          this as TokenBalance, _$identity);
 
-/// @nodoc
-abstract class $TokenBalanceCopyWith<$Res> {
-  factory $TokenBalanceCopyWith(
-          TokenBalance value, $Res Function(TokenBalance) then) =
-      _$TokenBalanceCopyWithImpl<$Res, TokenBalance>;
-  @useResult
-  $Res call({String userId, double balance, DateTime updatedAt});
-}
-
-/// @nodoc
-class _$TokenBalanceCopyWithImpl<$Res, $Val extends TokenBalance>
-    implements $TokenBalanceCopyWith<$Res> {
-  _$TokenBalanceCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of TokenBalance
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userId = null,
-    Object? balance = null,
-    Object? updatedAt = null,
-  }) {
-    return _then(_value.copyWith(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      balance: null == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as double,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$TokenBalanceImplCopyWith<$Res>
-    implements $TokenBalanceCopyWith<$Res> {
-  factory _$$TokenBalanceImplCopyWith(
-          _$TokenBalanceImpl value, $Res Function(_$TokenBalanceImpl) then) =
-      __$$TokenBalanceImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String userId, double balance, DateTime updatedAt});
-}
-
-/// @nodoc
-class __$$TokenBalanceImplCopyWithImpl<$Res>
-    extends _$TokenBalanceCopyWithImpl<$Res, _$TokenBalanceImpl>
-    implements _$$TokenBalanceImplCopyWith<$Res> {
-  __$$TokenBalanceImplCopyWithImpl(
-      _$TokenBalanceImpl _value, $Res Function(_$TokenBalanceImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of TokenBalance
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userId = null,
-    Object? balance = null,
-    Object? updatedAt = null,
-  }) {
-    return _then(_$TokenBalanceImpl(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      balance: null == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as double,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$TokenBalanceImpl implements _TokenBalance {
-  const _$TokenBalanceImpl(
-      {required this.userId, required this.balance, required this.updatedAt});
-
-  factory _$TokenBalanceImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TokenBalanceImplFromJson(json);
-
-  @override
-  final String userId;
-  @override
-  final double balance;
-  @override
-  final DateTime updatedAt;
-
-  @override
-  String toString() {
-    return 'TokenBalance(userId: $userId, balance: $balance, updatedAt: $updatedAt)';
-  }
+  /// Serializes this TokenBalance to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TokenBalanceImpl &&
+            other is TokenBalance &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -160,149 +44,362 @@ class _$TokenBalanceImpl implements _TokenBalance {
   @override
   int get hashCode => Object.hash(runtimeType, userId, balance, updatedAt);
 
-  /// Create a copy of TokenBalance
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$TokenBalanceImplCopyWith<_$TokenBalanceImpl> get copyWith =>
-      __$$TokenBalanceImplCopyWithImpl<_$TokenBalanceImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TokenBalanceImplToJson(
-      this,
-    );
+  String toString() {
+    return 'TokenBalance(userId: $userId, balance: $balance, updatedAt: $updatedAt)';
   }
 }
 
-abstract class _TokenBalance implements TokenBalance {
-  const factory _TokenBalance(
-      {required final String userId,
-      required final double balance,
-      required final DateTime updatedAt}) = _$TokenBalanceImpl;
+/// @nodoc
+abstract mixin class $TokenBalanceCopyWith<$Res> {
+  factory $TokenBalanceCopyWith(
+          TokenBalance value, $Res Function(TokenBalance) _then) =
+      _$TokenBalanceCopyWithImpl;
+  @useResult
+  $Res call({String userId, double balance, DateTime updatedAt});
+}
 
-  factory _TokenBalance.fromJson(Map<String, dynamic> json) =
-      _$TokenBalanceImpl.fromJson;
+/// @nodoc
+class _$TokenBalanceCopyWithImpl<$Res> implements $TokenBalanceCopyWith<$Res> {
+  _$TokenBalanceCopyWithImpl(this._self, this._then);
+
+  final TokenBalance _self;
+  final $Res Function(TokenBalance) _then;
+
+  /// Create a copy of TokenBalance
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = null,
+    Object? balance = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_self.copyWith(
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      balance: null == balance
+          ? _self.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      updatedAt: null == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [TokenBalance].
+extension TokenBalancePatterns on TokenBalance {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_TokenBalance value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TokenBalance() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_TokenBalance value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TokenBalance():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_TokenBalance value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TokenBalance() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String userId, double balance, DateTime updatedAt)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TokenBalance() when $default != null:
+        return $default(_that.userId, _that.balance, _that.updatedAt);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String userId, double balance, DateTime updatedAt)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TokenBalance():
+        return $default(_that.userId, _that.balance, _that.updatedAt);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String userId, double balance, DateTime updatedAt)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TokenBalance() when $default != null:
+        return $default(_that.userId, _that.balance, _that.updatedAt);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _TokenBalance implements TokenBalance {
+  const _TokenBalance(
+      {required this.userId, required this.balance, required this.updatedAt});
+  factory _TokenBalance.fromJson(Map<String, dynamic> json) =>
+      _$TokenBalanceFromJson(json);
 
   @override
-  String get userId;
+  final String userId;
   @override
-  double get balance;
+  final double balance;
   @override
-  DateTime get updatedAt;
+  final DateTime updatedAt;
 
   /// Create a copy of TokenBalance
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TokenBalanceImplCopyWith<_$TokenBalanceImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$TokenBalanceCopyWith<_TokenBalance> get copyWith =>
+      __$TokenBalanceCopyWithImpl<_TokenBalance>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$TokenBalanceToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _TokenBalance &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, userId, balance, updatedAt);
+
+  @override
+  String toString() {
+    return 'TokenBalance(userId: $userId, balance: $balance, updatedAt: $updatedAt)';
+  }
 }
 
-TokenTransaction _$TokenTransactionFromJson(Map<String, dynamic> json) {
-  return _TokenTransaction.fromJson(json);
+/// @nodoc
+abstract mixin class _$TokenBalanceCopyWith<$Res>
+    implements $TokenBalanceCopyWith<$Res> {
+  factory _$TokenBalanceCopyWith(
+          _TokenBalance value, $Res Function(_TokenBalance) _then) =
+      __$TokenBalanceCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String userId, double balance, DateTime updatedAt});
+}
+
+/// @nodoc
+class __$TokenBalanceCopyWithImpl<$Res>
+    implements _$TokenBalanceCopyWith<$Res> {
+  __$TokenBalanceCopyWithImpl(this._self, this._then);
+
+  final _TokenBalance _self;
+  final $Res Function(_TokenBalance) _then;
+
+  /// Create a copy of TokenBalance
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? userId = null,
+    Object? balance = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(_TokenBalance(
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      balance: null == balance
+          ? _self.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      updatedAt: null == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
 }
 
 /// @nodoc
 mixin _$TokenTransaction {
-  String get id => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  TokenTransactionType get type => throw _privateConstructorUsedError;
-  double get amount => throw _privateConstructorUsedError;
-  String get reason => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get metadata => throw _privateConstructorUsedError;
-
-  /// Serializes this TokenTransaction to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get id;
+  String get userId;
+  TokenTransactionType get type;
+  double get amount;
+  String get reason;
+  DateTime get createdAt;
+  Map<String, dynamic>? get metadata;
 
   /// Create a copy of TokenTransaction
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $TokenTransactionCopyWith<TokenTransaction> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $TokenTransactionCopyWith<$Res> {
-  factory $TokenTransactionCopyWith(
-          TokenTransaction value, $Res Function(TokenTransaction) then) =
-      _$TokenTransactionCopyWithImpl<$Res, TokenTransaction>;
-  @useResult
-  $Res call(
-      {String id,
-      String userId,
-      TokenTransactionType type,
-      double amount,
-      String reason,
-      DateTime createdAt,
-      Map<String, dynamic>? metadata});
-}
-
-/// @nodoc
-class _$TokenTransactionCopyWithImpl<$Res, $Val extends TokenTransaction>
-    implements $TokenTransactionCopyWith<$Res> {
-  _$TokenTransactionCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of TokenTransaction
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $TokenTransactionCopyWith<TokenTransaction> get copyWith =>
+      _$TokenTransactionCopyWithImpl<TokenTransaction>(
+          this as TokenTransaction, _$identity);
+
+  /// Serializes this TokenTransaction to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? userId = null,
-    Object? type = null,
-    Object? amount = null,
-    Object? reason = null,
-    Object? createdAt = null,
-    Object? metadata = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as TokenTransactionType,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as double,
-      reason: null == reason
-          ? _value.reason
-          : reason // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      metadata: freezed == metadata
-          ? _value.metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is TokenTransaction &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.reason, reason) || other.reason == reason) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            const DeepCollectionEquality().equals(other.metadata, metadata));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, userId, type, amount, reason,
+      createdAt, const DeepCollectionEquality().hash(metadata));
+
+  @override
+  String toString() {
+    return 'TokenTransaction(id: $id, userId: $userId, type: $type, amount: $amount, reason: $reason, createdAt: $createdAt, metadata: $metadata)';
   }
 }
 
 /// @nodoc
-abstract class _$$TokenTransactionImplCopyWith<$Res>
-    implements $TokenTransactionCopyWith<$Res> {
-  factory _$$TokenTransactionImplCopyWith(_$TokenTransactionImpl value,
-          $Res Function(_$TokenTransactionImpl) then) =
-      __$$TokenTransactionImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $TokenTransactionCopyWith<$Res> {
+  factory $TokenTransactionCopyWith(
+          TokenTransaction value, $Res Function(TokenTransaction) _then) =
+      _$TokenTransactionCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -315,12 +412,12 @@ abstract class _$$TokenTransactionImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TokenTransactionImplCopyWithImpl<$Res>
-    extends _$TokenTransactionCopyWithImpl<$Res, _$TokenTransactionImpl>
-    implements _$$TokenTransactionImplCopyWith<$Res> {
-  __$$TokenTransactionImplCopyWithImpl(_$TokenTransactionImpl _value,
-      $Res Function(_$TokenTransactionImpl) _then)
-      : super(_value, _then);
+class _$TokenTransactionCopyWithImpl<$Res>
+    implements $TokenTransactionCopyWith<$Res> {
+  _$TokenTransactionCopyWithImpl(this._self, this._then);
+
+  final TokenTransaction _self;
+  final $Res Function(TokenTransaction) _then;
 
   /// Create a copy of TokenTransaction
   /// with the given fields replaced by the non-null parameter values.
@@ -335,43 +432,227 @@ class __$$TokenTransactionImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? metadata = freezed,
   }) {
-    return _then(_$TokenTransactionImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       userId: null == userId
-          ? _value.userId
+          ? _self.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as TokenTransactionType,
       amount: null == amount
-          ? _value.amount
+          ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
       reason: null == reason
-          ? _value.reason
+          ? _self.reason
           : reason // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       metadata: freezed == metadata
-          ? _value._metadata
+          ? _self.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [TokenTransaction].
+extension TokenTransactionPatterns on TokenTransaction {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_TokenTransaction value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TokenTransaction() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_TokenTransaction value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TokenTransaction():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_TokenTransaction value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TokenTransaction() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String id,
+            String userId,
+            TokenTransactionType type,
+            double amount,
+            String reason,
+            DateTime createdAt,
+            Map<String, dynamic>? metadata)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TokenTransaction() when $default != null:
+        return $default(_that.id, _that.userId, _that.type, _that.amount,
+            _that.reason, _that.createdAt, _that.metadata);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String id,
+            String userId,
+            TokenTransactionType type,
+            double amount,
+            String reason,
+            DateTime createdAt,
+            Map<String, dynamic>? metadata)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TokenTransaction():
+        return $default(_that.id, _that.userId, _that.type, _that.amount,
+            _that.reason, _that.createdAt, _that.metadata);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String id,
+            String userId,
+            TokenTransactionType type,
+            double amount,
+            String reason,
+            DateTime createdAt,
+            Map<String, dynamic>? metadata)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TokenTransaction() when $default != null:
+        return $default(_that.id, _that.userId, _that.type, _that.amount,
+            _that.reason, _that.createdAt, _that.metadata);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$TokenTransactionImpl implements _TokenTransaction {
-  const _$TokenTransactionImpl(
+class _TokenTransaction implements TokenTransaction {
+  const _TokenTransaction(
       {required this.id,
       required this.userId,
       required this.type,
@@ -380,9 +661,8 @@ class _$TokenTransactionImpl implements _TokenTransaction {
       required this.createdAt,
       final Map<String, dynamic>? metadata})
       : _metadata = metadata;
-
-  factory _$TokenTransactionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TokenTransactionImplFromJson(json);
+  factory _TokenTransaction.fromJson(Map<String, dynamic> json) =>
+      _$TokenTransactionFromJson(json);
 
   @override
   final String id;
@@ -406,16 +686,26 @@ class _$TokenTransactionImpl implements _TokenTransaction {
     return EqualUnmodifiableMapView(value);
   }
 
+  /// Create a copy of TokenTransaction
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'TokenTransaction(id: $id, userId: $userId, type: $type, amount: $amount, reason: $reason, createdAt: $createdAt, metadata: $metadata)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$TokenTransactionCopyWith<_TokenTransaction> get copyWith =>
+      __$TokenTransactionCopyWithImpl<_TokenTransaction>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$TokenTransactionToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TokenTransactionImpl &&
+            other is _TokenTransaction &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.type, type) || other.type == type) &&
@@ -431,55 +721,82 @@ class _$TokenTransactionImpl implements _TokenTransaction {
   int get hashCode => Object.hash(runtimeType, id, userId, type, amount, reason,
       createdAt, const DeepCollectionEquality().hash(_metadata));
 
-  /// Create a copy of TokenTransaction
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$TokenTransactionImplCopyWith<_$TokenTransactionImpl> get copyWith =>
-      __$$TokenTransactionImplCopyWithImpl<_$TokenTransactionImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TokenTransactionImplToJson(
-      this,
-    );
+  String toString() {
+    return 'TokenTransaction(id: $id, userId: $userId, type: $type, amount: $amount, reason: $reason, createdAt: $createdAt, metadata: $metadata)';
   }
 }
 
-abstract class _TokenTransaction implements TokenTransaction {
-  const factory _TokenTransaction(
-      {required final String id,
-      required final String userId,
-      required final TokenTransactionType type,
-      required final double amount,
-      required final String reason,
-      required final DateTime createdAt,
-      final Map<String, dynamic>? metadata}) = _$TokenTransactionImpl;
+/// @nodoc
+abstract mixin class _$TokenTransactionCopyWith<$Res>
+    implements $TokenTransactionCopyWith<$Res> {
+  factory _$TokenTransactionCopyWith(
+          _TokenTransaction value, $Res Function(_TokenTransaction) _then) =
+      __$TokenTransactionCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String userId,
+      TokenTransactionType type,
+      double amount,
+      String reason,
+      DateTime createdAt,
+      Map<String, dynamic>? metadata});
+}
 
-  factory _TokenTransaction.fromJson(Map<String, dynamic> json) =
-      _$TokenTransactionImpl.fromJson;
+/// @nodoc
+class __$TokenTransactionCopyWithImpl<$Res>
+    implements _$TokenTransactionCopyWith<$Res> {
+  __$TokenTransactionCopyWithImpl(this._self, this._then);
 
-  @override
-  String get id;
-  @override
-  String get userId;
-  @override
-  TokenTransactionType get type;
-  @override
-  double get amount;
-  @override
-  String get reason;
-  @override
-  DateTime get createdAt;
-  @override
-  Map<String, dynamic>? get metadata;
+  final _TokenTransaction _self;
+  final $Res Function(_TokenTransaction) _then;
 
   /// Create a copy of TokenTransaction
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TokenTransactionImplCopyWith<_$TokenTransactionImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? userId = null,
+    Object? type = null,
+    Object? amount = null,
+    Object? reason = null,
+    Object? createdAt = null,
+    Object? metadata = freezed,
+  }) {
+    return _then(_TokenTransaction(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as TokenTransactionType,
+      amount: null == amount
+          ? _self.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      reason: null == reason
+          ? _self.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      metadata: freezed == metadata
+          ? _self._metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+    ));
+  }
 }
+
+// dart format on

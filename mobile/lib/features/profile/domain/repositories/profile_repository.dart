@@ -9,6 +9,7 @@ abstract class ProfileRepository {
     String? displayName,
     String? bio,
     List<String>? cryptoInterests,
+    List<String>? personaTags,
     int? age,
     String? location,
   });

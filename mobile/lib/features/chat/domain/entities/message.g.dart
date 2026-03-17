@@ -6,8 +6,7 @@ part of 'message.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
-    _$MessageImpl(
+_Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
       id: json['id'] as String,
       conversationId: json['conversationId'] as String,
       senderId: json['senderId'] as String,
@@ -16,8 +15,7 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
       isRead: json['isRead'] as bool?,
     );
 
-Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
       'id': instance.id,
       'conversationId': instance.conversationId,
       'senderId': instance.senderId,
@@ -26,8 +24,8 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
       'isRead': instance.isRead,
     };
 
-_$ConversationImpl _$$ConversationImplFromJson(Map<String, dynamic> json) =>
-    _$ConversationImpl(
+_Conversation _$ConversationFromJson(Map<String, dynamic> json) =>
+    _Conversation(
       id: json['id'] as String,
       participantId: json['participantId'] as String,
       participantName: json['participantName'] as String,
@@ -39,7 +37,7 @@ _$ConversationImpl _$$ConversationImplFromJson(Map<String, dynamic> json) =>
       unreadCount: (json['unreadCount'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$$ConversationImplToJson(_$ConversationImpl instance) =>
+Map<String, dynamic> _$ConversationToJson(_Conversation instance) =>
     <String, dynamic>{
       'id': instance.id,
       'participantId': instance.participantId,

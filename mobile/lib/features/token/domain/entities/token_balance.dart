@@ -9,7 +9,7 @@ enum TokenTransactionType {
 }
 
 @freezed
-class TokenBalance with _$TokenBalance {
+abstract class TokenBalance with _$TokenBalance {
   const factory TokenBalance({
     required String userId,
     required double balance,
@@ -21,7 +21,7 @@ class TokenBalance with _$TokenBalance {
 }
 
 @freezed
-class TokenTransaction with _$TokenTransaction {
+abstract class TokenTransaction with _$TokenTransaction {
   const factory TokenTransaction({
     required String id,
     required String userId,

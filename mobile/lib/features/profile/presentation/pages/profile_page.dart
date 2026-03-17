@@ -1,4 +1,5 @@
 import 'package:crypto_match/core/router/app_router.dart';
+import 'package:crypto_match/features/profile/domain/entities/crypto_persona.dart';
 import 'package:crypto_match/features/profile/domain/entities/profile.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_state.dart';
@@ -145,6 +146,41 @@ class _ProfileHeader extends StatelessWidget {
               ].join(' · '),
               style: const TextStyle(color: Colors.white54, fontSize: 14),
               textAlign: TextAlign.center,
+            ),
+          ],
+          if (profile.personaTags != null &&
+              profile.personaTags!.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              alignment: WrapAlignment.center,
+              children: profile.personaTags!
+                  .map(
+                    (key) => Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFB74D).withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color:
+                              const Color(0xFFFFB74D).withValues(alpha: 0.5),
+                        ),
+                      ),
+                      child: Text(
+                        CryptoPersona.labelFor(key),
+                        style: const TextStyle(
+                          color: Color(0xFFFFB74D),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ],
           if (profile.bio != null && profile.bio!.isNotEmpty) ...[

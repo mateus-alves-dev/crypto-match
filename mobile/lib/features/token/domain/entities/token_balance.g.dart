@@ -6,23 +6,22 @@ part of 'token_balance.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TokenBalanceImpl _$$TokenBalanceImplFromJson(Map<String, dynamic> json) =>
-    _$TokenBalanceImpl(
+_TokenBalance _$TokenBalanceFromJson(Map<String, dynamic> json) =>
+    _TokenBalance(
       userId: json['userId'] as String,
       balance: (json['balance'] as num).toDouble(),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
-Map<String, dynamic> _$$TokenBalanceImplToJson(_$TokenBalanceImpl instance) =>
+Map<String, dynamic> _$TokenBalanceToJson(_TokenBalance instance) =>
     <String, dynamic>{
       'userId': instance.userId,
       'balance': instance.balance,
       'updatedAt': instance.updatedAt.toIso8601String(),
     };
 
-_$TokenTransactionImpl _$$TokenTransactionImplFromJson(
-        Map<String, dynamic> json) =>
-    _$TokenTransactionImpl(
+_TokenTransaction _$TokenTransactionFromJson(Map<String, dynamic> json) =>
+    _TokenTransaction(
       id: json['id'] as String,
       userId: json['userId'] as String,
       type: $enumDecode(_$TokenTransactionTypeEnumMap, json['type']),
@@ -32,8 +31,7 @@ _$TokenTransactionImpl _$$TokenTransactionImplFromJson(
       metadata: json['metadata'] as Map<String, dynamic>?,
     );
 
-Map<String, dynamic> _$$TokenTransactionImplToJson(
-        _$TokenTransactionImpl instance) =>
+Map<String, dynamic> _$TokenTransactionToJson(_TokenTransaction instance) =>
     <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,

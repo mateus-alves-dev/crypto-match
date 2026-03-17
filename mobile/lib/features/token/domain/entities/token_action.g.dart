@@ -6,8 +6,7 @@ part of 'token_action.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TokenActionImpl _$$TokenActionImplFromJson(Map<String, dynamic> json) =>
-    _$TokenActionImpl(
+_TokenAction _$TokenActionFromJson(Map<String, dynamic> json) => _TokenAction(
       id: json['id'] as String,
       type: $enumDecode(_$TokenActionTypeEnumMap, json['type']),
       title: json['title'] as String,
@@ -22,7 +21,7 @@ _$TokenActionImpl _$$TokenActionImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['completedAt'] as String),
     );
 
-Map<String, dynamic> _$$TokenActionImplToJson(_$TokenActionImpl instance) =>
+Map<String, dynamic> _$TokenActionToJson(_TokenAction instance) =>
     <String, dynamic>{
       'id': instance.id,
       'type': _$TokenActionTypeEnumMap[instance.type]!,
@@ -38,4 +37,5 @@ const _$TokenActionTypeEnumMap = {
   TokenActionType.dailyCheckin: 'dailyCheckin',
   TokenActionType.completeProfile: 'completeProfile',
   TokenActionType.inviteFriend: 'inviteFriend',
+  TokenActionType.streakShield: 'streakShield',
 };

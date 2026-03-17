@@ -21,6 +21,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     String? displayName,
     String? bio,
     List<String>? cryptoInterests,
+    List<String>? personaTags,
     int? age,
     String? location,
   }) =>
@@ -29,6 +30,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
           if (displayName != null) 'displayName': displayName,
           if (bio != null) 'bio': bio,
           if (cryptoInterests != null) 'cryptoInterests': cryptoInterests,
+          if (personaTags != null) 'personaTags': personaTags,
           if (age != null) 'age': age,
           if (location != null) 'location': location,
         }),

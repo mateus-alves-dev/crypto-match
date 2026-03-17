@@ -29,6 +29,7 @@ class MockProfileRepositoryImpl implements ProfileRepository {
     String? displayName,
     String? bio,
     List<String>? cryptoInterests,
+    List<String>? personaTags,
     int? age,
     String? location,
   }) async {
@@ -37,6 +38,7 @@ class MockProfileRepositoryImpl implements ProfileRepository {
       displayName: displayName ?? _profile.displayName,
       bio: bio ?? _profile.bio,
       cryptoInterests: cryptoInterests ?? _profile.cryptoInterests,
+      personaTags: personaTags ?? _profile.personaTags,
       age: age ?? _profile.age,
       location: location ?? _profile.location,
       updatedAt: DateTime.now(),

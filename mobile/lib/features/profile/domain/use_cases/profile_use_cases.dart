@@ -23,6 +23,7 @@ class UpdateMyProfileUseCase {
     String? displayName,
     String? bio,
     List<String>? cryptoInterests,
+    List<String>? personaTags,
     int? age,
     String? location,
   }) =>
@@ -30,6 +31,7 @@ class UpdateMyProfileUseCase {
         displayName: displayName,
         bio: bio,
         cryptoInterests: cryptoInterests,
+        personaTags: personaTags,
         age: age,
         location: location,
       );

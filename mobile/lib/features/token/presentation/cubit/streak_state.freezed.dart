@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'settings_state.dart';
+part of 'streak_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,11 +13,11 @@ part of 'settings_state.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$SettingsState {
+mixin _$StreakState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SettingsState);
+        (other.runtimeType == runtimeType && other is StreakState);
   }
 
   @override
@@ -25,17 +25,17 @@ mixin _$SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState()';
+    return 'StreakState()';
   }
 }
 
 /// @nodoc
-class $SettingsStateCopyWith<$Res> {
-  $SettingsStateCopyWith(SettingsState _, $Res Function(SettingsState) __);
+class $StreakStateCopyWith<$Res> {
+  $StreakStateCopyWith(StreakState _, $Res Function(StreakState) __);
 }
 
-/// Adds pattern-matching-related methods to [SettingsState].
-extension SettingsStatePatterns on SettingsState {
+/// Adds pattern-matching-related methods to [StreakState].
+extension StreakStatePatterns on StreakState {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -53,10 +53,9 @@ extension SettingsStatePatterns on SettingsState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
-    TResult Function(_Updating value)? updating,
-    TResult Function(_UpdateSuccess value)? updateSuccess,
+    TResult Function(_Shielding value)? shielding,
+    TResult Function(_ShieldSuccess value)? shieldSuccess,
     TResult Function(_Failure value)? failure,
-    TResult Function(_AccountDeleted value)? accountDeleted,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -67,14 +66,12 @@ extension SettingsStatePatterns on SettingsState {
         return loading(_that);
       case _Loaded() when loaded != null:
         return loaded(_that);
-      case _Updating() when updating != null:
-        return updating(_that);
-      case _UpdateSuccess() when updateSuccess != null:
-        return updateSuccess(_that);
+      case _Shielding() when shielding != null:
+        return shielding(_that);
+      case _ShieldSuccess() when shieldSuccess != null:
+        return shieldSuccess(_that);
       case _Failure() when failure != null:
         return failure(_that);
-      case _AccountDeleted() when accountDeleted != null:
-        return accountDeleted(_that);
       case _:
         return orElse();
     }
@@ -98,10 +95,9 @@ extension SettingsStatePatterns on SettingsState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Updating value) updating,
-    required TResult Function(_UpdateSuccess value) updateSuccess,
+    required TResult Function(_Shielding value) shielding,
+    required TResult Function(_ShieldSuccess value) shieldSuccess,
     required TResult Function(_Failure value) failure,
-    required TResult Function(_AccountDeleted value) accountDeleted,
   }) {
     final _that = this;
     switch (_that) {
@@ -111,14 +107,12 @@ extension SettingsStatePatterns on SettingsState {
         return loading(_that);
       case _Loaded():
         return loaded(_that);
-      case _Updating():
-        return updating(_that);
-      case _UpdateSuccess():
-        return updateSuccess(_that);
+      case _Shielding():
+        return shielding(_that);
+      case _ShieldSuccess():
+        return shieldSuccess(_that);
       case _Failure():
         return failure(_that);
-      case _AccountDeleted():
-        return accountDeleted(_that);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -141,10 +135,9 @@ extension SettingsStatePatterns on SettingsState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Updating value)? updating,
-    TResult? Function(_UpdateSuccess value)? updateSuccess,
+    TResult? Function(_Shielding value)? shielding,
+    TResult? Function(_ShieldSuccess value)? shieldSuccess,
     TResult? Function(_Failure value)? failure,
-    TResult? Function(_AccountDeleted value)? accountDeleted,
   }) {
     final _that = this;
     switch (_that) {
@@ -154,14 +147,12 @@ extension SettingsStatePatterns on SettingsState {
         return loading(_that);
       case _Loaded() when loaded != null:
         return loaded(_that);
-      case _Updating() when updating != null:
-        return updating(_that);
-      case _UpdateSuccess() when updateSuccess != null:
-        return updateSuccess(_that);
+      case _Shielding() when shielding != null:
+        return shielding(_that);
+      case _ShieldSuccess() when shieldSuccess != null:
+        return shieldSuccess(_that);
       case _Failure() when failure != null:
         return failure(_that);
-      case _AccountDeleted() when accountDeleted != null:
-        return accountDeleted(_that);
       case _:
         return null;
     }
@@ -183,11 +174,10 @@ extension SettingsStatePatterns on SettingsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserSettings settings)? loaded,
-    TResult Function(UserSettings settings)? updating,
-    TResult Function(UserSettings settings)? updateSuccess,
-    TResult Function(String message)? failure,
-    TResult Function()? accountDeleted,
+    TResult Function(StreakInfo info)? loaded,
+    TResult Function(StreakInfo info)? shielding,
+    TResult Function(StreakInfo info)? shieldSuccess,
+    TResult Function(String message, StreakInfo? info)? failure,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -197,15 +187,13 @@ extension SettingsStatePatterns on SettingsState {
       case _Loading() when loading != null:
         return loading();
       case _Loaded() when loaded != null:
-        return loaded(_that.settings);
-      case _Updating() when updating != null:
-        return updating(_that.settings);
-      case _UpdateSuccess() when updateSuccess != null:
-        return updateSuccess(_that.settings);
+        return loaded(_that.info);
+      case _Shielding() when shielding != null:
+        return shielding(_that.info);
+      case _ShieldSuccess() when shieldSuccess != null:
+        return shieldSuccess(_that.info);
       case _Failure() when failure != null:
-        return failure(_that.message);
-      case _AccountDeleted() when accountDeleted != null:
-        return accountDeleted();
+        return failure(_that.message, _that.info);
       case _:
         return orElse();
     }
@@ -228,11 +216,10 @@ extension SettingsStatePatterns on SettingsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserSettings settings) loaded,
-    required TResult Function(UserSettings settings) updating,
-    required TResult Function(UserSettings settings) updateSuccess,
-    required TResult Function(String message) failure,
-    required TResult Function() accountDeleted,
+    required TResult Function(StreakInfo info) loaded,
+    required TResult Function(StreakInfo info) shielding,
+    required TResult Function(StreakInfo info) shieldSuccess,
+    required TResult Function(String message, StreakInfo? info) failure,
   }) {
     final _that = this;
     switch (_that) {
@@ -241,15 +228,13 @@ extension SettingsStatePatterns on SettingsState {
       case _Loading():
         return loading();
       case _Loaded():
-        return loaded(_that.settings);
-      case _Updating():
-        return updating(_that.settings);
-      case _UpdateSuccess():
-        return updateSuccess(_that.settings);
+        return loaded(_that.info);
+      case _Shielding():
+        return shielding(_that.info);
+      case _ShieldSuccess():
+        return shieldSuccess(_that.info);
       case _Failure():
-        return failure(_that.message);
-      case _AccountDeleted():
-        return accountDeleted();
+        return failure(_that.message, _that.info);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -271,11 +256,10 @@ extension SettingsStatePatterns on SettingsState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserSettings settings)? loaded,
-    TResult? Function(UserSettings settings)? updating,
-    TResult? Function(UserSettings settings)? updateSuccess,
-    TResult? Function(String message)? failure,
-    TResult? Function()? accountDeleted,
+    TResult? Function(StreakInfo info)? loaded,
+    TResult? Function(StreakInfo info)? shielding,
+    TResult? Function(StreakInfo info)? shieldSuccess,
+    TResult? Function(String message, StreakInfo? info)? failure,
   }) {
     final _that = this;
     switch (_that) {
@@ -284,15 +268,13 @@ extension SettingsStatePatterns on SettingsState {
       case _Loading() when loading != null:
         return loading();
       case _Loaded() when loaded != null:
-        return loaded(_that.settings);
-      case _Updating() when updating != null:
-        return updating(_that.settings);
-      case _UpdateSuccess() when updateSuccess != null:
-        return updateSuccess(_that.settings);
+        return loaded(_that.info);
+      case _Shielding() when shielding != null:
+        return shielding(_that.info);
+      case _ShieldSuccess() when shieldSuccess != null:
+        return shieldSuccess(_that.info);
       case _Failure() when failure != null:
-        return failure(_that.message);
-      case _AccountDeleted() when accountDeleted != null:
-        return accountDeleted();
+        return failure(_that.message, _that.info);
       case _:
         return null;
     }
@@ -301,7 +283,7 @@ extension SettingsStatePatterns on SettingsState {
 
 /// @nodoc
 
-class _Initial implements SettingsState {
+class _Initial implements StreakState {
   const _Initial();
 
   @override
@@ -315,13 +297,13 @@ class _Initial implements SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState.initial()';
+    return 'StreakState.initial()';
   }
 }
 
 /// @nodoc
 
-class _Loading implements SettingsState {
+class _Loading implements StreakState {
   const _Loading();
 
   @override
@@ -335,18 +317,18 @@ class _Loading implements SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState.loading()';
+    return 'StreakState.loading()';
   }
 }
 
 /// @nodoc
 
-class _Loaded implements SettingsState {
-  const _Loaded({required this.settings});
+class _Loaded implements StreakState {
+  const _Loaded({required this.info});
 
-  final UserSettings settings;
+  final StreakInfo info;
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -358,28 +340,27 @@ class _Loaded implements SettingsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Loaded &&
-            (identical(other.settings, settings) ||
-                other.settings == settings));
+            (identical(other.info, info) || other.info == info));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, settings);
+  int get hashCode => Object.hash(runtimeType, info);
 
   @override
   String toString() {
-    return 'SettingsState.loaded(settings: $settings)';
+    return 'StreakState.loaded(info: $info)';
   }
 }
 
 /// @nodoc
 abstract mixin class _$LoadedCopyWith<$Res>
-    implements $SettingsStateCopyWith<$Res> {
+    implements $StreakStateCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
       __$LoadedCopyWithImpl;
   @useResult
-  $Res call({UserSettings settings});
+  $Res call({StreakInfo info});
 
-  $UserSettingsCopyWith<$Res> get settings;
+  $StreakInfoCopyWith<$Res> get info;
 }
 
 /// @nodoc
@@ -389,191 +370,191 @@ class __$LoadedCopyWithImpl<$Res> implements _$LoadedCopyWith<$Res> {
   final _Loaded _self;
   final $Res Function(_Loaded) _then;
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? settings = null,
+    Object? info = null,
   }) {
     return _then(_Loaded(
-      settings: null == settings
-          ? _self.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as UserSettings,
+      info: null == info
+          ? _self.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as StreakInfo,
     ));
   }
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserSettingsCopyWith<$Res> get settings {
-    return $UserSettingsCopyWith<$Res>(_self.settings, (value) {
-      return _then(_self.copyWith(settings: value));
+  $StreakInfoCopyWith<$Res> get info {
+    return $StreakInfoCopyWith<$Res>(_self.info, (value) {
+      return _then(_self.copyWith(info: value));
     });
   }
 }
 
 /// @nodoc
 
-class _Updating implements SettingsState {
-  const _Updating({required this.settings});
+class _Shielding implements StreakState {
+  const _Shielding({required this.info});
 
-  final UserSettings settings;
+  final StreakInfo info;
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UpdatingCopyWith<_Updating> get copyWith =>
-      __$UpdatingCopyWithImpl<_Updating>(this, _$identity);
+  _$ShieldingCopyWith<_Shielding> get copyWith =>
+      __$ShieldingCopyWithImpl<_Shielding>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Updating &&
-            (identical(other.settings, settings) ||
-                other.settings == settings));
+            other is _Shielding &&
+            (identical(other.info, info) || other.info == info));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, settings);
+  int get hashCode => Object.hash(runtimeType, info);
 
   @override
   String toString() {
-    return 'SettingsState.updating(settings: $settings)';
+    return 'StreakState.shielding(info: $info)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$UpdatingCopyWith<$Res>
-    implements $SettingsStateCopyWith<$Res> {
-  factory _$UpdatingCopyWith(_Updating value, $Res Function(_Updating) _then) =
-      __$UpdatingCopyWithImpl;
+abstract mixin class _$ShieldingCopyWith<$Res>
+    implements $StreakStateCopyWith<$Res> {
+  factory _$ShieldingCopyWith(
+          _Shielding value, $Res Function(_Shielding) _then) =
+      __$ShieldingCopyWithImpl;
   @useResult
-  $Res call({UserSettings settings});
+  $Res call({StreakInfo info});
 
-  $UserSettingsCopyWith<$Res> get settings;
+  $StreakInfoCopyWith<$Res> get info;
 }
 
 /// @nodoc
-class __$UpdatingCopyWithImpl<$Res> implements _$UpdatingCopyWith<$Res> {
-  __$UpdatingCopyWithImpl(this._self, this._then);
+class __$ShieldingCopyWithImpl<$Res> implements _$ShieldingCopyWith<$Res> {
+  __$ShieldingCopyWithImpl(this._self, this._then);
 
-  final _Updating _self;
-  final $Res Function(_Updating) _then;
+  final _Shielding _self;
+  final $Res Function(_Shielding) _then;
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? settings = null,
+    Object? info = null,
   }) {
-    return _then(_Updating(
-      settings: null == settings
-          ? _self.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as UserSettings,
+    return _then(_Shielding(
+      info: null == info
+          ? _self.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as StreakInfo,
     ));
   }
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserSettingsCopyWith<$Res> get settings {
-    return $UserSettingsCopyWith<$Res>(_self.settings, (value) {
-      return _then(_self.copyWith(settings: value));
+  $StreakInfoCopyWith<$Res> get info {
+    return $StreakInfoCopyWith<$Res>(_self.info, (value) {
+      return _then(_self.copyWith(info: value));
     });
   }
 }
 
 /// @nodoc
 
-class _UpdateSuccess implements SettingsState {
-  const _UpdateSuccess({required this.settings});
+class _ShieldSuccess implements StreakState {
+  const _ShieldSuccess({required this.info});
 
-  final UserSettings settings;
+  final StreakInfo info;
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$UpdateSuccessCopyWith<_UpdateSuccess> get copyWith =>
-      __$UpdateSuccessCopyWithImpl<_UpdateSuccess>(this, _$identity);
+  _$ShieldSuccessCopyWith<_ShieldSuccess> get copyWith =>
+      __$ShieldSuccessCopyWithImpl<_ShieldSuccess>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UpdateSuccess &&
-            (identical(other.settings, settings) ||
-                other.settings == settings));
+            other is _ShieldSuccess &&
+            (identical(other.info, info) || other.info == info));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, settings);
+  int get hashCode => Object.hash(runtimeType, info);
 
   @override
   String toString() {
-    return 'SettingsState.updateSuccess(settings: $settings)';
+    return 'StreakState.shieldSuccess(info: $info)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$UpdateSuccessCopyWith<$Res>
-    implements $SettingsStateCopyWith<$Res> {
-  factory _$UpdateSuccessCopyWith(
-          _UpdateSuccess value, $Res Function(_UpdateSuccess) _then) =
-      __$UpdateSuccessCopyWithImpl;
+abstract mixin class _$ShieldSuccessCopyWith<$Res>
+    implements $StreakStateCopyWith<$Res> {
+  factory _$ShieldSuccessCopyWith(
+          _ShieldSuccess value, $Res Function(_ShieldSuccess) _then) =
+      __$ShieldSuccessCopyWithImpl;
   @useResult
-  $Res call({UserSettings settings});
+  $Res call({StreakInfo info});
 
-  $UserSettingsCopyWith<$Res> get settings;
+  $StreakInfoCopyWith<$Res> get info;
 }
 
 /// @nodoc
-class __$UpdateSuccessCopyWithImpl<$Res>
-    implements _$UpdateSuccessCopyWith<$Res> {
-  __$UpdateSuccessCopyWithImpl(this._self, this._then);
+class __$ShieldSuccessCopyWithImpl<$Res>
+    implements _$ShieldSuccessCopyWith<$Res> {
+  __$ShieldSuccessCopyWithImpl(this._self, this._then);
 
-  final _UpdateSuccess _self;
-  final $Res Function(_UpdateSuccess) _then;
+  final _ShieldSuccess _self;
+  final $Res Function(_ShieldSuccess) _then;
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? settings = null,
+    Object? info = null,
   }) {
-    return _then(_UpdateSuccess(
-      settings: null == settings
-          ? _self.settings
-          : settings // ignore: cast_nullable_to_non_nullable
-              as UserSettings,
+    return _then(_ShieldSuccess(
+      info: null == info
+          ? _self.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as StreakInfo,
     ));
   }
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserSettingsCopyWith<$Res> get settings {
-    return $UserSettingsCopyWith<$Res>(_self.settings, (value) {
-      return _then(_self.copyWith(settings: value));
+  $StreakInfoCopyWith<$Res> get info {
+    return $StreakInfoCopyWith<$Res>(_self.info, (value) {
+      return _then(_self.copyWith(info: value));
     });
   }
 }
 
 /// @nodoc
 
-class _Failure implements SettingsState {
-  const _Failure({required this.message});
+class _Failure implements StreakState {
+  const _Failure({required this.message, this.info});
 
   final String message;
+  final StreakInfo? info;
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -585,25 +566,28 @@ class _Failure implements SettingsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Failure &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.info, info) || other.info == info));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode => Object.hash(runtimeType, message, info);
 
   @override
   String toString() {
-    return 'SettingsState.failure(message: $message)';
+    return 'StreakState.failure(message: $message, info: $info)';
   }
 }
 
 /// @nodoc
 abstract mixin class _$FailureCopyWith<$Res>
-    implements $SettingsStateCopyWith<$Res> {
+    implements $StreakStateCopyWith<$Res> {
   factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) _then) =
       __$FailureCopyWithImpl;
   @useResult
-  $Res call({String message});
+  $Res call({String message, StreakInfo? info});
+
+  $StreakInfoCopyWith<$Res>? get info;
 }
 
 /// @nodoc
@@ -613,38 +597,37 @@ class __$FailureCopyWithImpl<$Res> implements _$FailureCopyWith<$Res> {
   final _Failure _self;
   final $Res Function(_Failure) _then;
 
-  /// Create a copy of SettingsState
+  /// Create a copy of StreakState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
     Object? message = null,
+    Object? info = freezed,
   }) {
     return _then(_Failure(
       message: null == message
           ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      info: freezed == info
+          ? _self.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as StreakInfo?,
     ));
   }
-}
 
-/// @nodoc
-
-class _AccountDeleted implements SettingsState {
-  const _AccountDeleted();
-
+  /// Create a copy of StreakState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _AccountDeleted);
-  }
+  @pragma('vm:prefer-inline')
+  $StreakInfoCopyWith<$Res>? get info {
+    if (_self.info == null) {
+      return null;
+    }
 
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'SettingsState.accountDeleted()';
+    return $StreakInfoCopyWith<$Res>(_self.info!, (value) {
+      return _then(_self.copyWith(info: value));
+    });
   }
 }
 

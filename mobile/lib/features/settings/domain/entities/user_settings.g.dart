@@ -6,9 +6,8 @@ part of 'user_settings.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MatchPreferencesImpl _$$MatchPreferencesImplFromJson(
-        Map<String, dynamic> json) =>
-    _$MatchPreferencesImpl(
+_MatchPreferences _$MatchPreferencesFromJson(Map<String, dynamic> json) =>
+    _MatchPreferences(
       maxDistanceKm: (json['maxDistanceKm'] as num?)?.toInt() ?? 50,
       minAge: (json['minAge'] as num?)?.toInt() ?? 18,
       maxAge: (json['maxAge'] as num?)?.toInt() ?? 50,
@@ -16,8 +15,7 @@ _$MatchPreferencesImpl _$$MatchPreferencesImplFromJson(
           json['filterByCryptoInterests'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$MatchPreferencesImplToJson(
-        _$MatchPreferencesImpl instance) =>
+Map<String, dynamic> _$MatchPreferencesToJson(_MatchPreferences instance) =>
     <String, dynamic>{
       'maxDistanceKm': instance.maxDistanceKm,
       'minAge': instance.minAge,
@@ -25,17 +23,17 @@ Map<String, dynamic> _$$MatchPreferencesImplToJson(
       'filterByCryptoInterests': instance.filterByCryptoInterests,
     };
 
-_$NotificationSettingsImpl _$$NotificationSettingsImplFromJson(
+_NotificationSettings _$NotificationSettingsFromJson(
         Map<String, dynamic> json) =>
-    _$NotificationSettingsImpl(
+    _NotificationSettings(
       newMatches: json['newMatches'] as bool? ?? true,
       newMessages: json['newMessages'] as bool? ?? true,
       tokenRewards: json['tokenRewards'] as bool? ?? true,
       appUpdates: json['appUpdates'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$NotificationSettingsImplToJson(
-        _$NotificationSettingsImpl instance) =>
+Map<String, dynamic> _$NotificationSettingsToJson(
+        _NotificationSettings instance) =>
     <String, dynamic>{
       'newMatches': instance.newMatches,
       'newMessages': instance.newMessages,
@@ -43,24 +41,22 @@ Map<String, dynamic> _$$NotificationSettingsImplToJson(
       'appUpdates': instance.appUpdates,
     };
 
-_$PrivacySettingsImpl _$$PrivacySettingsImplFromJson(
-        Map<String, dynamic> json) =>
-    _$PrivacySettingsImpl(
+_PrivacySettings _$PrivacySettingsFromJson(Map<String, dynamic> json) =>
+    _PrivacySettings(
       showOnlineStatus: json['showOnlineStatus'] as bool? ?? true,
       showDistance: json['showDistance'] as bool? ?? true,
       profileVisible: json['profileVisible'] as bool? ?? true,
     );
 
-Map<String, dynamic> _$$PrivacySettingsImplToJson(
-        _$PrivacySettingsImpl instance) =>
+Map<String, dynamic> _$PrivacySettingsToJson(_PrivacySettings instance) =>
     <String, dynamic>{
       'showOnlineStatus': instance.showOnlineStatus,
       'showDistance': instance.showDistance,
       'profileVisible': instance.profileVisible,
     };
 
-_$UserSettingsImpl _$$UserSettingsImplFromJson(Map<String, dynamic> json) =>
-    _$UserSettingsImpl(
+_UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
+    _UserSettings(
       matchPreferences: MatchPreferences.fromJson(
           json['matchPreferences'] as Map<String, dynamic>),
       notificationSettings: NotificationSettings.fromJson(
@@ -69,7 +65,7 @@ _$UserSettingsImpl _$$UserSettingsImplFromJson(Map<String, dynamic> json) =>
           json['privacySettings'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$UserSettingsImplToJson(_$UserSettingsImpl instance) =>
+Map<String, dynamic> _$UserSettingsToJson(_UserSettings instance) =>
     <String, dynamic>{
       'matchPreferences': instance.matchPreferences,
       'notificationSettings': instance.notificationSettings,

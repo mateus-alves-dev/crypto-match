@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:crypto_match/core/error/failure.dart';
+import 'package:crypto_match/features/token/domain/entities/streak_info.dart';
 import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
 import 'package:crypto_match/features/token/domain/repositories/token_repository.dart';
@@ -23,6 +24,11 @@ class MockTokenRepositoryImpl implements TokenRepository {
   bool _dailyCheckinDone = false;
   bool _completeProfileDone = true; // already done in initial history
   bool _inviteFriendDone = true; // already done in initial history
+
+  // Streak state
+  int _currentStreak = 7;
+  bool _streakAtRisk = true; // true so the shield dialog is shown on first load
+  bool _shieldUsed = false;
 
   void _initHistory() {
     final now = DateTime.now();
@@ -223,5 +229,45 @@ class MockTokenRepositoryImpl implements TokenRepository {
             _inviteFriendDone ? now.subtract(const Duration(days: 12)) : null,
       ),
     ];
+  }
+
+  @override
+  Future<Either<Failure, StreakInfo>> getStreakInfo() async {
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    return Right(
+      StreakInfo(
+        currentStreak: _currentStreak,
+        longestStreak: _currentStreak > 14 ? _currentStreak : 14,
+        streakAtRisk: _streakAtRisk && !_shieldUsed,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<Failure, void>> useStreakShield() async {
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+    const cost = 20.0;
+    if (_balance < cost) {
+      return const Left(
+        Failure.server(
+          statusCode: 422,
+          message: 'Saldo insuficiente para usar o Streak Shield.',
+        ),
+      );
+    }
+    _balance -= cost;
+    _shieldUsed = true;
+    _streakAtRisk = false;
+    _history.add(
+      TokenTransaction(
+        id: 'tx-${Random().nextInt(99999)}',
+        userId: _userId,
+        type: TokenTransactionType.debit,
+        amount: cost,
+        reason: 'Streak Shield usado',
+        createdAt: DateTime.now(),
+      ),
+    );
+    return const Right(null);
   }
 }

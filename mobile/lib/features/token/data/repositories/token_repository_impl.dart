@@ -1,6 +1,7 @@
 import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/core/network/api_error.dart';
 import 'package:crypto_match/features/token/data/datasources/token_remote_data_source.dart';
+import 'package:crypto_match/features/token/domain/entities/streak_info.dart';
 import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
 import 'package:crypto_match/features/token/domain/repositories/token_repository.dart';
@@ -34,4 +35,12 @@ class TokenRepositoryImpl implements TokenRepository {
   @override
   Future<Either<Failure, void>> inviteFriend({required String referralCode}) =>
       safeApiCall(() => _dataSource.inviteFriend(referralCode: referralCode));
+
+  @override
+  Future<Either<Failure, StreakInfo>> getStreakInfo() =>
+      safeApiCall(_dataSource.getStreakInfo);
+
+  @override
+  Future<Either<Failure, void>> useStreakShield() =>
+      safeApiCall(_dataSource.useStreakShield);
 }

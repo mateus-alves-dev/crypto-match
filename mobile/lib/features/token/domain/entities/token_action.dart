@@ -7,10 +7,11 @@ enum TokenActionType {
   dailyCheckin,
   completeProfile,
   inviteFriend,
+  streakShield,
 }
 
 @freezed
-class TokenAction with _$TokenAction {
+abstract class TokenAction with _$TokenAction {
   const factory TokenAction({
     required String id,
     required TokenActionType type,

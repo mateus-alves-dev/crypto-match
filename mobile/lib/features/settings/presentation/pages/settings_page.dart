@@ -501,7 +501,7 @@ class _SwitchTile extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: const Color(0xFF6C63FF),
+            activeThumbColor: const Color(0xFF6C63FF),
           ),
         ],
       ),

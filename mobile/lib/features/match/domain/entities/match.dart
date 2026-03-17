@@ -6,7 +6,7 @@ part 'match.g.dart';
 enum SwipeAction { like, dislike, superLike }
 
 @freezed
-class Match with _$Match {
+abstract class Match with _$Match {
   const factory Match({
     required String id,
     required String userId,
@@ -21,7 +21,7 @@ class Match with _$Match {
 }
 
 @freezed
-class MatchSuggestion with _$MatchSuggestion {
+abstract class MatchSuggestion with _$MatchSuggestion {
   const factory MatchSuggestion({
     required String userId,
     required String name,

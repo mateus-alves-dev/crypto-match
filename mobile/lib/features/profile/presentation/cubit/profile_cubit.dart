@@ -35,6 +35,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     String? displayName,
     String? bio,
     List<String>? cryptoInterests,
+    List<String>? personaTags,
     int? age,
     String? location,
   }) async {
@@ -49,6 +50,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       displayName: displayName,
       bio: bio,
       cryptoInterests: cryptoInterests,
+      personaTags: personaTags,
       age: age,
       location: location,
     );

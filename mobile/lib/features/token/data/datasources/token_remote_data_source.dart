@@ -1,4 +1,5 @@
 import 'package:crypto_match/core/network/api_client.dart';
+import 'package:crypto_match/features/token/domain/entities/streak_info.dart';
 import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
 import 'package:injectable/injectable.dart';
@@ -42,5 +43,15 @@ class TokenRemoteDataSource {
       '/token/actions/invite-friend',
       data: {'referralCode': referralCode},
     );
+  }
+
+  Future<StreakInfo> getStreakInfo() async {
+    final response =
+        await _apiClient.dio.get<Map<String, dynamic>>('/token/streak');
+    return StreakInfo.fromJson(response.data!);
+  }
+
+  Future<void> useStreakShield() async {
+    await _apiClient.dio.post<void>('/token/actions/streak-shield');
   }
 }

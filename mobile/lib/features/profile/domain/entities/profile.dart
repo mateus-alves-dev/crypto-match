@@ -4,7 +4,7 @@ part 'profile.freezed.dart';
 part 'profile.g.dart';
 
 @freezed
-class Profile with _$Profile {
+abstract class Profile with _$Profile {
   const factory Profile({
     required String userId,
     required String displayName,
@@ -12,6 +12,7 @@ class Profile with _$Profile {
     String? bio,
     String? avatarUrl,
     List<String>? cryptoInterests,
+    List<String>? personaTags,
     int? age,
     String? location,
   }) = _Profile;

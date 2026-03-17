@@ -6,7 +6,7 @@ part of 'match.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MatchImpl _$$MatchImplFromJson(Map<String, dynamic> json) => _$MatchImpl(
+_Match _$MatchFromJson(Map<String, dynamic> json) => _Match(
       id: json['id'] as String,
       userId: json['userId'] as String,
       matchedUserId: json['matchedUserId'] as String,
@@ -16,8 +16,7 @@ _$MatchImpl _$$MatchImplFromJson(Map<String, dynamic> json) => _$MatchImpl(
       matchedUserBio: json['matchedUserBio'] as String?,
     );
 
-Map<String, dynamic> _$$MatchImplToJson(_$MatchImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MatchToJson(_Match instance) => <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,
       'matchedUserId': instance.matchedUserId,
@@ -27,9 +26,8 @@ Map<String, dynamic> _$$MatchImplToJson(_$MatchImpl instance) =>
       'matchedUserBio': instance.matchedUserBio,
     };
 
-_$MatchSuggestionImpl _$$MatchSuggestionImplFromJson(
-        Map<String, dynamic> json) =>
-    _$MatchSuggestionImpl(
+_MatchSuggestion _$MatchSuggestionFromJson(Map<String, dynamic> json) =>
+    _MatchSuggestion(
       userId: json['userId'] as String,
       name: json['name'] as String,
       avatarUrl: json['avatarUrl'] as String?,
@@ -40,8 +38,7 @@ _$MatchSuggestionImpl _$$MatchSuggestionImplFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$MatchSuggestionImplToJson(
-        _$MatchSuggestionImpl instance) =>
+Map<String, dynamic> _$MatchSuggestionToJson(_MatchSuggestion instance) =>
     <String, dynamic>{
       'userId': instance.userId,
       'name': instance.name,

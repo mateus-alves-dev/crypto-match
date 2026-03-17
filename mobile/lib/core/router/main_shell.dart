@@ -1,6 +1,9 @@
 import 'package:crypto_match/features/chat/domain/entities/message.dart';
 import 'package:crypto_match/features/chat/presentation/cubit/conversations_cubit.dart';
 import 'package:crypto_match/features/chat/presentation/cubit/conversations_state.dart';
+import 'package:crypto_match/features/token/presentation/cubit/streak_cubit.dart';
+import 'package:crypto_match/features/token/presentation/cubit/streak_state.dart';
+import 'package:crypto_match/features/token/presentation/widgets/streak_shield_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -12,7 +15,28 @@ class MainShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<StreakCubit, StreakState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          loaded: (info) {
+            if (info.streakAtRisk) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (context.mounted) {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (_) => BlocProvider.value(
+                      value: context.read<StreakCubit>(),
+                      child: const StreakShieldDialog(),
+                    ),
+                  );
+                }
+              });
+            }
+          },
+        );
+      },
+      child: Scaffold(
       body: navigationShell,
       bottomNavigationBar:
           BlocSelector<ConversationsCubit, ConversationsState, int>(
@@ -71,6 +95,7 @@ class MainShell extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }

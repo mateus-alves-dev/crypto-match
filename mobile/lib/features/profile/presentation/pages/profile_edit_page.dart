@@ -1,6 +1,8 @@
 import 'package:crypto_match/features/profile/domain/entities/profile.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_state.dart';
+import 'package:crypto_match/features/profile/presentation/widgets/persona_tag_picker.dart';
+import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,6 +49,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   late final TextEditingController _locationController;
   late final TextEditingController _ageController;
   late List<String> _selectedInterests;
+  late List<String> _selectedPersonaTags;
+  late final bool _hadPersonaTagsOnLoad;
 
   @override
   void initState() {
@@ -58,6 +62,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     _ageController =
         TextEditingController(text: p.age != null ? '${p.age}' : '');
     _selectedInterests = List<String>.from(p.cryptoInterests ?? []);
+    _selectedPersonaTags = List<String>.from(p.personaTags ?? []);
+    _hadPersonaTagsOnLoad =
+        p.personaTags != null && p.personaTags!.isNotEmpty;
   }
 
   @override
@@ -87,6 +94,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               : _bioController.text.trim(),
           cryptoInterests:
               _selectedInterests.isEmpty ? null : _selectedInterests,
+          personaTags:
+              _selectedPersonaTags.isEmpty ? null : _selectedPersonaTags,
           age: int.tryParse(_ageController.text.trim()),
           location: _locationController.text.trim().isEmpty
               ? null
@@ -109,7 +118,14 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     return BlocListener<ProfileCubit, ProfileState>(
       listener: (context, state) {
         state.whenOrNull(
-          updateSuccess: (_) {
+          updateSuccess: (updatedProfile) {
+            // Reload balance if persona tags were added for the first time
+            // (backend auto-credits +50 CMT on first save)
+            final justAddedPersona = !_hadPersonaTagsOnLoad &&
+                (updatedProfile.personaTags?.isNotEmpty ?? false);
+            if (justAddedPersona) {
+              context.read<TokenCubit>().loadWallet();
+            }
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Perfil atualizado com sucesso! ✅'),
@@ -256,6 +272,19 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     ),
                   );
                 }).toList(),
+              ),
+              const SizedBox(height: 28),
+              const _SectionLabel('Identidade Cripto'),
+              const SizedBox(height: 4),
+              Text(
+                'Escolha até 3 personas que combinam com você',
+                style: const TextStyle(color: Colors.white38, fontSize: 13),
+              ),
+              const SizedBox(height: 12),
+              PersonaTagPicker(
+                selectedTags: _selectedPersonaTags,
+                onChanged: (tags) =>
+                    setState(() => _selectedPersonaTags = tags),
               ),
               const SizedBox(height: 40),
             ],
