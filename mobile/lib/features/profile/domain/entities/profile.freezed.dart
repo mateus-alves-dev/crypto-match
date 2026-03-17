@@ -23,6 +23,7 @@ mixin _$Profile {
   List<String>? get personaTags;
   int? get age;
   String? get location;
+  List<String>? get badges;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -53,7 +54,8 @@ mixin _$Profile {
                 .equals(other.personaTags, personaTags) &&
             (identical(other.age, age) || other.age == age) &&
             (identical(other.location, location) ||
-                other.location == location));
+                other.location == location) &&
+            const DeepCollectionEquality().equals(other.badges, badges));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -68,11 +70,12 @@ mixin _$Profile {
       const DeepCollectionEquality().hash(cryptoInterests),
       const DeepCollectionEquality().hash(personaTags),
       age,
-      location);
+      location,
+      const DeepCollectionEquality().hash(badges));
 
   @override
   String toString() {
-    return 'Profile(userId: $userId, displayName: $displayName, updatedAt: $updatedAt, bio: $bio, avatarUrl: $avatarUrl, cryptoInterests: $cryptoInterests, personaTags: $personaTags, age: $age, location: $location)';
+    return 'Profile(userId: $userId, displayName: $displayName, updatedAt: $updatedAt, bio: $bio, avatarUrl: $avatarUrl, cryptoInterests: $cryptoInterests, personaTags: $personaTags, age: $age, location: $location, badges: $badges)';
   }
 }
 
@@ -90,7 +93,8 @@ abstract mixin class $ProfileCopyWith<$Res> {
       List<String>? cryptoInterests,
       List<String>? personaTags,
       int? age,
-      String? location});
+      String? location,
+      List<String>? badges});
 }
 
 /// @nodoc
@@ -114,6 +118,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
     Object? personaTags = freezed,
     Object? age = freezed,
     Object? location = freezed,
+    Object? badges = freezed,
   }) {
     return _then(_self.copyWith(
       userId: null == userId
@@ -152,6 +157,10 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
           ? _self.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      badges: freezed == badges
+          ? _self.badges
+          : badges // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -258,7 +267,8 @@ extension ProfilePatterns on Profile {
             List<String>? cryptoInterests,
             List<String>? personaTags,
             int? age,
-            String? location)?
+            String? location,
+            List<String>? badges)?
         $default, {
     required TResult orElse(),
   }) {
@@ -274,7 +284,8 @@ extension ProfilePatterns on Profile {
             _that.cryptoInterests,
             _that.personaTags,
             _that.age,
-            _that.location);
+            _that.location,
+            _that.badges);
       case _:
         return orElse();
     }
@@ -304,7 +315,8 @@ extension ProfilePatterns on Profile {
             List<String>? cryptoInterests,
             List<String>? personaTags,
             int? age,
-            String? location)
+            String? location,
+            List<String>? badges)
         $default,
   ) {
     final _that = this;
@@ -319,7 +331,8 @@ extension ProfilePatterns on Profile {
             _that.cryptoInterests,
             _that.personaTags,
             _that.age,
-            _that.location);
+            _that.location,
+            _that.badges);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -348,7 +361,8 @@ extension ProfilePatterns on Profile {
             List<String>? cryptoInterests,
             List<String>? personaTags,
             int? age,
-            String? location)?
+            String? location,
+            List<String>? badges)?
         $default,
   ) {
     final _that = this;
@@ -363,7 +377,8 @@ extension ProfilePatterns on Profile {
             _that.cryptoInterests,
             _that.personaTags,
             _that.age,
-            _that.location);
+            _that.location,
+            _that.badges);
       case _:
         return null;
     }
@@ -382,9 +397,11 @@ class _Profile implements Profile {
       final List<String>? cryptoInterests,
       final List<String>? personaTags,
       this.age,
-      this.location})
+      this.location,
+      final List<String>? badges})
       : _cryptoInterests = cryptoInterests,
-        _personaTags = personaTags;
+        _personaTags = personaTags,
+        _badges = badges;
   factory _Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);
 
@@ -422,6 +439,15 @@ class _Profile implements Profile {
   final int? age;
   @override
   final String? location;
+  final List<String>? _badges;
+  @override
+  List<String>? get badges {
+    final value = _badges;
+    if (value == null) return null;
+    if (_badges is EqualUnmodifiableListView) return _badges;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -457,7 +483,8 @@ class _Profile implements Profile {
                 .equals(other._personaTags, _personaTags) &&
             (identical(other.age, age) || other.age == age) &&
             (identical(other.location, location) ||
-                other.location == location));
+                other.location == location) &&
+            const DeepCollectionEquality().equals(other._badges, _badges));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -472,11 +499,12 @@ class _Profile implements Profile {
       const DeepCollectionEquality().hash(_cryptoInterests),
       const DeepCollectionEquality().hash(_personaTags),
       age,
-      location);
+      location,
+      const DeepCollectionEquality().hash(_badges));
 
   @override
   String toString() {
-    return 'Profile(userId: $userId, displayName: $displayName, updatedAt: $updatedAt, bio: $bio, avatarUrl: $avatarUrl, cryptoInterests: $cryptoInterests, personaTags: $personaTags, age: $age, location: $location)';
+    return 'Profile(userId: $userId, displayName: $displayName, updatedAt: $updatedAt, bio: $bio, avatarUrl: $avatarUrl, cryptoInterests: $cryptoInterests, personaTags: $personaTags, age: $age, location: $location, badges: $badges)';
   }
 }
 
@@ -495,7 +523,8 @@ abstract mixin class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       List<String>? cryptoInterests,
       List<String>? personaTags,
       int? age,
-      String? location});
+      String? location,
+      List<String>? badges});
 }
 
 /// @nodoc
@@ -519,6 +548,7 @@ class __$ProfileCopyWithImpl<$Res> implements _$ProfileCopyWith<$Res> {
     Object? personaTags = freezed,
     Object? age = freezed,
     Object? location = freezed,
+    Object? badges = freezed,
   }) {
     return _then(_Profile(
       userId: null == userId
@@ -557,6 +587,10 @@ class __$ProfileCopyWithImpl<$Res> implements _$ProfileCopyWith<$Res> {
           ? _self.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      badges: freezed == badges
+          ? _self._badges
+          : badges // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }

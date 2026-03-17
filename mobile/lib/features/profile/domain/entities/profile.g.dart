@@ -20,6 +20,8 @@ _Profile _$ProfileFromJson(Map<String, dynamic> json) => _Profile(
           .toList(),
       age: (json['age'] as num?)?.toInt(),
       location: json['location'] as String?,
+      badges:
+          (json['badges'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$ProfileToJson(_Profile instance) => <String, dynamic>{
@@ -32,4 +34,5 @@ Map<String, dynamic> _$ProfileToJson(_Profile instance) => <String, dynamic>{
       'personaTags': instance.personaTags,
       'age': instance.age,
       'location': instance.location,
+      'badges': instance.badges,
     };

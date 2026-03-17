@@ -22,7 +22,16 @@ class _WalletPageState extends State<WalletPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Wallet')),
+      appBar: AppBar(
+        title: const Text('Wallet'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.leaderboard_rounded),
+            tooltip: 'Leaderboard',
+            onPressed: () => context.push(AppRoutes.leaderboard),
+          ),
+        ],
+      ),
       body: BlocBuilder<TokenCubit, TokenState>(
         builder: (BuildContext context, TokenState state) => state.when(
           initial: () => const SizedBox.shrink(),
@@ -54,6 +63,12 @@ class _WalletPageState extends State<WalletPage> {
                 onPressed: () => context.push(AppRoutes.rewards),
                 icon: const Icon(Icons.bolt_rounded),
                 label: const Text('Ganhar Tokens'),
+              ),
+              const SizedBox(height: 8),
+              OutlinedButton.icon(
+                onPressed: () => context.push(AppRoutes.missions),
+                icon: const Icon(Icons.flag_rounded),
+                label: const Text('Missões Diárias'),
               ),
               const SizedBox(height: 16),
               Expanded(

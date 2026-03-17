@@ -1,4 +1,6 @@
 import 'package:crypto_match/core/network/api_client.dart';
+import 'package:crypto_match/features/token/domain/entities/daily_mission.dart';
+import 'package:crypto_match/features/token/domain/entities/leaderboard_entry.dart';
 import 'package:crypto_match/features/token/domain/entities/streak_info.dart';
 import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
@@ -53,5 +55,26 @@ class TokenRemoteDataSource {
 
   Future<void> useStreakShield() async {
     await _apiClient.dio.post<void>('/token/actions/streak-shield');
+  }
+
+  Future<List<LeaderboardEntry>> getLeaderboard() async {
+    final response =
+        await _apiClient.dio.get<List<dynamic>>('/token/leaderboard');
+    return response.data!
+        .map((e) => LeaderboardEntry.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<List<DailyMission>> getDailyMissions() async {
+    final response = await _apiClient.dio.get<List<dynamic>>('/token/missions');
+    return response.data!
+        .map((e) => DailyMission.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<double> claimMissionReward({required String missionId}) async {
+    final response = await _apiClient.dio
+        .post<Map<String, dynamic>>('/token/missions/$missionId/claim');
+    return (response.data!['earnedAmount'] as num).toDouble();
   }
 }

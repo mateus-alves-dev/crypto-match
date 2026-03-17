@@ -8,6 +8,9 @@ enum TokenActionType {
   completeProfile,
   inviteFriend,
   streakShield,
+  weeklyRank1st,
+  weeklyRank2nd,
+  weeklyRank3rd,
 }
 
 @freezed

@@ -1,4 +1,6 @@
 import 'package:crypto_match/core/error/failure.dart';
+import 'package:crypto_match/features/token/domain/entities/daily_mission.dart';
+import 'package:crypto_match/features/token/domain/entities/leaderboard_entry.dart';
 import 'package:crypto_match/features/token/domain/entities/streak_info.dart';
 import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
@@ -79,4 +81,34 @@ class UseStreakShieldUseCase {
   final TokenRepository _repository;
 
   Future<Either<Failure, void>> call() => _repository.useStreakShield();
+}
+
+@injectable
+class GetLeaderboardUseCase {
+  const GetLeaderboardUseCase(this._repository);
+
+  final TokenRepository _repository;
+
+  Future<Either<Failure, List<LeaderboardEntry>>> call() =>
+      _repository.getLeaderboard();
+}
+
+@injectable
+class GetDailyMissionsUseCase {
+  const GetDailyMissionsUseCase(this._repository);
+
+  final TokenRepository _repository;
+
+  Future<Either<Failure, List<DailyMission>>> call() =>
+      _repository.getDailyMissions();
+}
+
+@injectable
+class ClaimMissionRewardUseCase {
+  const ClaimMissionRewardUseCase(this._repository);
+
+  final TokenRepository _repository;
+
+  Future<Either<Failure, double>> call({required String missionId}) =>
+      _repository.claimMissionReward(missionId: missionId);
 }

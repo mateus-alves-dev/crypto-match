@@ -38,4 +38,7 @@ const _$TokenActionTypeEnumMap = {
   TokenActionType.completeProfile: 'completeProfile',
   TokenActionType.inviteFriend: 'inviteFriend',
   TokenActionType.streakShield: 'streakShield',
+  TokenActionType.weeklyRank1st: 'weeklyRank1st',
+  TokenActionType.weeklyRank2nd: 'weeklyRank2nd',
+  TokenActionType.weeklyRank3rd: 'weeklyRank3rd',
 };

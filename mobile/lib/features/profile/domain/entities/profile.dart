@@ -15,6 +15,7 @@ abstract class Profile with _$Profile {
     List<String>? personaTags,
     int? age,
     String? location,
+    List<String>? badges,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>

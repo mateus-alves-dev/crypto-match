@@ -52,44 +52,44 @@ class _RewardActionsPageState extends State<RewardActionsPage> {
           ),
         ],
         child: BlocConsumer<RewardActionsCubit, RewardActionsState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            claimSuccess: (_, earnedAmount) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    '🎉 +${earnedAmount.toStringAsFixed(0)} CMT ganhos! Saldo atualizado.',
+          listener: (context, state) {
+            state.whenOrNull(
+              claimSuccess: (_, earnedAmount) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      '🎉 +${earnedAmount.toStringAsFixed(0)} CMT ganhos! Saldo atualizado.',
+                    ),
+                    backgroundColor: Colors.green.shade700,
                   ),
-                  backgroundColor: Colors.green.shade700,
-                ),
-              );
-            },
-            failure: (message, __) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(message),
-                  backgroundColor: Colors.red.shade700,
-                ),
-              );
-            },
-          );
-        },
-        builder: (context, state) => state.when(
-          initial: () => const SizedBox.shrink(),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          loaded: (actions) => _ActionsBody(actions: actions),
-          claiming: (actions, claimingId) =>
-              _ActionsBody(actions: actions, claimingActionId: claimingId),
-          claimSuccess: (actions, _) => _ActionsBody(actions: actions),
-          failure: (message, actions) => actions != null && actions.isNotEmpty
-              ? _ActionsBody(actions: actions)
-              : _ErrorView(
-                  message: message,
-                  onRetry: () =>
-                      context.read<RewardActionsCubit>().loadActions(),
-                ),
+                );
+              },
+              failure: (message, __) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(message),
+                    backgroundColor: Colors.red.shade700,
+                  ),
+                );
+              },
+            );
+          },
+          builder: (context, state) => state.when(
+            initial: () => const SizedBox.shrink(),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            loaded: (actions) => _ActionsBody(actions: actions),
+            claiming: (actions, claimingId) =>
+                _ActionsBody(actions: actions, claimingActionId: claimingId),
+            claimSuccess: (actions, _) => _ActionsBody(actions: actions),
+            failure: (message, actions) => actions != null && actions.isNotEmpty
+                ? _ActionsBody(actions: actions)
+                : _ErrorView(
+                    message: message,
+                    onRetry: () =>
+                        context.read<RewardActionsCubit>().loadActions(),
+                  ),
+          ),
         ),
-      ),
       ),
     );
   }
@@ -302,6 +302,10 @@ class _ActionCard extends StatelessWidget {
         TokenActionType.completeProfile => Icons.person_rounded,
         TokenActionType.inviteFriend => Icons.group_add_rounded,
         TokenActionType.streakShield => Icons.shield_rounded,
+        TokenActionType.weeklyRank1st ||
+        TokenActionType.weeklyRank2nd ||
+        TokenActionType.weeklyRank3rd =>
+          Icons.emoji_events_rounded,
       };
 
   void _onClaim(BuildContext context) {
@@ -315,6 +319,10 @@ class _ActionCard extends StatelessWidget {
         _showInviteDialog(context, cubit);
       case TokenActionType.streakShield:
         break; // managed by StreakCubit, not RewardActionsCubit
+      case TokenActionType.weeklyRank1st:
+      case TokenActionType.weeklyRank2nd:
+      case TokenActionType.weeklyRank3rd:
+        break; // distributed automatically by backend at week end
     }
   }
 

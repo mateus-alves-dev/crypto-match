@@ -166,8 +166,7 @@ class _ProfileHeader extends StatelessWidget {
                         color: const Color(0xFFFFB74D).withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color:
-                              const Color(0xFFFFB74D).withValues(alpha: 0.5),
+                          color: const Color(0xFFFFB74D).withValues(alpha: 0.5),
                         ),
                       ),
                       child: Text(
@@ -181,6 +180,39 @@ class _ProfileHeader extends StatelessWidget {
                     ),
                   )
                   .toList(),
+            ),
+          ],
+          if (profile.badges != null &&
+              profile.badges!.contains('weekly_top3')) ...[
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFD700).withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: const Color(0xFFFFD700).withValues(alpha: 0.6),
+                ),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.emoji_events_rounded,
+                    color: Color(0xFFFFD700),
+                    size: 14,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    'Top 3 da Semana',
+                    style: TextStyle(
+                      color: Color(0xFFFFD700),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
           if (profile.bio != null && profile.bio!.isNotEmpty) ...[

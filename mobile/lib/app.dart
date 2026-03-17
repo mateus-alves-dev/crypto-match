@@ -8,6 +8,7 @@ import 'package:crypto_match/features/match/presentation/cubit/match_cubit.dart'
 import 'package:crypto_match/features/match/presentation/cubit/matches_list_cubit.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:crypto_match/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:crypto_match/features/token/presentation/cubit/leaderboard_cubit.dart';
 import 'package:crypto_match/features/token/presentation/cubit/reward_actions_cubit.dart';
 import 'package:crypto_match/features/token/presentation/cubit/streak_cubit.dart';
 import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart';
@@ -35,6 +36,9 @@ class App extends StatelessWidget {
         BlocProvider<TokenCubit>(create: (_) => getIt<TokenCubit>()),
         BlocProvider<RewardActionsCubit>(
           create: (_) => getIt<RewardActionsCubit>(),
+        ),
+        BlocProvider<LeaderboardCubit>(
+          create: (_) => getIt<LeaderboardCubit>(),
         ),
         BlocProvider<StreakCubit>(create: (_) => getIt<StreakCubit>()),
         BlocProvider<SettingsCubit>(create: (_) => getIt<SettingsCubit>()),

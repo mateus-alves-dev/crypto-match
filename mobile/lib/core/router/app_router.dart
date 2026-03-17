@@ -11,6 +11,8 @@ import 'package:crypto_match/features/profile/domain/entities/profile.dart';
 import 'package:crypto_match/features/profile/presentation/pages/profile_edit_page.dart';
 import 'package:crypto_match/features/profile/presentation/pages/profile_page.dart';
 import 'package:crypto_match/features/settings/presentation/pages/settings_page.dart';
+import 'package:crypto_match/features/token/presentation/pages/daily_missions_page.dart';
+import 'package:crypto_match/features/token/presentation/pages/leaderboard_page.dart';
 import 'package:crypto_match/features/token/presentation/pages/reward_actions_page.dart';
 import 'package:crypto_match/features/token/presentation/pages/wallet_page.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,8 @@ abstract final class AppRoutes {
   static const settings = '/profile/settings';
   static const wallet = '/wallet';
   static const rewards = '/wallet/rewards';
+  static const leaderboard = '/wallet/leaderboard';
+  static const missions = '/wallet/missions';
 
   static String chat(String conversationId) =>
       '/conversations/chat/$conversationId';
@@ -117,6 +121,18 @@ class AppRouter {
                     name: 'rewards',
                     builder: (BuildContext context, GoRouterState state) =>
                         const RewardActionsPage(),
+                  ),
+                  GoRoute(
+                    path: 'leaderboard',
+                    name: 'leaderboard',
+                    builder: (BuildContext context, GoRouterState state) =>
+                        const LeaderboardPage(),
+                  ),
+                  GoRoute(
+                    path: 'missions',
+                    name: 'missions',
+                    builder: (BuildContext context, GoRouterState state) =>
+                        const DailyMissionsPage(),
                   ),
                 ],
               ),

@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:crypto_match/core/error/failure.dart';
+import 'package:crypto_match/features/token/domain/entities/daily_mission.dart';
+import 'package:crypto_match/features/token/domain/entities/leaderboard_entry.dart';
 import 'package:crypto_match/features/token/domain/entities/streak_info.dart';
 import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
@@ -269,5 +271,170 @@ class MockTokenRepositoryImpl implements TokenRepository {
       ),
     );
     return const Right(null);
+  }
+
+  @override
+  Future<Either<Failure, List<LeaderboardEntry>>> getLeaderboard() async {
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+    return Right([
+      const LeaderboardEntry(
+        rank: 1,
+        userId: 'mock-top-1',
+        displayName: 'CryptoKing',
+        weeklyTokens: 580,
+        hasWeeklyBadge: true,
+        isCurrentUser: false,
+      ),
+      const LeaderboardEntry(
+        rank: 2,
+        userId: 'mock-top-2',
+        displayName: 'DeFiQueen',
+        weeklyTokens: 420,
+        hasWeeklyBadge: true,
+        isCurrentUser: false,
+      ),
+      const LeaderboardEntry(
+        rank: 3,
+        userId: 'mock-top-3',
+        displayName: 'Hodlr',
+        weeklyTokens: 310,
+        hasWeeklyBadge: true,
+        isCurrentUser: false,
+      ),
+      const LeaderboardEntry(
+        rank: 4,
+        userId: 'mock-top-4',
+        displayName: 'AltcoinAlex',
+        weeklyTokens: 220,
+        hasWeeklyBadge: false,
+        isCurrentUser: false,
+      ),
+      const LeaderboardEntry(
+        rank: 5,
+        userId: 'mock-top-5',
+        displayName: 'BlockBob',
+        weeklyTokens: 180,
+        hasWeeklyBadge: false,
+        isCurrentUser: false,
+      ),
+      LeaderboardEntry(
+        rank: 6,
+        userId: _userId,
+        displayName: 'Você',
+        weeklyTokens: _balance,
+        hasWeeklyBadge: false,
+        isCurrentUser: true,
+      ),
+    ]);
+  }
+
+  // Daily missions mock state
+  int _likeProgress = 0;
+  int _chatProgress = 0;
+  bool _likeRewarded = false;
+  bool _chatRewarded = false;
+  bool _streak7dRewarded = false;
+
+  @override
+  Future<Either<Failure, List<DailyMission>>> getDailyMissions() async {
+    await Future<void>.delayed(const Duration(milliseconds: 400));
+    final now = DateTime.now();
+    final midnight = DateTime(now.year, now.month, now.day + 1);
+    return Right([
+      DailyMission(
+        id: 'mission-like',
+        type: DailyMissionType.like,
+        title: 'Dar 3 likes hoje',
+        description: 'Curta perfis para ganhar tokens',
+        reward: 5,
+        progress: _likeProgress,
+        target: 3,
+        isCompleted: _likeProgress >= 3,
+        isRewarded: _likeRewarded,
+        resetsAt: midnight,
+      ),
+      DailyMission(
+        id: 'mission-chat',
+        type: DailyMissionType.chat,
+        title: 'Iniciar 1 conversa',
+        description: 'Comece uma conversa para ganhar tokens',
+        reward: 10,
+        progress: _chatProgress,
+        target: 1,
+        isCompleted: _chatProgress >= 1,
+        isRewarded: _chatRewarded,
+        resetsAt: midnight,
+      ),
+      DailyMission(
+        id: 'mission-streak7d',
+        type: DailyMissionType.streak7d,
+        title: 'Streak de 7 dias',
+        description: 'Abra o app 7 dias seguidos',
+        reward: 50,
+        progress: _currentStreak.clamp(0, 7),
+        target: 7,
+        isCompleted: _currentStreak >= 7,
+        isRewarded: _streak7dRewarded,
+        resetsAt: midnight,
+      ),
+    ]);
+  }
+
+  @override
+  Future<Either<Failure, double>> claimMissionReward({
+    required String missionId,
+  }) async {
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+    switch (missionId) {
+      case 'mission-like':
+        const amount = 5.0;
+        _balance += amount;
+        _likeRewarded = true;
+        _history.add(
+          TokenTransaction(
+            id: 'tx-${Random().nextInt(99999)}',
+            userId: _userId,
+            type: TokenTransactionType.credit,
+            amount: amount,
+            reason: 'Missão: Dar 3 likes hoje',
+            createdAt: DateTime.now(),
+          ),
+        );
+        return const Right(amount);
+      case 'mission-chat':
+        const amount = 10.0;
+        _balance += amount;
+        _chatRewarded = true;
+        _history.add(
+          TokenTransaction(
+            id: 'tx-${Random().nextInt(99999)}',
+            userId: _userId,
+            type: TokenTransactionType.credit,
+            amount: amount,
+            reason: 'Missão: Iniciar 1 conversa',
+            createdAt: DateTime.now(),
+          ),
+        );
+        return const Right(amount);
+      case 'mission-streak7d':
+        const amount = 50.0;
+        _balance += amount;
+        _streak7dRewarded = true;
+        _history.add(
+          TokenTransaction(
+            id: 'tx-${Random().nextInt(99999)}',
+            userId: _userId,
+            type: TokenTransactionType.credit,
+            amount: amount,
+            reason: 'Missão: Streak de 7 dias',
+            createdAt: DateTime.now(),
+          ),
+        );
+        return const Right(amount);
+      default:
+        return const Left(
+          Failure.server(statusCode: 404, message: 'Missão não encontrada.'),
+        );
+    }
   }
 }

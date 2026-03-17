@@ -74,6 +74,10 @@ import 'package:crypto_match/features/token/domain/repositories/token_repository
     as _i593;
 import 'package:crypto_match/features/token/domain/use_cases/token_use_cases.dart'
     as _i833;
+import 'package:crypto_match/features/token/presentation/cubit/daily_missions_cubit.dart'
+    as _i926;
+import 'package:crypto_match/features/token/presentation/cubit/leaderboard_cubit.dart'
+    as _i1;
 import 'package:crypto_match/features/token/presentation/cubit/reward_actions_cubit.dart'
     as _i312;
 import 'package:crypto_match/features/token/presentation/cubit/streak_cubit.dart'
@@ -146,9 +150,19 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i833.GetStreakInfoUseCase(gh<_i593.TokenRepository>()));
     gh.factory<_i833.UseStreakShieldUseCase>(
         () => _i833.UseStreakShieldUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.GetLeaderboardUseCase>(
+        () => _i833.GetLeaderboardUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.GetDailyMissionsUseCase>(
+        () => _i833.GetDailyMissionsUseCase(gh<_i593.TokenRepository>()));
+    gh.factory<_i833.ClaimMissionRewardUseCase>(
+        () => _i833.ClaimMissionRewardUseCase(gh<_i593.TokenRepository>()));
     gh.factory<_i823.StreakCubit>(() => _i823.StreakCubit(
           gh<_i833.GetStreakInfoUseCase>(),
           gh<_i833.UseStreakShieldUseCase>(),
+        ));
+    gh.factory<_i926.DailyMissionsCubit>(() => _i926.DailyMissionsCubit(
+          gh<_i833.GetDailyMissionsUseCase>(),
+          gh<_i833.ClaimMissionRewardUseCase>(),
         ));
     gh.factory<_i1051.GetMatchFeedUseCase>(
         () => _i1051.GetMatchFeedUseCase(gh<_i1050.MatchRepository>()));
@@ -158,6 +172,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1051.GetMatchesUseCase(gh<_i1050.MatchRepository>()));
     gh.factory<_i12.MatchesListCubit>(
         () => _i12.MatchesListCubit(gh<_i1051.GetMatchesUseCase>()));
+    gh.factory<_i1.LeaderboardCubit>(
+        () => _i1.LeaderboardCubit(gh<_i833.GetLeaderboardUseCase>()));
     gh.factory<_i676.GetConversationsUseCase>(
         () => _i676.GetConversationsUseCase(gh<_i269.ChatRepository>()));
     gh.factory<_i676.GetMessagesUseCase>(

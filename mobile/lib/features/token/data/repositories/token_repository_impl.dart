@@ -1,6 +1,8 @@
 import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/core/network/api_error.dart';
 import 'package:crypto_match/features/token/data/datasources/token_remote_data_source.dart';
+import 'package:crypto_match/features/token/domain/entities/daily_mission.dart';
+import 'package:crypto_match/features/token/domain/entities/leaderboard_entry.dart';
 import 'package:crypto_match/features/token/domain/entities/streak_info.dart';
 import 'package:crypto_match/features/token/domain/entities/token_action.dart';
 import 'package:crypto_match/features/token/domain/entities/token_balance.dart';
@@ -43,4 +45,20 @@ class TokenRepositoryImpl implements TokenRepository {
   @override
   Future<Either<Failure, void>> useStreakShield() =>
       safeApiCall(_dataSource.useStreakShield);
+
+  @override
+  Future<Either<Failure, List<LeaderboardEntry>>> getLeaderboard() =>
+      safeApiCall(_dataSource.getLeaderboard);
+
+  @override
+  Future<Either<Failure, List<DailyMission>>> getDailyMissions() =>
+      safeApiCall(_dataSource.getDailyMissions);
+
+  @override
+  Future<Either<Failure, double>> claimMissionReward({
+    required String missionId,
+  }) =>
+      safeApiCall(
+        () => _dataSource.claimMissionReward(missionId: missionId),
+      );
 }
