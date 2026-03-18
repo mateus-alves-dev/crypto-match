@@ -11,17 +11,20 @@ const _baseUrl = String.fromEnvironment(
 @singleton
 class ApiClient {
   ApiClient(this._storage) {
-    _dio = Dio(
-      BaseOptions(
-        baseUrl: _baseUrl,
-        connectTimeout: const Duration(seconds: 15),
-        receiveTimeout: const Duration(seconds: 30),
-        headers: {'Content-Type': 'application/json'},
-      ),
-    )
-      ..interceptors.add(MockInterceptor())
-      ..interceptors.add(AuthInterceptor(_storage))
-      ..interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+    _dio =
+        Dio(
+            BaseOptions(
+              baseUrl: _baseUrl,
+              connectTimeout: const Duration(seconds: 15),
+              receiveTimeout: const Duration(seconds: 30),
+              headers: {'Content-Type': 'application/json'},
+            ),
+          )
+          ..interceptors.add(MockInterceptor())
+          ..interceptors.add(AuthInterceptor(_storage))
+          ..interceptors.add(
+            LogInterceptor(requestBody: true, responseBody: true),
+          );
   }
 
   final FlutterSecureStorage _storage;
