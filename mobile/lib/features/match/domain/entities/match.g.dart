@@ -7,24 +7,24 @@ part of 'match.dart';
 // **************************************************************************
 
 _Match _$MatchFromJson(Map<String, dynamic> json) => _Match(
-      id: json['id'] as String,
-      userId: json['userId'] as String,
-      matchedUserId: json['matchedUserId'] as String,
-      matchedUserName: json['matchedUserName'] as String,
-      matchedAt: DateTime.parse(json['matchedAt'] as String),
-      matchedUserAvatarUrl: json['matchedUserAvatarUrl'] as String?,
-      matchedUserBio: json['matchedUserBio'] as String?,
-    );
+  id: json['id'] as String,
+  userId: json['userId'] as String,
+  matchedUserId: json['matchedUserId'] as String,
+  matchedUserName: json['matchedUserName'] as String,
+  matchedAt: DateTime.parse(json['matchedAt'] as String),
+  matchedUserAvatarUrl: json['matchedUserAvatarUrl'] as String?,
+  matchedUserBio: json['matchedUserBio'] as String?,
+);
 
 Map<String, dynamic> _$MatchToJson(_Match instance) => <String, dynamic>{
-      'id': instance.id,
-      'userId': instance.userId,
-      'matchedUserId': instance.matchedUserId,
-      'matchedUserName': instance.matchedUserName,
-      'matchedAt': instance.matchedAt.toIso8601String(),
-      'matchedUserAvatarUrl': instance.matchedUserAvatarUrl,
-      'matchedUserBio': instance.matchedUserBio,
-    };
+  'id': instance.id,
+  'userId': instance.userId,
+  'matchedUserId': instance.matchedUserId,
+  'matchedUserName': instance.matchedUserName,
+  'matchedAt': instance.matchedAt.toIso8601String(),
+  'matchedUserAvatarUrl': instance.matchedUserAvatarUrl,
+  'matchedUserBio': instance.matchedUserBio,
+};
 
 _MatchSuggestion _$MatchSuggestionFromJson(Map<String, dynamic> json) =>
     _MatchSuggestion(

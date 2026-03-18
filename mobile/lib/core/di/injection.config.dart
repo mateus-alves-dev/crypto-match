@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:crypto_match/core/di/injection.dart' as _i324;
 import 'package:crypto_match/core/network/api_client.dart' as _i53;
 import 'package:crypto_match/core/router/app_router.dart' as _i446;
@@ -22,10 +23,12 @@ import 'package:crypto_match/features/auth/domain/use_cases/auth_use_cases.dart'
     as _i825;
 import 'package:crypto_match/features/auth/presentation/cubit/auth_cubit.dart'
     as _i212;
+import 'package:crypto_match/features/chat/data/datasources/chat_firestore_data_source.dart'
+    as _i998;
 import 'package:crypto_match/features/chat/data/datasources/chat_remote_data_source.dart'
     as _i173;
-import 'package:crypto_match/features/chat/data/repositories/chat_repository_mock.dart'
-    as _i74;
+import 'package:crypto_match/features/chat/data/repositories/chat_repository_impl.dart'
+    as _i599;
 import 'package:crypto_match/features/chat/domain/repositories/chat_repository.dart'
     as _i269;
 import 'package:crypto_match/features/chat/domain/use_cases/chat_use_cases.dart'
@@ -89,152 +92,223 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 extension GetItInjectableX on _i174.GetIt {
-// initializes the registration of main-scope dependencies inside of GetIt
+  // initializes the registration of main-scope dependencies inside of GetIt
   _i174.GetIt init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
   }) {
-    final gh = _i526.GetItHelper(
-      this,
-      environment,
-      environmentFilter,
-    );
+    final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
     gh.singleton<_i558.FlutterSecureStorage>(
-        () => registerModule.secureStorage);
+      () => registerModule.secureStorage,
+    );
+    gh.lazySingleton<_i974.FirebaseFirestore>(() => registerModule.firestore);
     gh.lazySingleton<_i197.AuthRepository>(
-        () => _i698.MockAuthRepositoryImpl());
-    gh.lazySingleton<_i269.ChatRepository>(() => _i74.MockChatRepositoryImpl());
+      () => _i698.MockAuthRepositoryImpl(),
+    );
     gh.lazySingleton<_i1050.MatchRepository>(
-        () => _i1067.MockMatchRepositoryImpl());
+      () => _i1067.MockMatchRepositoryImpl(),
+    );
     gh.singleton<_i53.ApiClient>(
-        () => _i53.ApiClient(gh<_i558.FlutterSecureStorage>()));
+      () => _i53.ApiClient(gh<_i558.FlutterSecureStorage>()),
+    );
     gh.lazySingleton<_i864.SettingsRepository>(
-        () => _i954.MockSettingsRepositoryImpl());
+      () => _i954.MockSettingsRepositoryImpl(),
+    );
     gh.lazySingleton<_i593.TokenRepository>(
-        () => _i920.MockTokenRepositoryImpl());
+      () => _i920.MockTokenRepositoryImpl(),
+    );
     gh.factory<_i156.AuthRemoteDataSource>(
-        () => _i156.AuthRemoteDataSource(gh<_i53.ApiClient>()));
+      () => _i156.AuthRemoteDataSource(gh<_i53.ApiClient>()),
+    );
     gh.factory<_i173.ChatRemoteDataSource>(
-        () => _i173.ChatRemoteDataSource(gh<_i53.ApiClient>()));
+      () => _i173.ChatRemoteDataSource(gh<_i53.ApiClient>()),
+    );
     gh.factory<_i627.MatchRemoteDataSource>(
-        () => _i627.MatchRemoteDataSource(gh<_i53.ApiClient>()));
+      () => _i627.MatchRemoteDataSource(gh<_i53.ApiClient>()),
+    );
     gh.factory<_i706.ProfileRemoteDataSource>(
-        () => _i706.ProfileRemoteDataSource(gh<_i53.ApiClient>()));
+      () => _i706.ProfileRemoteDataSource(gh<_i53.ApiClient>()),
+    );
     gh.factory<_i98.SettingsRemoteDataSource>(
-        () => _i98.SettingsRemoteDataSource(gh<_i53.ApiClient>()));
+      () => _i98.SettingsRemoteDataSource(gh<_i53.ApiClient>()),
+    );
     gh.factory<_i4.TokenRemoteDataSource>(
-        () => _i4.TokenRemoteDataSource(gh<_i53.ApiClient>()));
+      () => _i4.TokenRemoteDataSource(gh<_i53.ApiClient>()),
+    );
     gh.lazySingleton<_i360.ProfileRepository>(
-        () => _i841.MockProfileRepositoryImpl());
+      () => _i841.MockProfileRepositoryImpl(),
+    );
     gh.factory<_i825.LoginUseCase>(
-        () => _i825.LoginUseCase(gh<_i197.AuthRepository>()));
+      () => _i825.LoginUseCase(gh<_i197.AuthRepository>()),
+    );
     gh.factory<_i825.RegisterUseCase>(
-        () => _i825.RegisterUseCase(gh<_i197.AuthRepository>()));
+      () => _i825.RegisterUseCase(gh<_i197.AuthRepository>()),
+    );
     gh.factory<_i825.GetMeUseCase>(
-        () => _i825.GetMeUseCase(gh<_i197.AuthRepository>()));
+      () => _i825.GetMeUseCase(gh<_i197.AuthRepository>()),
+    );
     gh.factory<_i825.LogoutUseCase>(
-        () => _i825.LogoutUseCase(gh<_i197.AuthRepository>()));
-    gh.lazySingleton<_i212.AuthCubit>(() => _i212.AuthCubit(
-          gh<_i825.LoginUseCase>(),
-          gh<_i825.RegisterUseCase>(),
-          gh<_i825.GetMeUseCase>(),
-          gh<_i825.LogoutUseCase>(),
-        ));
+      () => _i825.LogoutUseCase(gh<_i197.AuthRepository>()),
+    );
+    gh.lazySingleton<_i212.AuthCubit>(
+      () => _i212.AuthCubit(
+        gh<_i825.LoginUseCase>(),
+        gh<_i825.RegisterUseCase>(),
+        gh<_i825.GetMeUseCase>(),
+        gh<_i825.LogoutUseCase>(),
+      ),
+    );
     gh.factory<_i833.GetTokenBalanceUseCase>(
-        () => _i833.GetTokenBalanceUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.GetTokenBalanceUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.GetTokenHistoryUseCase>(
-        () => _i833.GetTokenHistoryUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.GetTokenHistoryUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.DailyCheckinUseCase>(
-        () => _i833.DailyCheckinUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.DailyCheckinUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.GetRewardActionsUseCase>(
-        () => _i833.GetRewardActionsUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.GetRewardActionsUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.CompleteProfileActionUseCase>(
-        () => _i833.CompleteProfileActionUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.CompleteProfileActionUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.InviteFriendUseCase>(
-        () => _i833.InviteFriendUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.InviteFriendUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.GetStreakInfoUseCase>(
-        () => _i833.GetStreakInfoUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.GetStreakInfoUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.UseStreakShieldUseCase>(
-        () => _i833.UseStreakShieldUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.UseStreakShieldUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.GetLeaderboardUseCase>(
-        () => _i833.GetLeaderboardUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.GetLeaderboardUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.GetDailyMissionsUseCase>(
-        () => _i833.GetDailyMissionsUseCase(gh<_i593.TokenRepository>()));
+      () => _i833.GetDailyMissionsUseCase(gh<_i593.TokenRepository>()),
+    );
     gh.factory<_i833.ClaimMissionRewardUseCase>(
-        () => _i833.ClaimMissionRewardUseCase(gh<_i593.TokenRepository>()));
-    gh.factory<_i823.StreakCubit>(() => _i823.StreakCubit(
-          gh<_i833.GetStreakInfoUseCase>(),
-          gh<_i833.UseStreakShieldUseCase>(),
-        ));
-    gh.factory<_i926.DailyMissionsCubit>(() => _i926.DailyMissionsCubit(
-          gh<_i833.GetDailyMissionsUseCase>(),
-          gh<_i833.ClaimMissionRewardUseCase>(),
-        ));
+      () => _i833.ClaimMissionRewardUseCase(gh<_i593.TokenRepository>()),
+    );
+    gh.factory<_i823.StreakCubit>(
+      () => _i823.StreakCubit(
+        gh<_i833.GetStreakInfoUseCase>(),
+        gh<_i833.UseStreakShieldUseCase>(),
+      ),
+    );
+    gh.factory<_i926.DailyMissionsCubit>(
+      () => _i926.DailyMissionsCubit(
+        gh<_i833.GetDailyMissionsUseCase>(),
+        gh<_i833.ClaimMissionRewardUseCase>(),
+      ),
+    );
     gh.factory<_i1051.GetMatchFeedUseCase>(
-        () => _i1051.GetMatchFeedUseCase(gh<_i1050.MatchRepository>()));
+      () => _i1051.GetMatchFeedUseCase(gh<_i1050.MatchRepository>()),
+    );
     gh.factory<_i1051.SwipeUseCase>(
-        () => _i1051.SwipeUseCase(gh<_i1050.MatchRepository>()));
+      () => _i1051.SwipeUseCase(gh<_i1050.MatchRepository>()),
+    );
     gh.factory<_i1051.GetMatchesUseCase>(
-        () => _i1051.GetMatchesUseCase(gh<_i1050.MatchRepository>()));
+      () => _i1051.GetMatchesUseCase(gh<_i1050.MatchRepository>()),
+    );
     gh.factory<_i12.MatchesListCubit>(
-        () => _i12.MatchesListCubit(gh<_i1051.GetMatchesUseCase>()));
+      () => _i12.MatchesListCubit(gh<_i1051.GetMatchesUseCase>()),
+    );
     gh.factory<_i1.LeaderboardCubit>(
-        () => _i1.LeaderboardCubit(gh<_i833.GetLeaderboardUseCase>()));
-    gh.factory<_i676.GetConversationsUseCase>(
-        () => _i676.GetConversationsUseCase(gh<_i269.ChatRepository>()));
-    gh.factory<_i676.GetMessagesUseCase>(
-        () => _i676.GetMessagesUseCase(gh<_i269.ChatRepository>()));
-    gh.factory<_i676.SendMessageUseCase>(
-        () => _i676.SendMessageUseCase(gh<_i269.ChatRepository>()));
+      () => _i1.LeaderboardCubit(gh<_i833.GetLeaderboardUseCase>()),
+    );
+    gh.factory<_i998.ChatFirestoreDataSource>(
+      () => _i998.ChatFirestoreDataSource(gh<_i974.FirebaseFirestore>()),
+    );
     gh.factory<_i795.GetUserSettingsUseCase>(
-        () => _i795.GetUserSettingsUseCase(gh<_i864.SettingsRepository>()));
-    gh.factory<_i795.UpdateMatchPreferencesUseCase>(() =>
-        _i795.UpdateMatchPreferencesUseCase(gh<_i864.SettingsRepository>()));
-    gh.factory<_i795.UpdateNotificationSettingsUseCase>(() =>
-        _i795.UpdateNotificationSettingsUseCase(
-            gh<_i864.SettingsRepository>()));
-    gh.factory<_i795.UpdatePrivacySettingsUseCase>(() =>
-        _i795.UpdatePrivacySettingsUseCase(gh<_i864.SettingsRepository>()));
+      () => _i795.GetUserSettingsUseCase(gh<_i864.SettingsRepository>()),
+    );
+    gh.factory<_i795.UpdateMatchPreferencesUseCase>(
+      () => _i795.UpdateMatchPreferencesUseCase(gh<_i864.SettingsRepository>()),
+    );
+    gh.factory<_i795.UpdateNotificationSettingsUseCase>(
+      () => _i795.UpdateNotificationSettingsUseCase(
+        gh<_i864.SettingsRepository>(),
+      ),
+    );
+    gh.factory<_i795.UpdatePrivacySettingsUseCase>(
+      () => _i795.UpdatePrivacySettingsUseCase(gh<_i864.SettingsRepository>()),
+    );
     gh.factory<_i795.DeleteAccountUseCase>(
-        () => _i795.DeleteAccountUseCase(gh<_i864.SettingsRepository>()));
-    gh.factory<_i312.RewardActionsCubit>(() => _i312.RewardActionsCubit(
-          gh<_i833.GetRewardActionsUseCase>(),
-          gh<_i833.DailyCheckinUseCase>(),
-          gh<_i833.CompleteProfileActionUseCase>(),
-          gh<_i833.InviteFriendUseCase>(),
-        ));
-    gh.factory<_i947.TokenCubit>(() => _i947.TokenCubit(
-          gh<_i833.GetTokenBalanceUseCase>(),
-          gh<_i833.GetTokenHistoryUseCase>(),
-          gh<_i833.DailyCheckinUseCase>(),
-        ));
-    gh.factory<_i293.MessagesCubit>(() => _i293.MessagesCubit(
-          gh<_i676.GetMessagesUseCase>(),
-          gh<_i676.SendMessageUseCase>(),
-        ));
+      () => _i795.DeleteAccountUseCase(gh<_i864.SettingsRepository>()),
+    );
+    gh.factory<_i312.RewardActionsCubit>(
+      () => _i312.RewardActionsCubit(
+        gh<_i833.GetRewardActionsUseCase>(),
+        gh<_i833.DailyCheckinUseCase>(),
+        gh<_i833.CompleteProfileActionUseCase>(),
+        gh<_i833.InviteFriendUseCase>(),
+      ),
+    );
+    gh.factory<_i947.TokenCubit>(
+      () => _i947.TokenCubit(
+        gh<_i833.GetTokenBalanceUseCase>(),
+        gh<_i833.GetTokenHistoryUseCase>(),
+        gh<_i833.DailyCheckinUseCase>(),
+      ),
+    );
     gh.factory<_i722.GetMyProfileUseCase>(
-        () => _i722.GetMyProfileUseCase(gh<_i360.ProfileRepository>()));
+      () => _i722.GetMyProfileUseCase(gh<_i360.ProfileRepository>()),
+    );
     gh.factory<_i722.UpdateMyProfileUseCase>(
-        () => _i722.UpdateMyProfileUseCase(gh<_i360.ProfileRepository>()));
+      () => _i722.UpdateMyProfileUseCase(gh<_i360.ProfileRepository>()),
+    );
     gh.singleton<_i446.AppRouter>(() => _i446.AppRouter(gh<_i212.AuthCubit>()));
-    gh.factory<_i498.MatchCubit>(() => _i498.MatchCubit(
-          gh<_i1051.GetMatchFeedUseCase>(),
-          gh<_i1051.SwipeUseCase>(),
-        ));
+    gh.lazySingleton<_i269.ChatRepository>(
+      () => _i599.ChatRepositoryImpl(
+        gh<_i173.ChatRemoteDataSource>(),
+        gh<_i998.ChatFirestoreDataSource>(),
+      ),
+    );
+    gh.factory<_i498.MatchCubit>(
+      () => _i498.MatchCubit(
+        gh<_i1051.GetMatchFeedUseCase>(),
+        gh<_i1051.SwipeUseCase>(),
+      ),
+    );
+    gh.factory<_i296.SettingsCubit>(
+      () => _i296.SettingsCubit(
+        gh<_i795.GetUserSettingsUseCase>(),
+        gh<_i795.UpdateMatchPreferencesUseCase>(),
+        gh<_i795.UpdateNotificationSettingsUseCase>(),
+        gh<_i795.UpdatePrivacySettingsUseCase>(),
+        gh<_i795.DeleteAccountUseCase>(),
+      ),
+    );
+    gh.factory<_i676.GetConversationsUseCase>(
+      () => _i676.GetConversationsUseCase(gh<_i269.ChatRepository>()),
+    );
+    gh.factory<_i676.GetMessagesUseCase>(
+      () => _i676.GetMessagesUseCase(gh<_i269.ChatRepository>()),
+    );
+    gh.factory<_i676.SendMessageUseCase>(
+      () => _i676.SendMessageUseCase(gh<_i269.ChatRepository>()),
+    );
+    gh.factory<_i676.WatchMessagesUseCase>(
+      () => _i676.WatchMessagesUseCase(gh<_i269.ChatRepository>()),
+    );
+    gh.factory<_i41.ProfileCubit>(
+      () => _i41.ProfileCubit(
+        gh<_i722.GetMyProfileUseCase>(),
+        gh<_i722.UpdateMyProfileUseCase>(),
+      ),
+    );
     gh.factory<_i698.ConversationsCubit>(
-        () => _i698.ConversationsCubit(gh<_i676.GetConversationsUseCase>()));
-    gh.factory<_i296.SettingsCubit>(() => _i296.SettingsCubit(
-          gh<_i795.GetUserSettingsUseCase>(),
-          gh<_i795.UpdateMatchPreferencesUseCase>(),
-          gh<_i795.UpdateNotificationSettingsUseCase>(),
-          gh<_i795.UpdatePrivacySettingsUseCase>(),
-          gh<_i795.DeleteAccountUseCase>(),
-        ));
-    gh.factory<_i41.ProfileCubit>(() => _i41.ProfileCubit(
-          gh<_i722.GetMyProfileUseCase>(),
-          gh<_i722.UpdateMyProfileUseCase>(),
-        ));
+      () => _i698.ConversationsCubit(gh<_i676.GetConversationsUseCase>()),
+    );
+    gh.factory<_i293.MessagesCubit>(
+      () => _i293.MessagesCubit(
+        gh<_i676.SendMessageUseCase>(),
+        gh<_i676.WatchMessagesUseCase>(),
+      ),
+    );
     return this;
   }
 }

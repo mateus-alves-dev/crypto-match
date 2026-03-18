@@ -12,5 +12,8 @@ abstract class ChatRepository {
   Future<Either<Failure, Message>> sendMessage({
     required String conversationId,
     required String content,
+    required String senderId,
   });
+
+  Stream<List<Message>> watchMessages({required String conversationId});
 }

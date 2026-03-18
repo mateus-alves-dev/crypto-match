@@ -2,9 +2,8 @@ import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/features/chat/domain/entities/message.dart';
 import 'package:crypto_match/features/chat/domain/repositories/chat_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: ChatRepository)
+// @LazySingleton(as: ChatRepository) — disabled: production uses ChatRepositoryImpl
 class MockChatRepositoryImpl implements ChatRepository {
   // In-memory messages store: conversationId -> List<Message>
   final Map<String, List<Message>> _messages = {
@@ -129,6 +128,7 @@ class MockChatRepositoryImpl implements ChatRepository {
   Future<Either<Failure, Message>> sendMessage({
     required String conversationId,
     required String content,
+    required String senderId,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 200));
     final message = Message(
@@ -150,4 +150,8 @@ class MockChatRepositoryImpl implements ChatRepository {
     }
     return Right(message);
   }
+
+  @override
+  Stream<List<Message>> watchMessages({required String conversationId}) =>
+      Stream.value(_messages[conversationId] ?? []);
 }

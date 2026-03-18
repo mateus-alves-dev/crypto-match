@@ -7,19 +7,19 @@ part of 'token_action.dart';
 // **************************************************************************
 
 _TokenAction _$TokenActionFromJson(Map<String, dynamic> json) => _TokenAction(
-      id: json['id'] as String,
-      type: $enumDecode(_$TokenActionTypeEnumMap, json['type']),
-      title: json['title'] as String,
-      description: json['description'] as String,
-      reward: (json['reward'] as num).toDouble(),
-      isAvailable: json['isAvailable'] as bool,
-      nextAvailableAt: json['nextAvailableAt'] == null
-          ? null
-          : DateTime.parse(json['nextAvailableAt'] as String),
-      completedAt: json['completedAt'] == null
-          ? null
-          : DateTime.parse(json['completedAt'] as String),
-    );
+  id: json['id'] as String,
+  type: $enumDecode(_$TokenActionTypeEnumMap, json['type']),
+  title: json['title'] as String,
+  description: json['description'] as String,
+  reward: (json['reward'] as num).toDouble(),
+  isAvailable: json['isAvailable'] as bool,
+  nextAvailableAt: json['nextAvailableAt'] == null
+      ? null
+      : DateTime.parse(json['nextAvailableAt'] as String),
+  completedAt: json['completedAt'] == null
+      ? null
+      : DateTime.parse(json['completedAt'] as String),
+);
 
 Map<String, dynamic> _$TokenActionToJson(_TokenAction instance) =>
     <String, dynamic>{

@@ -34,6 +34,7 @@ class ChatRemoteDataSource {
   Future<Either<Failure, Message>> sendMessage({
     required String conversationId,
     required String content,
+    required String senderId, // ignored: server infers sender from JWT
   }) =>
       safeApiCall(() async {
         final response = await _apiClient.dio.post<Map<String, dynamic>>(

@@ -56,7 +56,7 @@ void main() {
     // -----------------------------------------------------------------------
     group('loadLeaderboard', () {
       final entries = [
-        _entry(userId: 'user-1'),
+        _entry(),
         _entry(
           rank: 2,
           userId: 'user-2',

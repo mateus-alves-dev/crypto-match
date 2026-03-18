@@ -35,9 +35,21 @@ class SendMessageUseCase {
   Future<Either<Failure, Message>> call({
     required String conversationId,
     required String content,
+    required String senderId,
   }) =>
       _repository.sendMessage(
         conversationId: conversationId,
         content: content,
+        senderId: senderId,
       );
+}
+
+@injectable
+class WatchMessagesUseCase {
+  const WatchMessagesUseCase(this._repository);
+
+  final ChatRepository _repository;
+
+  Stream<List<Message>> call({required String conversationId}) =>
+      _repository.watchMessages(conversationId: conversationId);
 }

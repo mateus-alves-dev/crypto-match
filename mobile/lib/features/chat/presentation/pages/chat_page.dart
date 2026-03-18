@@ -1,3 +1,5 @@
+import 'package:crypto_match/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:crypto_match/features/auth/presentation/cubit/auth_state.dart';
 import 'package:crypto_match/features/chat/domain/entities/message.dart';
 import 'package:crypto_match/features/chat/presentation/cubit/messages_cubit.dart';
 import 'package:crypto_match/features/chat/presentation/cubit/messages_state.dart';
@@ -18,13 +20,22 @@ class _ChatPageState extends State<ChatPage> {
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
   final _focusNode = FocusNode();
+  late final String _currentUserId;
 
   @override
   void initState() {
     super.initState();
-    context
-        .read<MessagesCubit>()
-        .loadMessages(conversation: widget.conversation);
+    _currentUserId = context.read<AuthCubit>().state.when(
+      initial: () => '',
+      loading: () => '',
+      authenticated: (user) => user.id,
+      unauthenticated: () => '',
+      needsOnboarding: (user) => '',
+      failure: (_) => '',
+    );
+    context.read<MessagesCubit>().watchMessages(
+      conversation: widget.conversation,
+    );
   }
 
   @override
@@ -51,7 +62,10 @@ class _ChatPageState extends State<ChatPage> {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
     _controller.clear();
-    context.read<MessagesCubit>().sendMessage(content: text);
+    context.read<MessagesCubit>().sendMessage(
+      content: text,
+      senderId: _currentUserId,
+    );
     _scrollToBottom();
   }
 
@@ -85,10 +99,12 @@ class _ChatPageState extends State<ChatPage> {
                 loaded: (_, messages) => _MessagesList(
                   messages: messages,
                   scrollController: _scrollController,
+                  currentUserId: _currentUserId,
                 ),
                 sending: (_, messages) => _MessagesList(
                   messages: messages,
                   scrollController: _scrollController,
+                  currentUserId: _currentUserId,
                   isSending: true,
                 ),
                 failure: (message) => Center(
@@ -104,10 +120,9 @@ class _ChatPageState extends State<ChatPage> {
                       Text(message),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () =>
-                            context.read<MessagesCubit>().loadMessages(
-                                  conversation: widget.conversation,
-                                ),
+                        onPressed: () => context
+                            .read<MessagesCubit>()
+                            .watchMessages(conversation: widget.conversation),
                         child: const Text('Tentar novamente'),
                       ),
                     ],
@@ -158,10 +173,7 @@ class _AppBarTitle extends StatelessWidget {
         Expanded(
           child: Text(
             conversation.participantName,
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 17,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -174,11 +186,13 @@ class _MessagesList extends StatelessWidget {
   const _MessagesList({
     required this.messages,
     required this.scrollController,
+    required this.currentUserId,
     this.isSending = false,
   });
 
   final List<Message> messages;
   final ScrollController scrollController;
+  final String currentUserId;
   final bool isSending;
 
   @override
@@ -190,10 +204,7 @@ class _MessagesList extends StatelessWidget {
           children: [
             const Text('👋', style: TextStyle(fontSize: 48)),
             const SizedBox(height: 12),
-            Text(
-              'Diga olá!',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text('Diga olá!', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 4),
             const Text(
               'Seja o primeiro a enviar uma mensagem.',
@@ -222,8 +233,7 @@ class _MessagesList extends StatelessWidget {
           );
         }
         final msg = messages[index];
-        return MessageBubble(
-            message: msg, isMe: msg.senderId == 'current-user',);
+        return MessageBubble(message: msg, isMe: msg.senderId == currentUserId);
       },
     );
   }

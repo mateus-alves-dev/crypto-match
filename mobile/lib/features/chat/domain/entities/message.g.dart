@@ -7,22 +7,22 @@ part of 'message.dart';
 // **************************************************************************
 
 _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
-      id: json['id'] as String,
-      conversationId: json['conversationId'] as String,
-      senderId: json['senderId'] as String,
-      content: json['content'] as String,
-      sentAt: DateTime.parse(json['sentAt'] as String),
-      isRead: json['isRead'] as bool?,
-    );
+  id: json['id'] as String,
+  conversationId: json['conversationId'] as String,
+  senderId: json['senderId'] as String,
+  content: json['content'] as String,
+  sentAt: DateTime.parse(json['sentAt'] as String),
+  isRead: json['isRead'] as bool?,
+);
 
 Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
-      'id': instance.id,
-      'conversationId': instance.conversationId,
-      'senderId': instance.senderId,
-      'content': instance.content,
-      'sentAt': instance.sentAt.toIso8601String(),
-      'isRead': instance.isRead,
-    };
+  'id': instance.id,
+  'conversationId': instance.conversationId,
+  'senderId': instance.senderId,
+  'content': instance.content,
+  'sentAt': instance.sentAt.toIso8601String(),
+  'isRead': instance.isRead,
+};
 
 _Conversation _$ConversationFromJson(Map<String, dynamic> json) =>
     _Conversation(

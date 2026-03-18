@@ -1,4 +1,5 @@
 import 'package:crypto_match/core/error/failure.dart';
+import 'package:crypto_match/features/auth/domain/entities/user.dart';
 import 'package:crypto_match/features/auth/domain/use_cases/auth_use_cases.dart';
 import 'package:crypto_match/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,8 @@ class AuthCubit extends Cubit<AuthState> {
   final RegisterUseCase _registerUseCase;
   final GetMeUseCase _getMeUseCase;
   final LogoutUseCase _logoutUseCase;
+
+  User? _pendingUser;
 
   Future<void> login({
     required String email,
@@ -63,8 +66,19 @@ class AuthCubit extends Cubit<AuthState> {
           ),
         ),
       ),
-      (user) => emit(AuthState.authenticated(user: user)),
+      (user) {
+        _pendingUser = user;
+        emit(AuthState.needsOnboarding(user: user));
+      },
     );
+  }
+
+  void completeOnboarding() {
+    final user = _pendingUser;
+    if (user != null) {
+      _pendingUser = null;
+      emit(AuthState.authenticated(user: user));
+    }
   }
 
   Future<void> checkAuth() async {

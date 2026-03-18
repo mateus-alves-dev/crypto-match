@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_match/core/di/injection.config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -13,4 +14,7 @@ Future<void> configureDependencies() async => getIt.init();
 abstract class RegisterModule {
   @singleton
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
+
+  @lazySingleton
+  FirebaseFirestore get firestore => FirebaseFirestore.instance;
 }

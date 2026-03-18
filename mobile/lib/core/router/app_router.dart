@@ -4,6 +4,7 @@ import 'package:crypto_match/core/router/main_shell.dart';
 import 'package:crypto_match/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:crypto_match/features/auth/presentation/cubit/auth_state.dart';
 import 'package:crypto_match/features/auth/presentation/pages/login_page.dart';
+import 'package:crypto_match/features/auth/presentation/pages/onboarding_page.dart';
 import 'package:crypto_match/features/auth/presentation/pages/register_page.dart';
 import 'package:crypto_match/features/chat/domain/entities/message.dart';
 import 'package:crypto_match/features/chat/presentation/cubit/messages_cubit.dart';
@@ -27,6 +28,7 @@ import 'package:injectable/injectable.dart';
 abstract final class AppRoutes {
   static const login = '/login';
   static const register = '/register';
+  static const onboarding = '/onboarding';
   static const feed = '/feed';
   static const matches = '/matches';
   static const conversations = '/conversations';
@@ -62,8 +64,15 @@ class AppRouter {
       return _authCubit.state.when(
         initial: () => null,
         loading: () => null,
-        authenticated: (_) => isOnAuthRoute ? AppRoutes.feed : null,
+        authenticated: (_) {
+          if (isOnAuthRoute || location == AppRoutes.onboarding) {
+            return AppRoutes.feed;
+          }
+          return null;
+        },
         unauthenticated: () => isOnAuthRoute ? null : AppRoutes.login,
+        needsOnboarding: (_) =>
+            location == AppRoutes.onboarding ? null : AppRoutes.onboarding,
         failure: (_) => isOnAuthRoute ? null : AppRoutes.login,
       );
     },
@@ -79,6 +88,12 @@ class AppRouter {
         name: 'register',
         builder: (BuildContext context, GoRouterState state) =>
             const RegisterPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.onboarding,
+        name: 'onboarding',
+        builder: (BuildContext context, GoRouterState state) =>
+            const OnboardingPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (
