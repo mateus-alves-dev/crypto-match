@@ -1,3 +1,4 @@
+import 'package:crypto_match/core/network/mock_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -18,6 +19,7 @@ class ApiClient {
         headers: {'Content-Type': 'application/json'},
       ),
     )
+      ..interceptors.add(MockInterceptor())
       ..interceptors.add(AuthInterceptor(_storage))
       ..interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
   }
