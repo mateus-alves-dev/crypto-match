@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:crypto_match/features/profile/domain/entities/profile.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_state.dart';
@@ -5,6 +7,7 @@ import 'package:crypto_match/features/profile/presentation/widgets/persona_tag_p
 import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 // All crypto options available for selection
 const _kAllCryptos = [
@@ -51,6 +54,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   late List<String> _selectedInterests;
   late List<String> _selectedPersonaTags;
   late final bool _hadPersonaTagsOnLoad;
+  late final bool _hadAvatarOnLoad;
+  XFile? _pickedAvatarFile;
 
   @override
   void initState() {
@@ -59,11 +64,13 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     _nameController = TextEditingController(text: p.displayName);
     _bioController = TextEditingController(text: p.bio ?? '');
     _locationController = TextEditingController(text: p.location ?? '');
-    _ageController =
-        TextEditingController(text: p.age != null ? '${p.age}' : '');
+    _ageController = TextEditingController(
+      text: p.age != null ? '${p.age}' : '',
+    );
     _selectedInterests = List<String>.from(p.cryptoInterests ?? []);
     _selectedPersonaTags = List<String>.from(p.personaTags ?? []);
     _hadPersonaTagsOnLoad = p.personaTags != null && p.personaTags!.isNotEmpty;
+    _hadAvatarOnLoad = p.avatarUrl != null;
   }
 
   @override
@@ -86,20 +93,19 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       );
       return;
     }
-    context.read<ProfileCubit>().updateProfile(
-          displayName: name,
-          bio: _bioController.text.trim().isEmpty
-              ? null
-              : _bioController.text.trim(),
-          cryptoInterests:
-              _selectedInterests.isEmpty ? null : _selectedInterests,
-          personaTags:
-              _selectedPersonaTags.isEmpty ? null : _selectedPersonaTags,
-          age: int.tryParse(_ageController.text.trim()),
-          location: _locationController.text.trim().isEmpty
-              ? null
-              : _locationController.text.trim(),
-        );
+    context.read<ProfileCubit>().uploadAndSaveProfile(
+      avatarFile: _pickedAvatarFile,
+      displayName: name,
+      bio: _bioController.text.trim().isEmpty
+          ? null
+          : _bioController.text.trim(),
+      cryptoInterests: _selectedInterests.isEmpty ? null : _selectedInterests,
+      personaTags: _selectedPersonaTags.isEmpty ? null : _selectedPersonaTags,
+      age: int.tryParse(_ageController.text.trim()),
+      location: _locationController.text.trim().isEmpty
+          ? null
+          : _locationController.text.trim(),
+    );
   }
 
   void _toggleInterest(String interest) {
@@ -120,9 +126,17 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           updateSuccess: (updatedProfile) {
             // Reload balance if persona tags were added for the first time
             // (backend auto-credits +50 CMT on first save)
-            final justAddedPersona = !_hadPersonaTagsOnLoad &&
+            final justAddedPersona =
+                !_hadPersonaTagsOnLoad &&
                 (updatedProfile.personaTags?.isNotEmpty ?? false);
             if (justAddedPersona) {
+              context.read<TokenCubit>().loadWallet();
+            }
+            // Reload balance if avatar was uploaded for the first time
+            // (backend auto-credits +20 CMT on first avatar upload)
+            final justAddedAvatar =
+                !_hadAvatarOnLoad && updatedProfile.avatarUrl != null;
+            if (justAddedAvatar) {
               context.read<TokenCubit>().loadWallet();
             }
             ScaffoldMessenger.of(context).showSnackBar(
@@ -157,6 +171,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               builder: (context, state) {
                 final isLoading = state.maybeWhen(
                   updating: (_) => true,
+                  uploadingAvatar: (_) => true,
                   orElse: () => false,
                 );
                 return Padding(
@@ -190,7 +205,21 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _AvatarSection(profile: widget.profile),
+              _AvatarSection(
+                profile: widget.profile,
+                pickedFile: _pickedAvatarFile,
+                onTap: () async {
+                  final picker = ImagePicker();
+                  final file = await picker.pickImage(
+                    source: ImageSource.gallery,
+                    imageQuality: 85,
+                    maxWidth: 800,
+                  );
+                  if (file != null) {
+                    setState(() => _pickedAvatarFile = file);
+                  }
+                },
+              ),
               const SizedBox(height: 28),
               const _SectionLabel('Sobre você'),
               const SizedBox(height: 12),
@@ -264,8 +293,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                         style: TextStyle(
                           color: selected ? Colors.white : Colors.white60,
                           fontSize: 13,
-                          fontWeight:
-                              selected ? FontWeight.w600 : FontWeight.normal,
+                          fontWeight: selected
+                              ? FontWeight.w600
+                              : FontWeight.normal,
                         ),
                       ),
                     ),
@@ -295,47 +325,82 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 }
 
 class _AvatarSection extends StatelessWidget {
-  const _AvatarSection({required this.profile});
+  const _AvatarSection({
+    required this.profile,
+    required this.onTap,
+    this.pickedFile,
+  });
+
   final Profile profile;
+  final XFile? pickedFile;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final isUploading = context.select<ProfileCubit, bool>(
+      (c) =>
+          c.state.maybeWhen(uploadingAvatar: (_) => true, orElse: () => false),
+    );
+
+    ImageProvider? imageProvider;
+    if (pickedFile != null) {
+      imageProvider = FileImage(File(pickedFile!.path));
+    } else if (profile.avatarUrl != null) {
+      imageProvider = NetworkImage(profile.avatarUrl!);
+    }
+
     return Center(
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          CircleAvatar(
-            radius: 52,
-            backgroundColor: const Color(0xFF1A1A2E),
-            backgroundImage: profile.avatarUrl != null
-                ? NetworkImage(profile.avatarUrl!)
-                : null,
-            child: profile.avatarUrl == null
-                ? Text(
-                    profile.displayName.isNotEmpty
-                        ? profile.displayName[0].toUpperCase()
-                        : '?',
-                    style: const TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white70,
+      child: GestureDetector(
+        onTap: isUploading ? null : onTap,
+        child: Stack(
+          alignment: Alignment.bottomRight,
+          children: [
+            CircleAvatar(
+              radius: 52,
+              backgroundColor: const Color(0xFF1A1A2E),
+              backgroundImage: imageProvider,
+              child: imageProvider == null
+                  ? Text(
+                      profile.displayName.isNotEmpty
+                          ? profile.displayName[0].toUpperCase()
+                          : '?',
+                      style: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white70,
+                      ),
+                    )
+                  : null,
+            ),
+            if (isUploading)
+              const Positioned.fill(
+                child: CircleAvatar(
+                  radius: 52,
+                  backgroundColor: Colors.black45,
+                  child: SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
                     ),
-                  )
-                : null,
-          ),
-          Container(
-            padding: const EdgeInsets.all(6),
-            decoration: const BoxDecoration(
-              color: Color(0xFF6C63FF),
-              shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: const BoxDecoration(
+                color: Color(0xFF6C63FF),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.camera_alt_rounded,
+                size: 16,
+                color: Colors.white,
+              ),
             ),
-            child: const Icon(
-              Icons.camera_alt_rounded,
-              size: 16,
-              color: Colors.white,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -398,16 +463,20 @@ class _Field extends StatelessWidget {
             hintStyle: const TextStyle(color: Colors.white24, fontSize: 14),
             filled: true,
             fillColor: const Color(0xFF1A1A2E),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide:
-                  const BorderSide(color: Color(0xFF6C63FF), width: 1.5),
+              borderSide: const BorderSide(
+                color: Color(0xFF6C63FF),
+                width: 1.5,
+              ),
             ),
           ),
         ),

@@ -50,6 +50,8 @@ class _ProfilePageState extends State<ProfilePage> {
           loaded: (profile) => _ProfileView(profile: profile),
           updating: (profile) =>
               _ProfileView(profile: profile, isUpdating: true),
+          uploadingAvatar: (profile) =>
+              _ProfileView(profile: profile, isUpdating: true),
           updateSuccess: (profile) => _ProfileView(profile: profile),
           failure: (message) => _ErrorView(
             message: message,
@@ -132,9 +134,9 @@ class _ProfileHeader extends StatelessWidget {
           Text(
             profile.displayName,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 22,
-                ),
+              fontWeight: FontWeight.w800,
+              fontSize: 22,
+            ),
             textAlign: TextAlign.center,
           ),
           if (profile.age != null || profile.location != null) ...[

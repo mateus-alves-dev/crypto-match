@@ -66,7 +66,7 @@ class _FeedPageState extends State<FeedPage> {
     Navigator.of(context).push<void>(
       PageRouteBuilder<void>(
         opaque: false,
-        pageBuilder: (_, __, ___) => MatchDialog(
+        pageBuilder: (_, _, _) => MatchDialog(
           match: match,
           onContinue: () {
             Navigator.of(context).pop();

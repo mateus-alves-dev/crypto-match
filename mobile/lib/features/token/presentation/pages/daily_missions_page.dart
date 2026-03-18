@@ -25,13 +25,11 @@ class _DailyMissionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Missões Diárias'),
-      ),
+      appBar: AppBar(title: const Text('Missões Diárias')),
       body: BlocConsumer<DailyMissionsCubit, DailyMissionsState>(
         listener: (BuildContext context, DailyMissionsState state) {
           state.whenOrNull(
-            claimSuccess: (_, earnedAmount, __) {
+            claimSuccess: (_, earnedAmount, _) {
               _showCelebrationSnackBar(context, earnedAmount);
               context.read<TokenCubit>().loadWallet();
             },
@@ -45,13 +43,10 @@ class _DailyMissionsView extends StatelessWidget {
             missions: missions,
             claimingMissionId: claimingMissionId,
           ),
-          claimSuccess: (missions, _, __) => _MissionsList(missions: missions),
+          claimSuccess: (missions, _, _) => _MissionsList(missions: missions),
           failure: (message, missions) {
             if (missions != null && missions.isNotEmpty) {
-              return _MissionsList(
-                missions: missions,
-                errorMessage: message,
-              );
+              return _MissionsList(missions: missions, errorMessage: message);
             }
             return _ErrorView(
               message: message,
@@ -151,8 +146,8 @@ class _ResetsAtFooter extends StatelessWidget {
     return Text(
       'Missões reiniciam em $formatted',
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
       textAlign: TextAlign.center,
     );
   }

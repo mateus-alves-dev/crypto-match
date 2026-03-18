@@ -51,8 +51,12 @@ import 'package:crypto_match/features/match/presentation/cubit/matches_list_cubi
     as _i12;
 import 'package:crypto_match/features/profile/data/datasources/profile_remote_data_source.dart'
     as _i706;
+import 'package:crypto_match/features/profile/data/repositories/avatar_repository_impl.dart'
+    as _i64;
 import 'package:crypto_match/features/profile/data/repositories/profile_repository_mock.dart'
     as _i841;
+import 'package:crypto_match/features/profile/domain/repositories/avatar_repository.dart'
+    as _i176;
 import 'package:crypto_match/features/profile/domain/repositories/profile_repository.dart'
     as _i360;
 import 'package:crypto_match/features/profile/domain/use_cases/profile_use_cases.dart'
@@ -87,6 +91,7 @@ import 'package:crypto_match/features/token/presentation/cubit/streak_cubit.dart
     as _i823;
 import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart'
     as _i947;
+import 'package:firebase_storage/firebase_storage.dart' as _i457;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -103,6 +108,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.secureStorage,
     );
     gh.lazySingleton<_i974.FirebaseFirestore>(() => registerModule.firestore);
+    gh.lazySingleton<_i457.FirebaseStorage>(() => registerModule.storage);
     gh.lazySingleton<_i197.AuthRepository>(
       () => _i698.MockAuthRepositoryImpl(),
     );
@@ -191,6 +197,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i833.ClaimMissionRewardUseCase>(
       () => _i833.ClaimMissionRewardUseCase(gh<_i593.TokenRepository>()),
+    );
+    gh.lazySingleton<_i176.AvatarRepository>(
+      () => _i64.AvatarRepositoryImpl(gh<_i457.FirebaseStorage>()),
     );
     gh.factory<_i823.StreakCubit>(
       () => _i823.StreakCubit(
@@ -298,6 +307,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i41.ProfileCubit(
         gh<_i722.GetMyProfileUseCase>(),
         gh<_i722.UpdateMyProfileUseCase>(),
+        gh<_i176.AvatarRepository>(),
       ),
     );
     gh.factory<_i698.ConversationsCubit>(

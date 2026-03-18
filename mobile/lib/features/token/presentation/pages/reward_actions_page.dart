@@ -64,7 +64,7 @@ class _RewardActionsPageState extends State<RewardActionsPage> {
                   ),
                 );
               },
-              failure: (message, __) {
+              failure: (message, _) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(message),
@@ -136,7 +136,7 @@ class _ActionsList extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: actions.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final action = actions[index];
         return _ActionCard(
@@ -192,8 +192,9 @@ class _ActionCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     action.description,
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: Colors.white54),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: Colors.white54,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   _statusBadge(context),
@@ -206,8 +207,10 @@ class _ActionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.primary.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
@@ -263,10 +266,9 @@ class _ActionCard extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             'Disponível',
-            style: Theme.of(context)
-                .textTheme
-                .labelSmall
-                ?.copyWith(color: Colors.greenAccent),
+            style: Theme.of(
+              context,
+            ).textTheme.labelSmall?.copyWith(color: Colors.greenAccent),
           ),
         ],
       );
@@ -275,10 +277,9 @@ class _ActionCard extends StatelessWidget {
     final label = _unavailableDetailLabel();
     return Text(
       label,
-      style: Theme.of(context)
-          .textTheme
-          .labelSmall
-          ?.copyWith(color: Colors.white38),
+      style: Theme.of(
+        context,
+      ).textTheme.labelSmall?.copyWith(color: Colors.white38),
     );
   }
 
@@ -298,15 +299,14 @@ class _ActionCard extends StatelessWidget {
   }
 
   IconData _iconFor(TokenActionType type) => switch (type) {
-        TokenActionType.dailyCheckin => Icons.calendar_today_rounded,
-        TokenActionType.completeProfile => Icons.person_rounded,
-        TokenActionType.inviteFriend => Icons.group_add_rounded,
-        TokenActionType.streakShield => Icons.shield_rounded,
-        TokenActionType.weeklyRank1st ||
-        TokenActionType.weeklyRank2nd ||
-        TokenActionType.weeklyRank3rd =>
-          Icons.emoji_events_rounded,
-      };
+    TokenActionType.dailyCheckin => Icons.calendar_today_rounded,
+    TokenActionType.completeProfile => Icons.person_rounded,
+    TokenActionType.inviteFriend => Icons.group_add_rounded,
+    TokenActionType.streakShield => Icons.shield_rounded,
+    TokenActionType.weeklyRank1st ||
+    TokenActionType.weeklyRank2nd ||
+    TokenActionType.weeklyRank3rd => Icons.emoji_events_rounded,
+  };
 
   void _onClaim(BuildContext context) {
     final cubit = context.read<RewardActionsCubit>();

@@ -89,8 +89,8 @@ class _ChatPageState extends State<ChatPage> {
             child: BlocConsumer<MessagesCubit, MessagesState>(
               listener: (context, state) {
                 state.whenOrNull(
-                  loaded: (_, __) => _scrollToBottom(),
-                  sending: (_, __) => _scrollToBottom(),
+                  loaded: (_, _) => _scrollToBottom(),
+                  sending: (_, _) => _scrollToBottom(),
                 );
               },
               builder: (context, state) => state.when(

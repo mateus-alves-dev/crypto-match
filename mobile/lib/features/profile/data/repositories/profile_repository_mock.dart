@@ -32,6 +32,7 @@ class MockProfileRepositoryImpl implements ProfileRepository {
     List<String>? personaTags,
     int? age,
     String? location,
+    String? avatarUrl,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 600));
     _profile = _profile.copyWith(
@@ -41,6 +42,7 @@ class MockProfileRepositoryImpl implements ProfileRepository {
       personaTags: personaTags ?? _profile.personaTags,
       age: age ?? _profile.age,
       location: location ?? _profile.location,
+      avatarUrl: avatarUrl ?? _profile.avatarUrl,
       updatedAt: DateTime.now(),
     );
     return Right(_profile);

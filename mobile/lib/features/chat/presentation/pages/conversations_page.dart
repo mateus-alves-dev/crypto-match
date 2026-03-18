@@ -139,25 +139,22 @@ class _ConversationsList extends StatelessWidget {
                 ? '$totalUnread não lida${totalUnread == 1 ? '' : 's'}'
                 : '${conversations.length} conversa${conversations.length == 1 ? '' : 's'}',
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: Colors.white38,
-                  letterSpacing: 0.5,
-                ),
+              color: Colors.white38,
+              letterSpacing: 0.5,
+            ),
           ),
         ),
         const Divider(height: 1, color: Color(0xFF1A1A2E)),
         Expanded(
           child: ListView.separated(
             itemCount: conversations.length,
-            separatorBuilder: (_, __) =>
+            separatorBuilder: (_, _) =>
                 const Divider(height: 1, color: Color(0xFF1A1A2E)),
             itemBuilder: (context, index) {
               final conv = conversations[index];
               return _ConversationTile(
                 conversation: conv,
-                onTap: () => context.push(
-                  AppRoutes.chat(conv.id),
-                  extra: conv,
-                ),
+                onTap: () => context.push(AppRoutes.chat(conv.id), extra: conv),
               );
             },
           ),
@@ -220,8 +217,9 @@ class _ConversationTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: hasUnread ? Colors.white70 : Colors.white38,
-                      fontWeight:
-                          hasUnread ? FontWeight.w500 : FontWeight.normal,
+                      fontWeight: hasUnread
+                          ? FontWeight.w500
+                          : FontWeight.normal,
                     ),
                   ),
                 ],

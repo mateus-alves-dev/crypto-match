@@ -9,6 +9,8 @@ class ProfileState with _$ProfileState {
   const factory ProfileState.loading() = _Loading;
   const factory ProfileState.loaded({required Profile profile}) = _Loaded;
   const factory ProfileState.updating({required Profile profile}) = _Updating;
+  const factory ProfileState.uploadingAvatar({required Profile profile}) =
+      _UploadingAvatar;
   const factory ProfileState.updateSuccess({required Profile profile}) =
       _UpdateSuccess;
   const factory ProfileState.failure({required String message}) = _Failure;

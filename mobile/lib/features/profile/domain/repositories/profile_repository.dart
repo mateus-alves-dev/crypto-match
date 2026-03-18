@@ -12,5 +12,6 @@ abstract class ProfileRepository {
     List<String>? personaTags,
     int? age,
     String? location,
+    String? avatarUrl,
   });
 }

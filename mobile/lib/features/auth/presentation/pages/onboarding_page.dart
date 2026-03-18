@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:crypto_match/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:crypto_match/features/profile/presentation/cubit/profile_state.dart';
 import 'package:crypto_match/features/profile/presentation/widgets/persona_tag_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 const _kAllCryptos = [
   'Bitcoin',
@@ -55,6 +58,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
   // Step 2 — persona
   List<String> _selectedPersonaTags = [];
 
+  // Step 3 — photo
+  XFile? _selectedAvatarFile;
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -89,20 +95,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   void _finish() {
-    context.read<ProfileCubit>().updateProfile(
-          displayName: _nameController.text.trim(),
-          bio: _bioController.text.trim().isEmpty
-              ? null
-              : _bioController.text.trim(),
-          age: int.tryParse(_ageController.text.trim()),
-          location: _locationController.text.trim().isEmpty
-              ? null
-              : _locationController.text.trim(),
-          cryptoInterests:
-              _selectedInterests.isEmpty ? null : _selectedInterests,
-          personaTags:
-              _selectedPersonaTags.isEmpty ? null : _selectedPersonaTags,
-        );
+    context.read<ProfileCubit>().uploadAndSaveProfile(
+      avatarFile: _selectedAvatarFile,
+      displayName: _nameController.text.trim(),
+      bio: _bioController.text.trim().isEmpty
+          ? null
+          : _bioController.text.trim(),
+      age: int.tryParse(_ageController.text.trim()),
+      location: _locationController.text.trim().isEmpty
+          ? null
+          : _locationController.text.trim(),
+      cryptoInterests: _selectedInterests.isEmpty ? null : _selectedInterests,
+      personaTags: _selectedPersonaTags.isEmpty ? null : _selectedPersonaTags,
+    );
   }
 
   @override
@@ -124,7 +129,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         body: SafeArea(
           child: Column(
             children: [
-              _StepIndicator(currentStep: _currentStep, totalSteps: 3),
+              _StepIndicator(currentStep: _currentStep, totalSteps: 4),
               Expanded(
                 child: PageView(
                   controller: _pageController,
@@ -157,6 +162,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       selectedTags: _selectedPersonaTags,
                       onChanged: (tags) =>
                           setState(() => _selectedPersonaTags = tags),
+                      onContinue: _nextPage,
+                      onSkip: _nextPage,
+                    ),
+                    _Step3Avatar(
+                      selectedFile: _selectedAvatarFile,
+                      onPickImage: () async {
+                        final picker = ImagePicker();
+                        final file = await picker.pickImage(
+                          source: ImageSource.gallery,
+                          imageQuality: 85,
+                          maxWidth: 800,
+                        );
+                        if (file != null) {
+                          setState(() => _selectedAvatarFile = file);
+                        }
+                      },
                       onFinish: _finish,
                       onSkip: _finish,
                     ),
@@ -231,9 +252,9 @@ class _Step0BasicInfo extends StatelessWidget {
           const SizedBox(height: 32),
           Text(
             'Bem-vindo! 👋',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.w800,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
@@ -278,10 +299,7 @@ class _Step0BasicInfo extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 36),
-          ElevatedButton(
-            onPressed: onContinue,
-            child: const Text('Continuar'),
-          ),
+          ElevatedButton(onPressed: onContinue, child: const Text('Continuar')),
           const SizedBox(height: 24),
         ],
       ),
@@ -317,8 +335,8 @@ class _Step1Interests extends StatelessWidget {
               Text(
                 'Seus interesses',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
+                  fontWeight: FontWeight.w800,
+                ),
               ),
               const SizedBox(height: 6),
               Text(
@@ -351,8 +369,9 @@ class _Step1Interests extends StatelessWidget {
                           : const Color(0xFF1A1A2E),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color:
-                            selected ? const Color(0xFF6C63FF) : Colors.white12,
+                        color: selected
+                            ? const Color(0xFF6C63FF)
+                            : Colors.white12,
                       ),
                     ),
                     child: Text(
@@ -360,8 +379,9 @@ class _Step1Interests extends StatelessWidget {
                       style: TextStyle(
                         color: selected ? Colors.white : Colors.white60,
                         fontSize: 13,
-                        fontWeight:
-                            selected ? FontWeight.w600 : FontWeight.normal,
+                        fontWeight: selected
+                            ? FontWeight.w600
+                            : FontWeight.normal,
                       ),
                     ),
                   ),
@@ -395,18 +415,18 @@ class _Step1Interests extends StatelessWidget {
   }
 }
 
-// ─────────────────────────── Step 2: Persona ───────────────────────────
+// ─────────────────────────── Step 3: Photo ───────────────────────────
 
-class _Step2Persona extends StatelessWidget {
-  const _Step2Persona({
-    required this.selectedTags,
-    required this.onChanged,
+class _Step3Avatar extends StatelessWidget {
+  const _Step3Avatar({
+    required this.onPickImage,
     required this.onFinish,
     required this.onSkip,
+    this.selectedFile,
   });
 
-  final List<String> selectedTags;
-  final void Function(List<String>) onChanged;
+  final XFile? selectedFile;
+  final VoidCallback onPickImage;
   final VoidCallback onFinish;
   final VoidCallback onSkip;
 
@@ -416,8 +436,10 @@ class _Step2Persona extends StatelessWidget {
       builder: (context, state) {
         final isSaving = state.maybeWhen(
           updating: (_) => true,
+          uploadingAvatar: (_) => true,
           orElse: () => false,
         );
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -427,29 +449,83 @@ class _Step2Persona extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sua identidade cripto',
+                    'Adicione uma foto 📸',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   const Text(
-                    'Escolha até 3 personas que combinam com você',
+                    'Perfis com foto recebem muito mais matches',
                     style: TextStyle(color: Colors.white54, fontSize: 14),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: PersonaTagPicker(
-                  selectedTags: selectedTags,
-                  onChanged: onChanged,
+            const SizedBox(height: 40),
+            Center(
+              child: GestureDetector(
+                onTap: isSaving ? null : onPickImage,
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    CircleAvatar(
+                      radius: 72,
+                      backgroundColor: const Color(0xFF1A1A2E),
+                      backgroundImage: selectedFile != null
+                          ? FileImage(File(selectedFile!.path))
+                          : null,
+                      child: selectedFile == null
+                          ? const Icon(
+                              Icons.person_rounded,
+                              size: 64,
+                              color: Colors.white24,
+                            )
+                          : null,
+                    ),
+                    if (isSaving)
+                      const Positioned.fill(
+                        child: CircleAvatar(
+                          radius: 72,
+                          backgroundColor: Colors.black45,
+                          child: SizedBox(
+                            width: 32,
+                            height: 32,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(
+                        color: Color(0xFF6C63FF),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.camera_alt_rounded,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: OutlinedButton(
+                onPressed: isSaving ? null : onPickImage,
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Color(0xFF6C63FF)),
+                ),
+                child: const Text('Escolher da galeria'),
+              ),
+            ),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
               child: Column(
@@ -479,6 +555,78 @@ class _Step2Persona extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class _Step2Persona extends StatelessWidget {
+  const _Step2Persona({
+    required this.selectedTags,
+    required this.onChanged,
+    required this.onContinue,
+    required this.onSkip,
+  });
+
+  final List<String> selectedTags;
+  final void Function(List<String>) onChanged;
+  final VoidCallback onContinue;
+  final VoidCallback onSkip;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Sua identidade cripto',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Escolha até 3 personas que combinam com você',
+                style: TextStyle(color: Colors.white54, fontSize: 14),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: PersonaTagPicker(
+              selectedTags: selectedTags,
+              onChanged: onChanged,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                onPressed: onContinue,
+                child: const Text('Continuar'),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed: onSkip,
+                child: const Text(
+                  'Pular',
+                  style: TextStyle(color: Colors.white38),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -527,16 +675,20 @@ class _OnboardingField extends StatelessWidget {
             hintStyle: const TextStyle(color: Colors.white24, fontSize: 14),
             filled: true,
             fillColor: const Color(0xFF1A1A2E),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide:
-                  const BorderSide(color: Color(0xFF6C63FF), width: 1.5),
+              borderSide: const BorderSide(
+                color: Color(0xFF6C63FF),
+                width: 1.5,
+              ),
             ),
           ),
         ),

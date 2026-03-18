@@ -26,13 +26,14 @@ class UpdateMyProfileUseCase {
     List<String>? personaTags,
     int? age,
     String? location,
-  }) =>
-      _repository.updateMyProfile(
-        displayName: displayName,
-        bio: bio,
-        cryptoInterests: cryptoInterests,
-        personaTags: personaTags,
-        age: age,
-        location: location,
-      );
+    String? avatarUrl,
+  }) => _repository.updateMyProfile(
+    displayName: displayName,
+    bio: bio,
+    cryptoInterests: cryptoInterests,
+    personaTags: personaTags,
+    age: age,
+    location: location,
+    avatarUrl: avatarUrl,
+  );
 }

@@ -24,15 +24,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
     List<String>? personaTags,
     int? age,
     String? location,
-  }) =>
-      safeApiCall(
-        () => _dataSource.updateMyProfile({
-          if (displayName != null) 'displayName': displayName,
-          if (bio != null) 'bio': bio,
-          if (cryptoInterests != null) 'cryptoInterests': cryptoInterests,
-          if (personaTags != null) 'personaTags': personaTags,
-          if (age != null) 'age': age,
-          if (location != null) 'location': location,
-        }),
-      );
+    String? avatarUrl,
+  }) => safeApiCall(
+    () => _dataSource.updateMyProfile({
+      'displayName': ?displayName,
+      'bio': ?bio,
+      'cryptoInterests': ?cryptoInterests,
+      'personaTags': ?personaTags,
+      'age': ?age,
+      'location': ?location,
+      'avatarUrl': ?avatarUrl,
+    }),
+  );
 }

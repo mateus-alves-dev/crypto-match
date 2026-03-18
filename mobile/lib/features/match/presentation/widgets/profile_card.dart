@@ -4,11 +4,7 @@ import 'package:flutter/material.dart';
 enum SwipeIndicator { like, nope, superLike }
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({
-    required this.suggestion,
-    this.swipeIndicator,
-    super.key,
-  });
+  const ProfileCard({required this.suggestion, this.swipeIndicator, super.key});
 
   final MatchSuggestion suggestion;
   final SwipeIndicator? swipeIndicator;
@@ -48,7 +44,7 @@ class _AvatarBackground extends StatelessWidget {
           if (loadingProgress == null) return child;
           return const _PlaceholderBg();
         },
-        errorBuilder: (_, __, ___) => const _PlaceholderBg(),
+        errorBuilder: (_, _, _) => const _PlaceholderBg(),
       );
     }
     return const _PlaceholderBg();
@@ -126,8 +122,9 @@ class _ProfileInfo extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 4),
                   child: Text(
                     '${suggestion.age}',
-                    style: theme.textTheme.titleLarge
-                        ?.copyWith(color: Colors.white70),
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      color: Colors.white70,
+                    ),
                   ),
                 ),
               ],
@@ -196,11 +193,11 @@ class _SwipeStamp extends StatelessWidget {
       SwipeIndicator.like => ('LIKE', Colors.green, Alignment.topLeft, -0.4),
       SwipeIndicator.nope => ('NOPE', Colors.red, Alignment.topRight, 0.4),
       SwipeIndicator.superLike => (
-          'SUPER\nLIKE',
-          Colors.blue,
-          Alignment.topCenter,
-          0.0
-        ),
+        'SUPER\nLIKE',
+        Colors.blue,
+        Alignment.topCenter,
+        0.0,
+      ),
     };
 
     return Align(

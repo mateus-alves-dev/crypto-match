@@ -136,16 +136,16 @@ class _MatchesList extends StatelessWidget {
           child: Text(
             '${matches.length} ${matches.length == 1 ? 'match' : 'matches'}',
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: Colors.white38,
-                  letterSpacing: 0.5,
-                ),
+              color: Colors.white38,
+              letterSpacing: 0.5,
+            ),
           ),
         ),
         const Divider(height: 1, color: Color(0xFF1A1A2E)),
         Expanded(
           child: ListView.separated(
             itemCount: matches.length,
-            separatorBuilder: (_, __) =>
+            separatorBuilder: (_, _) =>
                 const Divider(height: 1, color: Color(0xFF1A1A2E)),
             itemBuilder: (context, index) {
               final match = matches[index];
@@ -158,8 +158,10 @@ class _MatchesList extends StatelessWidget {
                     participantName: match.matchedUserName,
                     participantAvatarUrl: match.matchedUserAvatarUrl,
                   );
-                  context.push(AppRoutes.chat(conversation.id),
-                      extra: conversation,);
+                  context.push(
+                    AppRoutes.chat(conversation.id),
+                    extra: conversation,
+                  );
                 },
               );
             },
