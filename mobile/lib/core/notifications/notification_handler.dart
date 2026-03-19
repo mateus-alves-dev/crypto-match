@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:crypto_match/core/notifications/notification_payload.dart';
 import 'package:crypto_match/core/router/app_router.dart';
 import 'package:crypto_match/features/settings/domain/entities/user_settings.dart';
@@ -50,7 +52,7 @@ class NotificationHandler {
   // ──────────────────────────── Setup ────────────────────────────────────────
 
   Future<void> _requestPermission() async {
-    await _messaging.requestPermission(alert: true, badge: true, sound: true);
+    await _messaging.requestPermission();
   }
 
   Future<void> _setupLocalNotifications() async {
@@ -80,6 +82,19 @@ class NotificationHandler {
   }
 
   Future<void> _saveToken() async {
+    // On iOS, getToken() requires the APNs token to be registered first.
+    // APNs registration is async; poll briefly before giving up.
+    if (Platform.isIOS) {
+      String? apnsToken;
+      for (var i = 0; i < 5 && apnsToken == null; i++) {
+        apnsToken = await _messaging.getAPNSToken();
+        if (apnsToken == null) {
+          await Future<void>.delayed(const Duration(seconds: 1));
+        }
+      }
+      if (apnsToken == null) return; // APNs not ready — skip silently
+    }
+
     final token = await _messaging.getToken();
     if (token != null) {
       await _secureStorage.write(key: _fcmTokenKey, value: token);
