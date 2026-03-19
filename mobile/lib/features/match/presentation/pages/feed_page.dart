@@ -5,6 +5,9 @@ import 'package:crypto_match/features/match/presentation/cubit/match_cubit.dart'
 import 'package:crypto_match/features/match/presentation/cubit/match_state.dart';
 import 'package:crypto_match/features/match/presentation/widgets/match_dialog.dart';
 import 'package:crypto_match/features/match/presentation/widgets/swipe_card_deck.dart';
+import 'package:crypto_match/features/settings/domain/entities/user_settings.dart';
+import 'package:crypto_match/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:crypto_match/features/settings/presentation/cubit/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -32,7 +35,37 @@ class _FeedPageState extends State<FeedPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.tune_rounded),
-            onPressed: () {},
+            onPressed: () {
+              final prefs =
+                  context.read<SettingsCubit>().state.mapOrNull(
+                    loaded: (s) => s.settings.matchPreferences,
+                    updating: (s) => s.settings.matchPreferences,
+                    updateSuccess: (s) => s.settings.matchPreferences,
+                  ) ??
+                  const MatchPreferences();
+
+              if (!context.read<SettingsCubit>().state.maybeWhen(
+                loaded: (_) => true,
+                updating: (_) => true,
+                updateSuccess: (_) => true,
+                orElse: () => false,
+              )) {
+                context.read<SettingsCubit>().loadSettings();
+              }
+
+              showModalBottomSheet<void>(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: const Color(0xFF1A1A2E),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                ),
+                builder: (_) => BlocProvider.value(
+                  value: context.read<SettingsCubit>(),
+                  child: _FeedFiltersSheet(initialPreferences: prefs),
+                ),
+              );
+            },
             tooltip: 'Filtros',
           ),
           const SizedBox(width: 4),
@@ -270,6 +303,179 @@ class _ActionButton extends StatelessWidget {
         ),
         child: Icon(icon, color: color, size: size * 0.5),
       ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Feed Filters Bottom Sheet
+// ---------------------------------------------------------------------------
+
+class _FeedFiltersSheet extends StatefulWidget {
+  const _FeedFiltersSheet({required this.initialPreferences});
+
+  final MatchPreferences initialPreferences;
+
+  @override
+  State<_FeedFiltersSheet> createState() => _FeedFiltersSheetState();
+}
+
+class _FeedFiltersSheetState extends State<_FeedFiltersSheet> {
+  late double _maxDistance;
+  late RangeValues _ageRange;
+  late bool _filterByCrypto;
+
+  @override
+  void initState() {
+    super.initState();
+    _maxDistance = widget.initialPreferences.maxDistanceKm.toDouble();
+    _ageRange = RangeValues(
+      widget.initialPreferences.minAge.toDouble(),
+      widget.initialPreferences.maxAge.toDouble(),
+    );
+    _filterByCrypto = widget.initialPreferences.filterByCryptoInterests;
+  }
+
+  void _apply(BuildContext context) {
+    context.read<SettingsCubit>().updateMatchPreferences(
+      MatchPreferences(
+        maxDistanceKm: _maxDistance.round(),
+        minAge: _ageRange.start.round(),
+        maxAge: _ageRange.end.round(),
+        filterByCryptoInterests: _filterByCrypto,
+      ),
+    );
+    Navigator.of(context).pop();
+  }
+
+  void _reset() {
+    setState(() {
+      const defaults = MatchPreferences();
+      _maxDistance = defaults.maxDistanceKm.toDouble();
+      _ageRange = RangeValues(
+        defaults.minAge.toDouble(),
+        defaults.maxAge.toDouble(),
+      );
+      _filterByCrypto = defaults.filterByCryptoInterests;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 24,
+          right: 24,
+          top: 20,
+          bottom: 24 + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  'Filtros',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+                ),
+                const Spacer(),
+                TextButton(
+                  onPressed: _reset,
+                  child: const Text(
+                    'Redefinir',
+                    style: TextStyle(color: Color(0xFF6C63FF)),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            _Label('Distância máxima: ${_maxDistance.round()} km'),
+            Slider(
+              value: _maxDistance,
+              min: 5,
+              max: 200,
+              divisions: 39,
+              label: '${_maxDistance.round()} km',
+              activeColor: const Color(0xFF6C63FF),
+              onChanged: (v) => setState(() => _maxDistance = v),
+            ),
+            const SizedBox(height: 12),
+            _Label(
+              'Faixa etária: ${_ageRange.start.round()} – ${_ageRange.end.round()} anos',
+            ),
+            RangeSlider(
+              values: _ageRange,
+              min: 18,
+              max: 70,
+              divisions: 52,
+              labels: RangeLabels(
+                '${_ageRange.start.round()}',
+                '${_ageRange.end.round()}',
+              ),
+              activeColor: const Color(0xFF6C63FF),
+              onChanged: (v) => setState(() => _ageRange = v),
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const _Label('Filtrar por interesses em cripto'),
+                      const Text(
+                        'Mostrar apenas perfis com interesses similares',
+                        style: TextStyle(color: Colors.white38, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                Switch(
+                  value: _filterByCrypto,
+                  onChanged: (v) => setState(() => _filterByCrypto = v),
+                  activeColor: const Color(0xFF6C63FF),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => _apply(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF6C63FF),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  'Aplicar',
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Label extends StatelessWidget {
+  const _Label(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
     );
   }
 }

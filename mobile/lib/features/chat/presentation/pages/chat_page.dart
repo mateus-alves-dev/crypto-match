@@ -4,6 +4,7 @@ import 'package:crypto_match/features/chat/domain/entities/message.dart';
 import 'package:crypto_match/features/chat/presentation/cubit/messages_cubit.dart';
 import 'package:crypto_match/features/chat/presentation/cubit/messages_state.dart';
 import 'package:crypto_match/features/chat/presentation/widgets/message_bubble.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +22,7 @@ class _ChatPageState extends State<ChatPage> {
   final _scrollController = ScrollController();
   final _focusNode = FocusNode();
   late final String _currentUserId;
+  bool _showEmojiPicker = false;
 
   @override
   void initState() {
@@ -58,6 +60,16 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
+  void _toggleEmojiPicker() {
+    if (_showEmojiPicker) {
+      setState(() => _showEmojiPicker = false);
+      _focusNode.requestFocus();
+    } else {
+      _focusNode.unfocus();
+      setState(() => _showEmojiPicker = true);
+    }
+  }
+
   void _sendMessage() {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
@@ -79,7 +91,17 @@ class _ChatPageState extends State<ChatPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.more_vert_rounded),
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet<void>(
+                context: context,
+                backgroundColor: const Color(0xFF1A1A2E),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                ),
+                builder: (_) =>
+                    _ChatOptionsSheet(conversation: widget.conversation),
+              );
+            },
           ),
         ],
       ),
@@ -135,6 +157,8 @@ class _ChatPageState extends State<ChatPage> {
             controller: _controller,
             focusNode: _focusNode,
             onSend: _sendMessage,
+            showEmojiPicker: _showEmojiPicker,
+            onToggleEmoji: _toggleEmojiPicker,
           ),
         ],
       ),
@@ -244,70 +268,140 @@ class _MessageInput extends StatelessWidget {
     required this.controller,
     required this.focusNode,
     required this.onSend,
+    required this.showEmojiPicker,
+    required this.onToggleEmoji,
   });
 
   final TextEditingController controller;
   final FocusNode focusNode;
   final VoidCallback onSend;
+  final bool showEmojiPicker;
+  final VoidCallback onToggleEmoji;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xFF0D0D0D),
-        border: Border(top: BorderSide(color: Color(0xFF1A1A2E))),
-      ),
-      padding: EdgeInsets.only(
-        left: 12,
-        right: 8,
-        top: 8,
-        bottom: 8 + MediaQuery.of(context).viewInsets.bottom,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            color: Color(0xFF0D0D0D),
+            border: Border(top: BorderSide(color: Color(0xFF1A1A2E))),
+          ),
+          padding: EdgeInsets.only(
+            left: 4,
+            right: 8,
+            top: 8,
+            bottom: 8 + MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: Icon(
+                  showEmojiPicker
+                      ? Icons.keyboard_rounded
+                      : Icons.emoji_emotions_outlined,
+                  color: Colors.white54,
+                ),
+                onPressed: onToggleEmoji,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  maxLines: 4,
+                  minLines: 1,
+                  textCapitalization: TextCapitalization.sentences,
+                  style: const TextStyle(fontSize: 15),
+                  decoration: InputDecoration(
+                    hintText: 'Mensagem...',
+                    hintStyle: const TextStyle(
+                      color: Colors.white38,
+                      fontSize: 15,
+                    ),
+                    filled: true,
+                    fillColor: const Color(0xFF1A1A2E),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  onSubmitted: (_) => onSend(),
+                  onTap: showEmojiPicker ? onToggleEmoji : null,
+                ),
+              ),
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: onSend,
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF6C63FF),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.send_rounded,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (showEmojiPicker)
+          SizedBox(
+            height: 256,
+            child: EmojiPicker(
+              textEditingController: controller,
+              config: Config(
+                height: 256,
+                emojiViewConfig: const EmojiViewConfig(
+                  backgroundColor: Color(0xFF0D0D0D),
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Chat Options Bottom Sheet
+// ---------------------------------------------------------------------------
+
+class _ChatOptionsSheet extends StatelessWidget {
+  const _ChatOptionsSheet({required this.conversation});
+
+  final Conversation conversation;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: TextField(
-              controller: controller,
-              focusNode: focusNode,
-              maxLines: 4,
-              minLines: 1,
-              textCapitalization: TextCapitalization.sentences,
-              style: const TextStyle(fontSize: 15),
-              decoration: InputDecoration(
-                hintText: 'Mensagem...',
-                hintStyle: const TextStyle(color: Colors.white38, fontSize: 15),
-                filled: true,
-                fillColor: const Color(0xFF1A1A2E),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 10,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(24),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              onSubmitted: (_) => onSend(),
-            ),
+          const SizedBox(height: 8),
+          ListTile(
+            leading: const Icon(Icons.block_rounded, color: Colors.redAccent),
+            title: const Text('Bloquear usuário'),
+            onTap: () => Navigator.of(context).pop(),
           ),
-          const SizedBox(width: 8),
-          GestureDetector(
-            onTap: onSend,
-            child: Container(
-              width: 44,
-              height: 44,
-              decoration: const BoxDecoration(
-                color: Color(0xFF6C63FF),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.send_rounded,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
+          ListTile(
+            leading: const Icon(Icons.flag_rounded, color: Colors.orangeAccent),
+            title: const Text('Denunciar'),
+            onTap: () => Navigator.of(context).pop(),
           ),
+          const SizedBox(height: 8),
         ],
       ),
     );
