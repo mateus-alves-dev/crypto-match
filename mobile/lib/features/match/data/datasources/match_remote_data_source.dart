@@ -1,5 +1,6 @@
 import 'package:crypto_match/core/network/api_client.dart';
 import 'package:crypto_match/features/match/domain/entities/match.dart';
+import 'package:crypto_match/features/match/domain/entities/swipe_result.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -15,7 +16,7 @@ class MatchRemoteDataSource {
         .toList();
   }
 
-  Future<Match?> swipe({
+  Future<SwipeResult> swipe({
     required String targetUserId,
     required SwipeAction action,
   }) async {
@@ -23,8 +24,16 @@ class MatchRemoteDataSource {
       '/matches/swipe',
       data: {'targetUserId': targetUserId, 'action': action.name},
     );
-    if (response.data == null || response.data!.isEmpty) return null;
-    return Match.fromJson(response.data!);
+    if (response.data == null || response.data!.isEmpty) {
+      return const SwipeResult();
+    }
+    final data = response.data!;
+    final matchData = data['matched'] as Map<String, dynamic>?;
+    final newTokenBalance = (data['tokenBalance'] as num?)?.toDouble();
+    return SwipeResult(
+      match: matchData != null ? Match.fromJson(matchData) : null,
+      newTokenBalance: newTokenBalance,
+    );
   }
 
   Future<List<Match>> getMatches() async {

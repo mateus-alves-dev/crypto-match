@@ -99,8 +99,8 @@ class MockTokenRepositoryImpl implements TokenRepository {
         id: 'tx-008',
         userId: _userId,
         type: TokenTransactionType.debit,
-        amount: 5,
-        reason: 'Super like enviado',
+        amount: 10,
+        reason: 'super_like',
         createdAt: now.subtract(const Duration(days: 1)),
         metadata: {'targetUserId': 'mock-3'},
       ),
@@ -227,8 +227,9 @@ class MockTokenRepositoryImpl implements TokenRepository {
             'Ganhe tokens quando seu amigo se cadastrar com seu código',
         reward: 100,
         isAvailable: !_inviteFriendDone,
-        completedAt:
-            _inviteFriendDone ? now.subtract(const Duration(days: 12)) : null,
+        completedAt: _inviteFriendDone
+            ? now.subtract(const Duration(days: 12))
+            : null,
       ),
     ];
   }

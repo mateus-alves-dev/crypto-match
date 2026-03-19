@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/features/match/domain/entities/match.dart';
+import 'package:crypto_match/features/match/domain/entities/swipe_result.dart';
 import 'package:crypto_match/features/match/domain/repositories/match_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -87,7 +88,7 @@ class MockMatchRepositoryImpl implements MatchRepository {
   }
 
   @override
-  Future<Either<Failure, Match?>> swipe({
+  Future<Either<Failure, SwipeResult>> swipe({
     required String targetUserId,
     required SwipeAction action,
   }) async {
@@ -98,17 +99,19 @@ class MockMatchRepositoryImpl implements MatchRepository {
         orElse: () => _mockProfiles.first,
       );
       return Right(
-        Match(
-          id: 'match-${DateTime.now().millisecondsSinceEpoch}',
-          userId: 'current-user',
-          matchedUserId: targetUserId,
-          matchedUserName: profile.name,
-          matchedUserAvatarUrl: profile.avatarUrl,
-          matchedAt: DateTime.now(),
+        SwipeResult(
+          match: Match(
+            id: 'match-${DateTime.now().millisecondsSinceEpoch}',
+            userId: 'current-user',
+            matchedUserId: targetUserId,
+            matchedUserName: profile.name,
+            matchedUserAvatarUrl: profile.avatarUrl,
+            matchedAt: DateTime.now(),
+          ),
         ),
       );
     }
-    return const Right(null);
+    return const Right(SwipeResult());
   }
 
   static final List<Match> _mockMatches = [

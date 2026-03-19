@@ -1,5 +1,6 @@
 import 'package:crypto_match/core/error/failure.dart';
 import 'package:crypto_match/features/match/domain/entities/match.dart';
+import 'package:crypto_match/features/match/domain/entities/swipe_result.dart';
 import 'package:crypto_match/features/match/domain/repositories/match_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -20,11 +21,10 @@ class SwipeUseCase {
 
   final MatchRepository _repository;
 
-  Future<Either<Failure, Match?>> call({
+  Future<Either<Failure, SwipeResult>> call({
     required String targetUserId,
     required SwipeAction action,
-  }) =>
-      _repository.swipe(targetUserId: targetUserId, action: action);
+  }) => _repository.swipe(targetUserId: targetUserId, action: action);
 }
 
 @injectable

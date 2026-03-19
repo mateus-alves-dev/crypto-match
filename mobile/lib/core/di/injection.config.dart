@@ -231,6 +231,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1051.GetMatchesUseCase>(
       () => _i1051.GetMatchesUseCase(gh<_i1050.MatchRepository>()),
     );
+    gh.factory<_i498.MatchCubit>(
+      () => _i498.MatchCubit(
+        gh<_i1051.GetMatchFeedUseCase>(),
+        gh<_i1051.SwipeUseCase>(),
+        gh<_i833.GetTokenBalanceUseCase>(),
+      ),
+    );
     gh.factory<_i12.MatchesListCubit>(
       () => _i12.MatchesListCubit(gh<_i1051.GetMatchesUseCase>()),
     );
@@ -283,12 +290,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i599.ChatRepositoryImpl(
         gh<_i173.ChatRemoteDataSource>(),
         gh<_i998.ChatFirestoreDataSource>(),
-      ),
-    );
-    gh.factory<_i498.MatchCubit>(
-      () => _i498.MatchCubit(
-        gh<_i1051.GetMatchFeedUseCase>(),
-        gh<_i1051.SwipeUseCase>(),
       ),
     );
     gh.lazySingleton<_i308.NotificationHandler>(

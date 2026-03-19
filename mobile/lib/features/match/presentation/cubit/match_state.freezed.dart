@@ -55,7 +55,7 @@ extension MatchStatePatterns on MatchState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Swiping value)?  swiping,TResult Function( _Matched value)?  matched,TResult Function( _Empty value)?  empty,TResult Function( _Failure value)?  failure,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Swiping value)?  swiping,TResult Function( _Matched value)?  matched,TResult Function( _Empty value)?  empty,TResult Function( _Failure value)?  failure,TResult Function( _InsufficientBalance value)?  insufficientBalance,TResult Function( _SwipeFailed value)?  swipeFailed,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -64,7 +64,9 @@ return loading(_that);case _Swiping() when swiping != null:
 return swiping(_that);case _Matched() when matched != null:
 return matched(_that);case _Empty() when empty != null:
 return empty(_that);case _Failure() when failure != null:
-return failure(_that);case _:
+return failure(_that);case _InsufficientBalance() when insufficientBalance != null:
+return insufficientBalance(_that);case _SwipeFailed() when swipeFailed != null:
+return swipeFailed(_that);case _:
   return orElse();
 
 }
@@ -82,7 +84,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Swiping value)  swiping,required TResult Function( _Matched value)  matched,required TResult Function( _Empty value)  empty,required TResult Function( _Failure value)  failure,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Swiping value)  swiping,required TResult Function( _Matched value)  matched,required TResult Function( _Empty value)  empty,required TResult Function( _Failure value)  failure,required TResult Function( _InsufficientBalance value)  insufficientBalance,required TResult Function( _SwipeFailed value)  swipeFailed,}){
 final _that = this;
 switch (_that) {
 case _Initial():
@@ -91,7 +93,9 @@ return loading(_that);case _Swiping():
 return swiping(_that);case _Matched():
 return matched(_that);case _Empty():
 return empty(_that);case _Failure():
-return failure(_that);case _:
+return failure(_that);case _InsufficientBalance():
+return insufficientBalance(_that);case _SwipeFailed():
+return swipeFailed(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -108,7 +112,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Swiping value)?  swiping,TResult? Function( _Matched value)?  matched,TResult? Function( _Empty value)?  empty,TResult? Function( _Failure value)?  failure,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Swiping value)?  swiping,TResult? Function( _Matched value)?  matched,TResult? Function( _Empty value)?  empty,TResult? Function( _Failure value)?  failure,TResult? Function( _InsufficientBalance value)?  insufficientBalance,TResult? Function( _SwipeFailed value)?  swipeFailed,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -117,7 +121,9 @@ return loading(_that);case _Swiping() when swiping != null:
 return swiping(_that);case _Matched() when matched != null:
 return matched(_that);case _Empty() when empty != null:
 return empty(_that);case _Failure() when failure != null:
-return failure(_that);case _:
+return failure(_that);case _InsufficientBalance() when insufficientBalance != null:
+return insufficientBalance(_that);case _SwipeFailed() when swipeFailed != null:
+return swipeFailed(_that);case _:
   return null;
 
 }
@@ -134,7 +140,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<MatchSuggestion> remaining)?  swiping,TResult Function( Match match,  List<MatchSuggestion> remaining)?  matched,TResult Function()?  empty,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<MatchSuggestion> remaining)?  swiping,TResult Function( Match match,  List<MatchSuggestion> remaining)?  matched,TResult Function()?  empty,TResult Function( String message)?  failure,TResult Function( List<MatchSuggestion> remaining)?  insufficientBalance,TResult Function( String message,  List<MatchSuggestion> remaining)?  swipeFailed,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -142,7 +148,9 @@ return loading();case _Swiping() when swiping != null:
 return swiping(_that.remaining);case _Matched() when matched != null:
 return matched(_that.match,_that.remaining);case _Empty() when empty != null:
 return empty();case _Failure() when failure != null:
-return failure(_that.message);case _:
+return failure(_that.message);case _InsufficientBalance() when insufficientBalance != null:
+return insufficientBalance(_that.remaining);case _SwipeFailed() when swipeFailed != null:
+return swipeFailed(_that.message,_that.remaining);case _:
   return orElse();
 
 }
@@ -160,7 +168,7 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<MatchSuggestion> remaining)  swiping,required TResult Function( Match match,  List<MatchSuggestion> remaining)  matched,required TResult Function()  empty,required TResult Function( String message)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<MatchSuggestion> remaining)  swiping,required TResult Function( Match match,  List<MatchSuggestion> remaining)  matched,required TResult Function()  empty,required TResult Function( String message)  failure,required TResult Function( List<MatchSuggestion> remaining)  insufficientBalance,required TResult Function( String message,  List<MatchSuggestion> remaining)  swipeFailed,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
@@ -168,7 +176,9 @@ return loading();case _Swiping():
 return swiping(_that.remaining);case _Matched():
 return matched(_that.match,_that.remaining);case _Empty():
 return empty();case _Failure():
-return failure(_that.message);case _:
+return failure(_that.message);case _InsufficientBalance():
+return insufficientBalance(_that.remaining);case _SwipeFailed():
+return swipeFailed(_that.message,_that.remaining);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -185,7 +195,7 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<MatchSuggestion> remaining)?  swiping,TResult? Function( Match match,  List<MatchSuggestion> remaining)?  matched,TResult? Function()?  empty,TResult? Function( String message)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<MatchSuggestion> remaining)?  swiping,TResult? Function( Match match,  List<MatchSuggestion> remaining)?  matched,TResult? Function()?  empty,TResult? Function( String message)?  failure,TResult? Function( List<MatchSuggestion> remaining)?  insufficientBalance,TResult? Function( String message,  List<MatchSuggestion> remaining)?  swipeFailed,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -193,7 +203,9 @@ return loading();case _Swiping() when swiping != null:
 return swiping(_that.remaining);case _Matched() when matched != null:
 return matched(_that.match,_that.remaining);case _Empty() when empty != null:
 return empty();case _Failure() when failure != null:
-return failure(_that.message);case _:
+return failure(_that.message);case _InsufficientBalance() when insufficientBalance != null:
+return insufficientBalance(_that.remaining);case _SwipeFailed() when swipeFailed != null:
+return swipeFailed(_that.message,_that.remaining);case _:
   return null;
 
 }
@@ -512,6 +524,152 @@ class __$FailureCopyWithImpl<$Res>
   return _then(_Failure(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _InsufficientBalance implements MatchState {
+  const _InsufficientBalance({required final  List<MatchSuggestion> remaining}): _remaining = remaining;
+  
+
+ final  List<MatchSuggestion> _remaining;
+ List<MatchSuggestion> get remaining {
+  if (_remaining is EqualUnmodifiableListView) return _remaining;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_remaining);
+}
+
+
+/// Create a copy of MatchState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InsufficientBalanceCopyWith<_InsufficientBalance> get copyWith => __$InsufficientBalanceCopyWithImpl<_InsufficientBalance>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InsufficientBalance&&const DeepCollectionEquality().equals(other._remaining, _remaining));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_remaining));
+
+@override
+String toString() {
+  return 'MatchState.insufficientBalance(remaining: $remaining)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$InsufficientBalanceCopyWith<$Res> implements $MatchStateCopyWith<$Res> {
+  factory _$InsufficientBalanceCopyWith(_InsufficientBalance value, $Res Function(_InsufficientBalance) _then) = __$InsufficientBalanceCopyWithImpl;
+@useResult
+$Res call({
+ List<MatchSuggestion> remaining
+});
+
+
+
+
+}
+/// @nodoc
+class __$InsufficientBalanceCopyWithImpl<$Res>
+    implements _$InsufficientBalanceCopyWith<$Res> {
+  __$InsufficientBalanceCopyWithImpl(this._self, this._then);
+
+  final _InsufficientBalance _self;
+  final $Res Function(_InsufficientBalance) _then;
+
+/// Create a copy of MatchState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? remaining = null,}) {
+  return _then(_InsufficientBalance(
+remaining: null == remaining ? _self._remaining : remaining // ignore: cast_nullable_to_non_nullable
+as List<MatchSuggestion>,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _SwipeFailed implements MatchState {
+  const _SwipeFailed({required this.message, required final  List<MatchSuggestion> remaining}): _remaining = remaining;
+  
+
+ final  String message;
+ final  List<MatchSuggestion> _remaining;
+ List<MatchSuggestion> get remaining {
+  if (_remaining is EqualUnmodifiableListView) return _remaining;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_remaining);
+}
+
+
+/// Create a copy of MatchState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SwipeFailedCopyWith<_SwipeFailed> get copyWith => __$SwipeFailedCopyWithImpl<_SwipeFailed>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SwipeFailed&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other._remaining, _remaining));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message,const DeepCollectionEquality().hash(_remaining));
+
+@override
+String toString() {
+  return 'MatchState.swipeFailed(message: $message, remaining: $remaining)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SwipeFailedCopyWith<$Res> implements $MatchStateCopyWith<$Res> {
+  factory _$SwipeFailedCopyWith(_SwipeFailed value, $Res Function(_SwipeFailed) _then) = __$SwipeFailedCopyWithImpl;
+@useResult
+$Res call({
+ String message, List<MatchSuggestion> remaining
+});
+
+
+
+
+}
+/// @nodoc
+class __$SwipeFailedCopyWithImpl<$Res>
+    implements _$SwipeFailedCopyWith<$Res> {
+  __$SwipeFailedCopyWithImpl(this._self, this._then);
+
+  final _SwipeFailed _self;
+  final $Res Function(_SwipeFailed) _then;
+
+/// Create a copy of MatchState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = null,Object? remaining = null,}) {
+  return _then(_SwipeFailed(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,remaining: null == remaining ? _self._remaining : remaining // ignore: cast_nullable_to_non_nullable
+as List<MatchSuggestion>,
   ));
 }
 

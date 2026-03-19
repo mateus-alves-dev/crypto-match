@@ -8,11 +8,8 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class TokenCubit extends Cubit<TokenState> {
-  TokenCubit(
-    this._getBalance,
-    this._getHistory,
-    this._dailyCheckin,
-  ) : super(const TokenState.initial());
+  TokenCubit(this._getBalance, this._getHistory, this._dailyCheckin)
+    : super(const TokenState.initial());
 
   final GetTokenBalanceUseCase _getBalance;
   final GetTokenHistoryUseCase _getHistory;
@@ -55,9 +52,32 @@ class TokenCubit extends Cubit<TokenState> {
 
   Future<void> dailyCheckin() async {
     final result = await _dailyCheckin();
-    result.fold(
-      (failure) => null,
-      (_) => unawaited(loadWallet()),
+    result.fold((failure) => null, (_) => unawaited(loadWallet()));
+  }
+
+  /// Immediately applies an optimistic token deduction to the loaded balance
+  /// without an API call.  Must be paired with [revertOptimisticDebit] on
+  /// failure or [loadWallet] on success.
+  void applyOptimisticDebit(double amount) {
+    final s = state.mapOrNull(loaded: (s) => s);
+    if (s == null) return;
+    emit(
+      TokenState.loaded(
+        balance: s.balance.copyWith(balance: s.balance.balance - amount),
+        history: s.history,
+      ),
+    );
+  }
+
+  /// Reverts a previously applied optimistic deduction.
+  void revertOptimisticDebit(double amount) {
+    final s = state.mapOrNull(loaded: (s) => s);
+    if (s == null) return;
+    emit(
+      TokenState.loaded(
+        balance: s.balance.copyWith(balance: s.balance.balance + amount),
+        history: s.history,
+      ),
     );
   }
 }

@@ -3,11 +3,13 @@ import 'package:crypto_match/features/chat/domain/entities/message.dart';
 import 'package:crypto_match/features/match/domain/entities/match.dart';
 import 'package:crypto_match/features/match/presentation/cubit/match_cubit.dart';
 import 'package:crypto_match/features/match/presentation/cubit/match_state.dart';
+import 'package:crypto_match/features/match/presentation/widgets/insufficient_balance_sheet.dart';
 import 'package:crypto_match/features/match/presentation/widgets/match_dialog.dart';
 import 'package:crypto_match/features/match/presentation/widgets/swipe_card_deck.dart';
 import 'package:crypto_match/features/settings/domain/entities/user_settings.dart';
 import 'package:crypto_match/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:crypto_match/features/settings/presentation/cubit/settings_state.dart';
+import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -20,10 +22,40 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
+  /// Tracks the most recent swipe action so the listener can coordinate
+  /// token debit rollback or balance refresh after the cubit responds.
+  SwipeAction? _lastSwipeAction;
+
   @override
   void initState() {
     super.initState();
     context.read<MatchCubit>().loadFeed();
+  }
+
+  void _onSwipe(BuildContext context, SwipeAction action) {
+    _lastSwipeAction = action;
+    if (action == SwipeAction.superLike) {
+      // Optimistically deduct 10 tokens so the balance widget updates instantly.
+      context.read<TokenCubit>().applyOptimisticDebit(
+        InsufficientBalanceSheet.superLikeCost,
+      );
+    }
+    context.read<MatchCubit>().swipe(action: action);
+  }
+
+  void _showInsufficientBalanceSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(0xFF1A1A2E),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (_) => BlocProvider.value(
+        value: context.read<TokenCubit>(),
+        child: const InsufficientBalanceSheet(),
+      ),
+    );
   }
 
   @override
@@ -74,7 +106,47 @@ class _FeedPageState extends State<FeedPage> {
       body: BlocConsumer<MatchCubit, MatchState>(
         listener: (context, state) {
           state.whenOrNull(
-            matched: (match, _) => _showMatchDialog(context, match),
+            matched: (match, _) {
+              _showMatchDialog(context, match);
+              if (_lastSwipeAction == SwipeAction.superLike) {
+                context.read<TokenCubit>().loadWallet();
+              }
+              _lastSwipeAction = null;
+            },
+            swiping: (_) {
+              if (_lastSwipeAction == SwipeAction.superLike) {
+                context.read<TokenCubit>().loadWallet();
+              }
+              _lastSwipeAction = null;
+            },
+            empty: () {
+              if (_lastSwipeAction == SwipeAction.superLike) {
+                context.read<TokenCubit>().loadWallet();
+              }
+              _lastSwipeAction = null;
+            },
+            insufficientBalance: (_) {
+              context.read<TokenCubit>().revertOptimisticDebit(
+                InsufficientBalanceSheet.superLikeCost,
+              );
+              _lastSwipeAction = null;
+              _showInsufficientBalanceSheet(context);
+            },
+            swipeFailed: (message, _) {
+              if (_lastSwipeAction == SwipeAction.superLike) {
+                context.read<TokenCubit>().revertOptimisticDebit(
+                  InsufficientBalanceSheet.superLikeCost,
+                );
+              }
+              _lastSwipeAction = null;
+              context.read<MatchCubit>().recoverFromSwipeFailed();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(message),
+                  backgroundColor: Colors.red[700],
+                ),
+              );
+            },
           );
         },
         builder: (context, state) => state.when(
@@ -82,11 +154,19 @@ class _FeedPageState extends State<FeedPage> {
           loading: () => const _LoadingView(),
           swiping: (remaining) => _SwipingView(
             remaining: remaining,
-            onSwiped: (a) => context.read<MatchCubit>().swipe(action: a),
+            onSwiped: (a) => _onSwipe(context, a),
           ),
           matched: (_, remaining) => _SwipingView(
             remaining: remaining,
-            onSwiped: (a) => context.read<MatchCubit>().swipe(action: a),
+            onSwiped: (a) => _onSwipe(context, a),
+          ),
+          insufficientBalance: (remaining) => _SwipingView(
+            remaining: remaining,
+            onSwiped: (a) => _onSwipe(context, a),
+          ),
+          swipeFailed: (_, remaining) => _SwipingView(
+            remaining: remaining,
+            onSwiped: (a) => _onSwipe(context, a),
           ),
           empty: () => const _EmptyView(),
           failure: (message) => _ErrorView(message: message),
