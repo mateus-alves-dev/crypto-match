@@ -1,12 +1,8 @@
+import 'package:crypto_match/core/config/app_config.dart';
 import 'package:crypto_match/core/network/mock_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
-
-const _baseUrl = String.fromEnvironment(
-  'API_BASE_URL',
-  defaultValue: 'http://localhost:3000',
-);
 
 @singleton
 class ApiClient {
@@ -14,17 +10,20 @@ class ApiClient {
     _dio =
         Dio(
             BaseOptions(
-              baseUrl: _baseUrl,
+              baseUrl: AppConfig.apiBaseUrl,
               connectTimeout: const Duration(seconds: 15),
               receiveTimeout: const Duration(seconds: 30),
               headers: {'Content-Type': 'application/json'},
             ),
           )
           ..interceptors.add(MockInterceptor())
-          ..interceptors.add(AuthInterceptor(_storage))
-          ..interceptors.add(
-            LogInterceptor(requestBody: true, responseBody: true),
-          );
+          ..interceptors.add(AuthInterceptor(_storage));
+
+    if (AppConfig.enableLogs) {
+      _dio.interceptors.add(
+        LogInterceptor(requestBody: true, responseBody: true),
+      );
+    }
   }
 
   final FlutterSecureStorage _storage;

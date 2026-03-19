@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "CryptoMatch (dev)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}/mobile",
+      "args": [
+        "--dart-define-from-file",
+        "${workspaceFolder}/mobile/.env.dev.json"
+      ]
+    },
+    {
+      "name": "CryptoMatch (prod)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}/mobile",
+      "args": [
+        "--dart-define-from-file",
+        "${workspaceFolder}/mobile/.env.prod.json"
+      ]
+    }
+  ]
+}
