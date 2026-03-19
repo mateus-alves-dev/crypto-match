@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Photo library access for profile photo upload -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- Push notifications (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Fallback for Android < 13 -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"

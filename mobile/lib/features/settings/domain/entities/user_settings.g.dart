@@ -30,6 +30,7 @@ _NotificationSettings _$NotificationSettingsFromJson(
   newMessages: json['newMessages'] as bool? ?? true,
   tokenRewards: json['tokenRewards'] as bool? ?? true,
   appUpdates: json['appUpdates'] as bool? ?? false,
+  dailyStreak: json['dailyStreak'] as bool? ?? true,
 );
 
 Map<String, dynamic> _$NotificationSettingsToJson(
@@ -39,6 +40,7 @@ Map<String, dynamic> _$NotificationSettingsToJson(
   'newMessages': instance.newMessages,
   'tokenRewards': instance.tokenRewards,
   'appUpdates': instance.appUpdates,
+  'dailyStreak': instance.dailyStreak,
 };
 
 _PrivacySettings _$PrivacySettingsFromJson(Map<String, dynamic> json) =>

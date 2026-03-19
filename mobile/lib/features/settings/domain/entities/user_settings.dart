@@ -23,6 +23,7 @@ abstract class NotificationSettings with _$NotificationSettings {
     @Default(true) bool newMessages,
     @Default(true) bool tokenRewards,
     @Default(false) bool appUpdates,
+    @Default(true) bool dailyStreak,
   }) = _NotificationSettings;
 
   factory NotificationSettings.fromJson(Map<String, dynamic> json) =>

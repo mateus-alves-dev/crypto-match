@@ -75,19 +75,18 @@ class _SettingsPageState extends State<SettingsPage> {
             onMaxDistanceChangeEnd: (v) {
               setState(() => _maxDistance = v);
               context.read<SettingsCubit>().updateMatchPreferences(
-                    settings.matchPreferences
-                        .copyWith(maxDistanceKm: v.round()),
-                  );
+                settings.matchPreferences.copyWith(maxDistanceKm: v.round()),
+              );
             },
             onAgeRangeChanged: (v) => setState(() => _ageRange = v),
             onAgeRangeChangeEnd: (v) {
               setState(() => _ageRange = v);
               context.read<SettingsCubit>().updateMatchPreferences(
-                    settings.matchPreferences.copyWith(
-                      minAge: v.start.round(),
-                      maxAge: v.end.round(),
-                    ),
-                  );
+                settings.matchPreferences.copyWith(
+                  minAge: v.start.round(),
+                  maxAge: v.end.round(),
+                ),
+              );
             },
           ),
           updating: (settings) => _SettingsContent(
@@ -99,19 +98,18 @@ class _SettingsPageState extends State<SettingsPage> {
             onMaxDistanceChangeEnd: (v) {
               setState(() => _maxDistance = v);
               context.read<SettingsCubit>().updateMatchPreferences(
-                    settings.matchPreferences
-                        .copyWith(maxDistanceKm: v.round()),
-                  );
+                settings.matchPreferences.copyWith(maxDistanceKm: v.round()),
+              );
             },
             onAgeRangeChanged: (v) => setState(() => _ageRange = v),
             onAgeRangeChangeEnd: (v) {
               setState(() => _ageRange = v);
               context.read<SettingsCubit>().updateMatchPreferences(
-                    settings.matchPreferences.copyWith(
-                      minAge: v.start.round(),
-                      maxAge: v.end.round(),
-                    ),
-                  );
+                settings.matchPreferences.copyWith(
+                  minAge: v.start.round(),
+                  maxAge: v.end.round(),
+                ),
+              );
             },
           ),
           updateSuccess: (settings) => _SettingsContent(
@@ -122,19 +120,18 @@ class _SettingsPageState extends State<SettingsPage> {
             onMaxDistanceChangeEnd: (v) {
               setState(() => _maxDistance = v);
               context.read<SettingsCubit>().updateMatchPreferences(
-                    settings.matchPreferences
-                        .copyWith(maxDistanceKm: v.round()),
-                  );
+                settings.matchPreferences.copyWith(maxDistanceKm: v.round()),
+              );
             },
             onAgeRangeChanged: (v) => setState(() => _ageRange = v),
             onAgeRangeChangeEnd: (v) {
               setState(() => _ageRange = v);
               context.read<SettingsCubit>().updateMatchPreferences(
-                    settings.matchPreferences.copyWith(
-                      minAge: v.start.round(),
-                      maxAge: v.end.round(),
-                    ),
-                  );
+                settings.matchPreferences.copyWith(
+                  minAge: v.start.round(),
+                  maxAge: v.end.round(),
+                ),
+              );
             },
           ),
           failure: (message) => _ErrorView(
@@ -254,8 +251,8 @@ class _SettingsContent extends StatelessWidget {
               value: prefs.filterByCryptoInterests,
               onChanged: (v) =>
                   context.read<SettingsCubit>().updateMatchPreferences(
-                        prefs.copyWith(filterByCryptoInterests: v),
-                      ),
+                    prefs.copyWith(filterByCryptoInterests: v),
+                  ),
             ),
           ],
         ),
@@ -277,40 +274,45 @@ class _SettingsContent extends StatelessWidget {
               title: 'Novos matches',
               subtitle: 'Notificar quando der match com alguém',
               value: notif.newMatches,
-              onChanged: (v) =>
-                  context.read<SettingsCubit>().updateNotificationSettings(
-                        notif.copyWith(newMatches: v),
-                      ),
+              onChanged: (v) => context
+                  .read<SettingsCubit>()
+                  .updateNotificationSettings(notif.copyWith(newMatches: v)),
             ),
             const Divider(height: 1, color: Color(0xFF1A1A2E)),
             _SwitchTile(
               title: 'Novas mensagens',
               subtitle: 'Notificar ao receber uma mensagem',
               value: notif.newMessages,
-              onChanged: (v) =>
-                  context.read<SettingsCubit>().updateNotificationSettings(
-                        notif.copyWith(newMessages: v),
-                      ),
+              onChanged: (v) => context
+                  .read<SettingsCubit>()
+                  .updateNotificationSettings(notif.copyWith(newMessages: v)),
             ),
             const Divider(height: 1, color: Color(0xFF1A1A2E)),
             _SwitchTile(
               title: 'Recompensas de token',
               subtitle: 'Notificar ao ganhar tokens',
               value: notif.tokenRewards,
-              onChanged: (v) =>
-                  context.read<SettingsCubit>().updateNotificationSettings(
-                        notif.copyWith(tokenRewards: v),
-                      ),
+              onChanged: (v) => context
+                  .read<SettingsCubit>()
+                  .updateNotificationSettings(notif.copyWith(tokenRewards: v)),
             ),
             const Divider(height: 1, color: Color(0xFF1A1A2E)),
             _SwitchTile(
               title: 'Atualizações do app',
               subtitle: 'Novidades e melhorias do CryptoMatch',
               value: notif.appUpdates,
-              onChanged: (v) =>
-                  context.read<SettingsCubit>().updateNotificationSettings(
-                        notif.copyWith(appUpdates: v),
-                      ),
+              onChanged: (v) => context
+                  .read<SettingsCubit>()
+                  .updateNotificationSettings(notif.copyWith(appUpdates: v)),
+            ),
+            const Divider(height: 1, color: Color(0xFF1A1A2E)),
+            _SwitchTile(
+              title: 'Streak diário',
+              subtitle: 'Lembrete de check-in para manter sua sequência',
+              value: notif.dailyStreak,
+              onChanged: (v) => context
+                  .read<SettingsCubit>()
+                  .updateNotificationSettings(notif.copyWith(dailyStreak: v)),
             ),
           ],
         ),
@@ -332,30 +334,27 @@ class _SettingsContent extends StatelessWidget {
               title: 'Mostrar status online',
               subtitle: 'Outros usuários podem ver quando você está online',
               value: privacy.showOnlineStatus,
-              onChanged: (v) =>
-                  context.read<SettingsCubit>().updatePrivacySettings(
-                        privacy.copyWith(showOnlineStatus: v),
-                      ),
+              onChanged: (v) => context
+                  .read<SettingsCubit>()
+                  .updatePrivacySettings(privacy.copyWith(showOnlineStatus: v)),
             ),
             const Divider(height: 1, color: Color(0xFF1A1A2E)),
             _SwitchTile(
               title: 'Mostrar distância',
               subtitle: 'Exibir sua distância aproximada no perfil',
               value: privacy.showDistance,
-              onChanged: (v) =>
-                  context.read<SettingsCubit>().updatePrivacySettings(
-                        privacy.copyWith(showDistance: v),
-                      ),
+              onChanged: (v) => context
+                  .read<SettingsCubit>()
+                  .updatePrivacySettings(privacy.copyWith(showDistance: v)),
             ),
             const Divider(height: 1, color: Color(0xFF1A1A2E)),
             _SwitchTile(
               title: 'Perfil visível',
               subtitle: 'Aparecer no feed de busca de outros usuários',
               value: privacy.profileVisible,
-              onChanged: (v) =>
-                  context.read<SettingsCubit>().updatePrivacySettings(
-                        privacy.copyWith(profileVisible: v),
-                      ),
+              onChanged: (v) => context
+                  .read<SettingsCubit>()
+                  .updatePrivacySettings(privacy.copyWith(profileVisible: v)),
             ),
           ],
         ),
@@ -430,9 +429,7 @@ class _SettingsContent extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         backgroundColor: const Color(0xFF1A1A2E),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text(
           'Excluir conta',
           style: TextStyle(fontWeight: FontWeight.w700),
@@ -451,9 +448,7 @@ class _SettingsContent extends StatelessWidget {
               Navigator.of(dialogContext).pop();
               context.read<SettingsCubit>().deleteAccount();
             },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.redAccent,
-            ),
+            style: TextButton.styleFrom(foregroundColor: Colors.redAccent),
             child: const Text('Excluir'),
           ),
         ],
@@ -516,10 +511,7 @@ class _SwitchTile extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
-                  style: const TextStyle(
-                    color: Colors.white54,
-                    fontSize: 12,
-                  ),
+                  style: const TextStyle(color: Colors.white54, fontSize: 12),
                 ),
               ],
             ),

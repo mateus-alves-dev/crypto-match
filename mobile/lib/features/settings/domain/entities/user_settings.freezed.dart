@@ -287,7 +287,7 @@ as bool,
 /// @nodoc
 mixin _$NotificationSettings {
 
- bool get newMatches; bool get newMessages; bool get tokenRewards; bool get appUpdates;
+ bool get newMatches; bool get newMessages; bool get tokenRewards; bool get appUpdates; bool get dailyStreak;
 /// Create a copy of NotificationSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -300,16 +300,16 @@ $NotificationSettingsCopyWith<NotificationSettings> get copyWith => _$Notificati
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationSettings&&(identical(other.newMatches, newMatches) || other.newMatches == newMatches)&&(identical(other.newMessages, newMessages) || other.newMessages == newMessages)&&(identical(other.tokenRewards, tokenRewards) || other.tokenRewards == tokenRewards)&&(identical(other.appUpdates, appUpdates) || other.appUpdates == appUpdates));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationSettings&&(identical(other.newMatches, newMatches) || other.newMatches == newMatches)&&(identical(other.newMessages, newMessages) || other.newMessages == newMessages)&&(identical(other.tokenRewards, tokenRewards) || other.tokenRewards == tokenRewards)&&(identical(other.appUpdates, appUpdates) || other.appUpdates == appUpdates)&&(identical(other.dailyStreak, dailyStreak) || other.dailyStreak == dailyStreak));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,newMatches,newMessages,tokenRewards,appUpdates);
+int get hashCode => Object.hash(runtimeType,newMatches,newMessages,tokenRewards,appUpdates,dailyStreak);
 
 @override
 String toString() {
-  return 'NotificationSettings(newMatches: $newMatches, newMessages: $newMessages, tokenRewards: $tokenRewards, appUpdates: $appUpdates)';
+  return 'NotificationSettings(newMatches: $newMatches, newMessages: $newMessages, tokenRewards: $tokenRewards, appUpdates: $appUpdates, dailyStreak: $dailyStreak)';
 }
 
 
@@ -320,7 +320,7 @@ abstract mixin class $NotificationSettingsCopyWith<$Res>  {
   factory $NotificationSettingsCopyWith(NotificationSettings value, $Res Function(NotificationSettings) _then) = _$NotificationSettingsCopyWithImpl;
 @useResult
 $Res call({
- bool newMatches, bool newMessages, bool tokenRewards, bool appUpdates
+ bool newMatches, bool newMessages, bool tokenRewards, bool appUpdates, bool dailyStreak
 });
 
 
@@ -337,12 +337,13 @@ class _$NotificationSettingsCopyWithImpl<$Res>
 
 /// Create a copy of NotificationSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? newMatches = null,Object? newMessages = null,Object? tokenRewards = null,Object? appUpdates = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? newMatches = null,Object? newMessages = null,Object? tokenRewards = null,Object? appUpdates = null,Object? dailyStreak = null,}) {
   return _then(_self.copyWith(
 newMatches: null == newMatches ? _self.newMatches : newMatches // ignore: cast_nullable_to_non_nullable
 as bool,newMessages: null == newMessages ? _self.newMessages : newMessages // ignore: cast_nullable_to_non_nullable
 as bool,tokenRewards: null == tokenRewards ? _self.tokenRewards : tokenRewards // ignore: cast_nullable_to_non_nullable
 as bool,appUpdates: null == appUpdates ? _self.appUpdates : appUpdates // ignore: cast_nullable_to_non_nullable
+as bool,dailyStreak: null == dailyStreak ? _self.dailyStreak : dailyStreak // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -428,10 +429,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool newMatches,  bool newMessages,  bool tokenRewards,  bool appUpdates)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool newMatches,  bool newMessages,  bool tokenRewards,  bool appUpdates,  bool dailyStreak)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NotificationSettings() when $default != null:
-return $default(_that.newMatches,_that.newMessages,_that.tokenRewards,_that.appUpdates);case _:
+return $default(_that.newMatches,_that.newMessages,_that.tokenRewards,_that.appUpdates,_that.dailyStreak);case _:
   return orElse();
 
 }
@@ -449,10 +450,10 @@ return $default(_that.newMatches,_that.newMessages,_that.tokenRewards,_that.appU
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool newMatches,  bool newMessages,  bool tokenRewards,  bool appUpdates)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool newMatches,  bool newMessages,  bool tokenRewards,  bool appUpdates,  bool dailyStreak)  $default,) {final _that = this;
 switch (_that) {
 case _NotificationSettings():
-return $default(_that.newMatches,_that.newMessages,_that.tokenRewards,_that.appUpdates);case _:
+return $default(_that.newMatches,_that.newMessages,_that.tokenRewards,_that.appUpdates,_that.dailyStreak);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -469,10 +470,10 @@ return $default(_that.newMatches,_that.newMessages,_that.tokenRewards,_that.appU
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool newMatches,  bool newMessages,  bool tokenRewards,  bool appUpdates)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool newMatches,  bool newMessages,  bool tokenRewards,  bool appUpdates,  bool dailyStreak)?  $default,) {final _that = this;
 switch (_that) {
 case _NotificationSettings() when $default != null:
-return $default(_that.newMatches,_that.newMessages,_that.tokenRewards,_that.appUpdates);case _:
+return $default(_that.newMatches,_that.newMessages,_that.tokenRewards,_that.appUpdates,_that.dailyStreak);case _:
   return null;
 
 }
@@ -484,13 +485,14 @@ return $default(_that.newMatches,_that.newMessages,_that.tokenRewards,_that.appU
 @JsonSerializable()
 
 class _NotificationSettings implements NotificationSettings {
-  const _NotificationSettings({this.newMatches = true, this.newMessages = true, this.tokenRewards = true, this.appUpdates = false});
+  const _NotificationSettings({this.newMatches = true, this.newMessages = true, this.tokenRewards = true, this.appUpdates = false, this.dailyStreak = true});
   factory _NotificationSettings.fromJson(Map<String, dynamic> json) => _$NotificationSettingsFromJson(json);
 
 @override@JsonKey() final  bool newMatches;
 @override@JsonKey() final  bool newMessages;
 @override@JsonKey() final  bool tokenRewards;
 @override@JsonKey() final  bool appUpdates;
+@override@JsonKey() final  bool dailyStreak;
 
 /// Create a copy of NotificationSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -505,16 +507,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationSettings&&(identical(other.newMatches, newMatches) || other.newMatches == newMatches)&&(identical(other.newMessages, newMessages) || other.newMessages == newMessages)&&(identical(other.tokenRewards, tokenRewards) || other.tokenRewards == tokenRewards)&&(identical(other.appUpdates, appUpdates) || other.appUpdates == appUpdates));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationSettings&&(identical(other.newMatches, newMatches) || other.newMatches == newMatches)&&(identical(other.newMessages, newMessages) || other.newMessages == newMessages)&&(identical(other.tokenRewards, tokenRewards) || other.tokenRewards == tokenRewards)&&(identical(other.appUpdates, appUpdates) || other.appUpdates == appUpdates)&&(identical(other.dailyStreak, dailyStreak) || other.dailyStreak == dailyStreak));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,newMatches,newMessages,tokenRewards,appUpdates);
+int get hashCode => Object.hash(runtimeType,newMatches,newMessages,tokenRewards,appUpdates,dailyStreak);
 
 @override
 String toString() {
-  return 'NotificationSettings(newMatches: $newMatches, newMessages: $newMessages, tokenRewards: $tokenRewards, appUpdates: $appUpdates)';
+  return 'NotificationSettings(newMatches: $newMatches, newMessages: $newMessages, tokenRewards: $tokenRewards, appUpdates: $appUpdates, dailyStreak: $dailyStreak)';
 }
 
 
@@ -525,7 +527,7 @@ abstract mixin class _$NotificationSettingsCopyWith<$Res> implements $Notificati
   factory _$NotificationSettingsCopyWith(_NotificationSettings value, $Res Function(_NotificationSettings) _then) = __$NotificationSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- bool newMatches, bool newMessages, bool tokenRewards, bool appUpdates
+ bool newMatches, bool newMessages, bool tokenRewards, bool appUpdates, bool dailyStreak
 });
 
 
@@ -542,12 +544,13 @@ class __$NotificationSettingsCopyWithImpl<$Res>
 
 /// Create a copy of NotificationSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? newMatches = null,Object? newMessages = null,Object? tokenRewards = null,Object? appUpdates = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? newMatches = null,Object? newMessages = null,Object? tokenRewards = null,Object? appUpdates = null,Object? dailyStreak = null,}) {
   return _then(_NotificationSettings(
 newMatches: null == newMatches ? _self.newMatches : newMatches // ignore: cast_nullable_to_non_nullable
 as bool,newMessages: null == newMessages ? _self.newMessages : newMessages // ignore: cast_nullable_to_non_nullable
 as bool,tokenRewards: null == tokenRewards ? _self.tokenRewards : tokenRewards // ignore: cast_nullable_to_non_nullable
 as bool,appUpdates: null == appUpdates ? _self.appUpdates : appUpdates // ignore: cast_nullable_to_non_nullable
+as bool,dailyStreak: null == dailyStreak ? _self.dailyStreak : dailyStreak // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

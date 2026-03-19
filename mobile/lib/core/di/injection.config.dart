@@ -12,6 +12,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:crypto_match/core/di/injection.dart' as _i324;
 import 'package:crypto_match/core/network/api_client.dart' as _i53;
+import 'package:crypto_match/core/notifications/notification_handler.dart'
+    as _i308;
 import 'package:crypto_match/core/router/app_router.dart' as _i446;
 import 'package:crypto_match/features/auth/data/datasources/auth_remote_data_source.dart'
     as _i156;
@@ -91,7 +93,10 @@ import 'package:crypto_match/features/token/presentation/cubit/streak_cubit.dart
     as _i823;
 import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart'
     as _i947;
+import 'package:firebase_messaging/firebase_messaging.dart' as _i892;
 import 'package:firebase_storage/firebase_storage.dart' as _i457;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart'
+    as _i163;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -109,6 +114,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i974.FirebaseFirestore>(() => registerModule.firestore);
     gh.lazySingleton<_i457.FirebaseStorage>(() => registerModule.storage);
+    gh.lazySingleton<_i892.FirebaseMessaging>(() => registerModule.messaging);
+    gh.lazySingleton<_i163.FlutterLocalNotificationsPlugin>(
+      () => registerModule.localNotifications,
+    );
     gh.lazySingleton<_i197.AuthRepository>(
       () => _i698.MockAuthRepositoryImpl(),
     );
@@ -280,6 +289,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i498.MatchCubit(
         gh<_i1051.GetMatchFeedUseCase>(),
         gh<_i1051.SwipeUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i308.NotificationHandler>(
+      () => _i308.NotificationHandler(
+        gh<_i892.FirebaseMessaging>(),
+        gh<_i163.FlutterLocalNotificationsPlugin>(),
+        gh<_i558.FlutterSecureStorage>(),
+        gh<_i446.AppRouter>(),
       ),
     );
     gh.factory<_i296.SettingsCubit>(
