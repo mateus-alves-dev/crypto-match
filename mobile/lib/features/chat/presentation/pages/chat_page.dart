@@ -362,9 +362,8 @@ class _MessageInput extends StatelessWidget {
             height: 256,
             child: EmojiPicker(
               textEditingController: controller,
-              config: Config(
-                height: 256,
-                emojiViewConfig: const EmojiViewConfig(
+              config: const Config(
+                emojiViewConfig: EmojiViewConfig(
                   backgroundColor: Color(0xFF0D0D0D),
                 ),
               ),

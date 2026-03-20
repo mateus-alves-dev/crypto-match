@@ -502,12 +502,12 @@ class _FeedFiltersSheetState extends State<_FeedFiltersSheet> {
             const SizedBox(height: 4),
             Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const _Label('Filtrar por interesses em cripto'),
-                      const Text(
+                      _Label('Filtrar por interesses em cripto'),
+                      Text(
                         'Mostrar apenas perfis com interesses similares',
                         style: TextStyle(color: Colors.white38, fontSize: 12),
                       ),
@@ -517,7 +517,7 @@ class _FeedFiltersSheetState extends State<_FeedFiltersSheet> {
                 Switch(
                   value: _filterByCrypto,
                   onChanged: (v) => setState(() => _filterByCrypto = v),
-                  activeColor: const Color(0xFF6C63FF),
+                  activeThumbColor: const Color(0xFF6C63FF),
                 ),
               ],
             ),
