@@ -1,0 +1,116 @@
+service: crypto-match-backend
+
+frameworkVersion: "3"
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+useDotenv: true
+
+custom:
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+
+  serverless-offline:
+    httpPort: 3000
+    noPrependStageInUrl: true
+
+provider:
+  name: aws
+  runtime: nodejs24.x
+  architecture: arm64
+  stage: ${self:custom.stage}
+  region: ${self:custom.region}
+  memorySize: 512
+  timeout: 29 # API Gateway hard limit is 30s
+  logRetentionInDays: 7
+
+  # VPC – required for RDS Proxy access
+  vpc:
+    securityGroupIds:
+      - ${ssm:/crypto-match/${self:custom.stage}/lambda-sg-id}
+    subnetIds:
+      - ${ssm:/crypto-match/${self:custom.stage}/subnet-1}
+      - ${ssm:/crypto-match/${self:custom.stage}/subnet-2}
+
+  environment:
+    NODE_ENV: ${self:custom.stage}
+    DATABASE_URL: ${ssm:/crypto-match/${self:custom.stage}/database-url}
+    JWT_SECRET: ${ssm:/crypto-match/${self:custom.stage}/jwt-secret}
+    JWT_EXPIRES_IN: "7d"
+    BCRYPT_ROUNDS: "12"
+    FIREBASE_SERVICE_ACCOUNT_JSON: ${ssm:/crypto-match/${self:custom.stage}/firebase-service-account-json}
+    ENABLE_EMAIL_LOGIN: ${ssm:/crypto-match/${self:custom.stage}/enable-email-login, 'true'}
+    ENABLE_GOOGLE_LOGIN: ${ssm:/crypto-match/${self:custom.stage}/enable-google-login, 'true'}
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - ssm:GetParameter
+          Resource:
+            - arn:aws:ssm:${self:provider.region}:*:parameter/crypto-match/${self:custom.stage}/*
+        - Effect: Allow
+          Action:
+            - sqs:SendMessage
+            - sqs:ReceiveMessage
+            - sqs:DeleteMessage
+            - sqs:GetQueueAttributes
+          Resource:
+            - !GetAtt NotificationsQueue.Arn
+        - Effect: Allow
+          Action:
+            - rds-db:connect
+          Resource: "*"
+
+package:
+  individually: false
+  patterns:
+    - "!node_modules/.prisma/client/libquery_engine-*"
+    - "node_modules/.prisma/client/libquery_engine-linux-arm64-openssl-3.0.x"
+    - "!node_modules/.prisma/client/query-engine-*"
+    - "!test/**"
+    - "!**/*.spec.ts"
+    - "!**/*.map"
+
+functions:
+  api:
+    handler: src/serverless.handler
+    reservedConcurrency: 10
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
+    description: "CryptoMatch REST API"
+
+  # Placeholder workers (Phase 2+)
+  notificationWorker:
+    handler: src/workers/notification.handler
+    memorySize: 256
+    reservedConcurrency: 5
+    events:
+      - sqs:
+          arn: !GetAtt NotificationsQueue.Arn
+          batchSize: 10
+          functionResponseType: ReportBatchItemFailures
+    description: "Push notification delivery worker"
+
+resources:
+  Resources:
+    NotificationsQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: crypto-match-notifications-${self:custom.stage}
+        VisibilityTimeout: 90
+        MessageRetentionPeriod: 86400 # 24h
+        RedrivePolicy:
+          deadLetterTargetArn: !GetAtt NotificationsDLQ.Arn
+          maxReceiveCount: 3
+
+    NotificationsDLQ:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: crypto-match-notifications-dlq-${self:custom.stage}
+        MessageRetentionPeriod: 604800 # 7 days

@@ -13,8 +13,7 @@ class LoginUseCase {
   Future<Either<Failure, User>> call({
     required String email,
     required String password,
-  }) =>
-      _repository.login(email: email, password: password);
+  }) => _repository.login(email: email, password: password);
 }
 
 @injectable
@@ -27,8 +26,16 @@ class RegisterUseCase {
     required String name,
     required String email,
     required String password,
-  }) =>
-      _repository.register(name: name, email: email, password: password);
+  }) => _repository.register(name: name, email: email, password: password);
+}
+
+@injectable
+class LoginWithGoogleUseCase {
+  const LoginWithGoogleUseCase(this._repository);
+
+  final AuthRepository _repository;
+
+  Future<Either<Failure, User>> call() => _repository.loginWithGoogle();
 }
 
 @injectable

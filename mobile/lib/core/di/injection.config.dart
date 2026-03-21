@@ -11,6 +11,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:crypto_match/core/di/injection.dart' as _i324;
+import 'package:crypto_match/core/feature_flags/feature_flags_cubit.dart'
+    as _i35;
+import 'package:crypto_match/core/feature_flags/feature_flags_service.dart'
+    as _i573;
 import 'package:crypto_match/core/network/api_client.dart' as _i53;
 import 'package:crypto_match/core/notifications/notification_handler.dart'
     as _i308;
@@ -93,12 +97,15 @@ import 'package:crypto_match/features/token/presentation/cubit/streak_cubit.dart
     as _i823;
 import 'package:crypto_match/features/token/presentation/cubit/token_cubit.dart'
     as _i947;
+import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:firebase_messaging/firebase_messaging.dart' as _i892;
+import 'package:firebase_remote_config/firebase_remote_config.dart' as _i627;
 import 'package:firebase_storage/firebase_storage.dart' as _i457;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart'
     as _i163;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:google_sign_in/google_sign_in.dart' as _i116;
 import 'package:injectable/injectable.dart' as _i526;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -115,6 +122,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i974.FirebaseFirestore>(() => registerModule.firestore);
     gh.lazySingleton<_i457.FirebaseStorage>(() => registerModule.storage);
     gh.lazySingleton<_i892.FirebaseMessaging>(() => registerModule.messaging);
+    gh.lazySingleton<_i59.FirebaseAuth>(() => registerModule.firebaseAuth);
+    gh.lazySingleton<_i627.FirebaseRemoteConfig>(
+      () => registerModule.remoteConfig,
+    );
+    gh.lazySingleton<_i116.GoogleSignIn>(() => registerModule.googleSignIn);
     gh.lazySingleton<_i163.FlutterLocalNotificationsPlugin>(
       () => registerModule.localNotifications,
     );
@@ -154,25 +166,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i360.ProfileRepository>(
       () => _i841.MockProfileRepositoryImpl(),
     );
+    gh.lazySingleton<_i573.FeatureFlagsService>(
+      () => _i573.FeatureFlagsService(gh<_i627.FirebaseRemoteConfig>()),
+    );
+    gh.lazySingleton<_i35.FeatureFlagsCubit>(
+      () => _i35.FeatureFlagsCubit(gh<_i573.FeatureFlagsService>()),
+    );
     gh.factory<_i825.LoginUseCase>(
       () => _i825.LoginUseCase(gh<_i197.AuthRepository>()),
     );
     gh.factory<_i825.RegisterUseCase>(
       () => _i825.RegisterUseCase(gh<_i197.AuthRepository>()),
     );
+    gh.factory<_i825.LoginWithGoogleUseCase>(
+      () => _i825.LoginWithGoogleUseCase(gh<_i197.AuthRepository>()),
+    );
     gh.factory<_i825.GetMeUseCase>(
       () => _i825.GetMeUseCase(gh<_i197.AuthRepository>()),
     );
     gh.factory<_i825.LogoutUseCase>(
       () => _i825.LogoutUseCase(gh<_i197.AuthRepository>()),
-    );
-    gh.lazySingleton<_i212.AuthCubit>(
-      () => _i212.AuthCubit(
-        gh<_i825.LoginUseCase>(),
-        gh<_i825.RegisterUseCase>(),
-        gh<_i825.GetMeUseCase>(),
-        gh<_i825.LogoutUseCase>(),
-      ),
     );
     gh.factory<_i833.GetTokenBalanceUseCase>(
       () => _i833.GetTokenBalanceUseCase(gh<_i593.TokenRepository>()),
@@ -209,6 +222,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i176.AvatarRepository>(
       () => _i64.AvatarRepositoryImpl(gh<_i457.FirebaseStorage>()),
+    );
+    gh.lazySingleton<_i212.AuthCubit>(
+      () => _i212.AuthCubit(
+        gh<_i825.LoginUseCase>(),
+        gh<_i825.RegisterUseCase>(),
+        gh<_i825.LoginWithGoogleUseCase>(),
+        gh<_i825.GetMeUseCase>(),
+        gh<_i825.LogoutUseCase>(),
+      ),
     );
     gh.factory<_i823.StreakCubit>(
       () => _i823.StreakCubit(

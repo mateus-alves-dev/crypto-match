@@ -10,21 +10,20 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit(
     this._loginUseCase,
     this._registerUseCase,
+    this._loginWithGoogleUseCase,
     this._getMeUseCase,
     this._logoutUseCase,
   ) : super(const AuthState.initial());
 
   final LoginUseCase _loginUseCase;
   final RegisterUseCase _registerUseCase;
+  final LoginWithGoogleUseCase _loginWithGoogleUseCase;
   final GetMeUseCase _getMeUseCase;
   final LogoutUseCase _logoutUseCase;
 
   User? _pendingUser;
 
-  Future<void> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> login({required String email, required String password}) async {
     emit(const AuthState.loading());
     final result = await _loginUseCase(email: email, password: password);
     result.fold(
@@ -70,6 +69,25 @@ class AuthCubit extends Cubit<AuthState> {
         _pendingUser = user;
         emit(AuthState.needsOnboarding(user: user));
       },
+    );
+  }
+
+  Future<void> loginWithGoogle() async {
+    emit(const AuthState.loading());
+    final result = await _loginWithGoogleUseCase();
+    result.fold(
+      (failure) => emit(
+        AuthState.failure(
+          message: failure.map(
+            server: (f) => f.message,
+            network: (f) => f.message,
+            unauthorized: (_) => 'Google login failed',
+            notFound: (_) => 'User not found',
+            unknown: (f) => f.message,
+          ),
+        ),
+      ),
+      (user) => emit(AuthState.authenticated(user: user)),
     );
   }
 

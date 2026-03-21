@@ -32,6 +32,14 @@ class AuthRemoteDataSource {
     return AuthResponse.fromJson(response.data!);
   }
 
+  Future<AuthResponse> loginWithGoogle({required String idToken}) async {
+    final response = await _apiClient.dio.post<Map<String, dynamic>>(
+      '/auth/google',
+      data: {'idToken': idToken},
+    );
+    return AuthResponse.fromJson(response.data!);
+  }
+
   Future<User> getMe() async {
     final response = await _apiClient.dio.get<Map<String, dynamic>>('/me');
     return User.fromJson(response.data!);

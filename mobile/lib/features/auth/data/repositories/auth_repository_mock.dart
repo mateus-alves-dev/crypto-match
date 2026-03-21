@@ -30,6 +30,13 @@ class MockAuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<Failure, User>> loginWithGoogle() async {
+    await Future<void>.delayed(const Duration(milliseconds: 800));
+    _loggedInUser = _buildUser('google-user@gmail.com', name: 'Google User');
+    return Right(_loggedInUser!);
+  }
+
+  @override
   Future<Either<Failure, User>> getMe() async {
     if (_loggedInUser != null) return Right(_loggedInUser!);
     return const Left(Failure.unauthorized());

@@ -1,4 +1,5 @@
 import 'package:crypto_match/core/di/injection.dart';
+import 'package:crypto_match/core/feature_flags/feature_flags_cubit.dart';
 import 'package:crypto_match/core/notifications/notification_handler.dart';
 import 'package:crypto_match/core/router/app_router.dart';
 import 'package:crypto_match/core/theme/app_theme.dart';
@@ -26,6 +27,9 @@ class App extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        BlocProvider<FeatureFlagsCubit>(
+          create: (_) => getIt<FeatureFlagsCubit>()..loadFlags(),
+        ),
         BlocProvider<AuthCubit>(create: (_) => getIt<AuthCubit>()..checkAuth()),
         BlocProvider<MatchCubit>(create: (_) => getIt<MatchCubit>()),
         BlocProvider<MatchesListCubit>(

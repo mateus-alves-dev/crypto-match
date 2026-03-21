@@ -1,0 +1,285 @@
+// This is your Prisma schema file.
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// USERS & AUTH
+// ─────────────────────────────────────────────────────────────────────────────
+
+model User {
+    id        String   @id @default(uuid())
+    email     String   @unique
+    name      String
+    password  String?
+    googleUid String?  @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations
+    profile           Profile?
+    settings          UserSettings?
+    deviceTokens      DeviceToken[]
+    tokenBalance      TokenBalance?
+    tokenTransactions TokenTransaction[]
+    tokenActionClaims TokenActionClaim[]
+    streak            DailyStreak?
+    missionProgress   DailyMissionProgress[]
+    swipesGiven       Swipe[]                   @relation("SwipeActor")
+    swipesReceived    Swipe[]                   @relation("SwipeTarget")
+    matchesAsA        Match[]                   @relation("MatchUserA")
+    matchesAsB        Match[]                   @relation("MatchUserB")
+    referralCode      String?                   @unique
+    referralsSent     Referral[]                @relation("ReferrerUser")
+    referredBy        Referral?                 @relation("ReferredUser")
+    conversations     ConversationParticipant[]
+
+    @@index([email])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PROFILE
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Profile {
+    id              String   @id @default(uuid())
+    userId          String   @unique
+    user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    displayName     String
+    bio             String?
+    avatarUrl       String?
+    cryptoInterests String[]
+    personaTags     String[]
+    age             Int?
+    location        String?
+    profileVisible  Boolean  @default(true)
+    badges          String[] @default([])
+    updatedAt       DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SETTINGS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model UserSettings {
+    id     String @id @default(uuid())
+    userId String @unique
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    // Match preferences
+    maxDistanceKm           Int     @default(50)
+    minAge                  Int     @default(18)
+    maxAge                  Int     @default(50)
+    filterByCryptoInterests Boolean @default(false)
+
+    // Notification preferences
+    notifyNewMatches   Boolean @default(true)
+    notifyNewMessages  Boolean @default(true)
+    notifyTokenRewards Boolean @default(true)
+    notifyAppUpdates   Boolean @default(false)
+    notifyDailyStreak  Boolean @default(true)
+
+    // Privacy
+    showOnlineStatus Boolean @default(true)
+    showDistance     Boolean @default(true)
+
+    updatedAt DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DEVICE TOKENS (FCM)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model DeviceToken {
+    id         String   @id @default(uuid())
+    userId     String
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    token      String   @unique
+    platform   Platform
+    lastSeenAt DateTime @default(now())
+    createdAt  DateTime @default(now())
+
+    @@index([userId])
+}
+
+enum Platform {
+    ios
+    android
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TOKEN (OFF-CHAIN LEDGER)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model TokenBalance {
+    userId    String   @id
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    balance   Decimal  @default(0) @db.Decimal(18, 4)
+    updatedAt DateTime @updatedAt
+}
+
+model TokenTransaction {
+    id        String               @id @default(uuid())
+    userId    String
+    user      User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+    type      TokenTransactionType
+    amount    Decimal              @db.Decimal(18, 4)
+    reason    String
+    metadata  Json?
+    createdAt DateTime             @default(now())
+
+    @@index([userId, createdAt(sort: Desc)])
+}
+
+enum TokenTransactionType {
+    CREDIT
+    DEBIT
+}
+
+// Idempotency guard for one-shot and time-windowed token actions
+// actionKey format examples:
+//   daily_checkin:2026-03-21
+//   complete_profile
+//   invite_friend:REFERRAL_CODE
+//   streak_shield:2026-03-21
+//   mission_reward:missionProgressId
+model TokenActionClaim {
+    id        String   @id @default(uuid())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    actionKey String
+    claimedAt DateTime @default(now())
+
+    @@unique([userId, actionKey])
+    @@index([userId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAK
+// ─────────────────────────────────────────────────────────────────────────────
+
+model DailyStreak {
+    userId          String    @id
+    user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    currentStreak   Int       @default(0)
+    longestStreak   Int       @default(0)
+    lastCheckinDate DateTime?
+    streakAtRisk    Boolean   @default(false)
+    updatedAt       DateTime  @updatedAt
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DAILY MISSIONS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model DailyMissionDefinition {
+    id          String  @id @default(uuid())
+    type        String // like | chat | streak7d
+    title       String
+    description String
+    reward      Decimal @db.Decimal(18, 4)
+    target      Int
+    isActive    Boolean @default(true)
+    resetsAt    String // cron-like hint: "daily" | "weekly"
+
+    progress DailyMissionProgress[]
+}
+
+model DailyMissionProgress {
+    id          String                 @id @default(uuid())
+    userId      String
+    user        User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    missionId   String
+    mission     DailyMissionDefinition @relation(fields: [missionId], references: [id])
+    progress    Int                    @default(0)
+    isCompleted Boolean                @default(false)
+    isRewarded  Boolean                @default(false)
+    periodDate  DateTime // The UTC day this progress belongs to
+    createdAt   DateTime               @default(now())
+    updatedAt   DateTime               @updatedAt
+
+    @@unique([userId, missionId, periodDate])
+    @@index([userId, periodDate])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MATCH FLOW
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Swipe {
+    id           String      @id @default(uuid())
+    actorUserId  String
+    actor        User        @relation("SwipeActor", fields: [actorUserId], references: [id], onDelete: Cascade)
+    targetUserId String
+    target       User        @relation("SwipeTarget", fields: [targetUserId], references: [id], onDelete: Cascade)
+    action       SwipeAction
+    createdAt    DateTime    @default(now())
+
+    @@unique([actorUserId, targetUserId])
+    @@index([actorUserId])
+    @@index([targetUserId])
+}
+
+enum SwipeAction {
+    LIKE
+    DISLIKE
+    SUPER_LIKE
+}
+
+model Match {
+    id        String   @id @default(uuid())
+    userAId   String
+    userA     User     @relation("MatchUserA", fields: [userAId], references: [id], onDelete: Cascade)
+    userBId   String
+    userB     User     @relation("MatchUserB", fields: [userBId], references: [id], onDelete: Cascade)
+    matchedAt DateTime @default(now())
+
+    @@unique([userAId, userBId])
+    @@index([userAId])
+    @@index([userBId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REFERRALS
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Referral {
+    id             String   @id @default(uuid())
+    referrerId     String
+    referrer       User     @relation("ReferrerUser", fields: [referrerId], references: [id], onDelete: Cascade)
+    referredUserId String   @unique
+    referredUser   User     @relation("ReferredUser", fields: [referredUserId], references: [id], onDelete: Cascade)
+    code           String
+    rewarded       Boolean  @default(false)
+    createdAt      DateTime @default(now())
+
+    @@index([referrerId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CHAT METADATA (list only – messages stay in Firestore in MVP)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Conversation {
+    id           String                    @id @default(uuid())
+    createdAt    DateTime                  @default(now())
+    participants ConversationParticipant[]
+}
+
+model ConversationParticipant {
+    conversationId String
+    conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+    userId         String
+    user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@id([conversationId, userId])
+    @@index([userId])
+}
